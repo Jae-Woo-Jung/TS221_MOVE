@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "72718955190",
+    "project_id": "hoho-60f1d",
+    "storage_bucket": "hoho-60f1d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:72718955190:android:4f6e94a5bcd6af00966c17",
+        "android_client_info": {
+          "package_name": "com.KAIST.Hoho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "72718955190-tjrebpam8bdd6q53br84q0gt787o12qr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8mga-fdGVaNQJH8EJ0MvGHxFnv5L3KQw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "72718955190-tjrebpam8bdd6q53br84q0gt787o12qr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

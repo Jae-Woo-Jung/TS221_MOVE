@@ -1,0 +1,47 @@
+원본 : https://github.com/toio/ble-plugin-unity/tree/main/Assets/Plugins/Android/src
+package com.example.bleplugin.BleScannerObj
+
+//BLE 스캔을 위한 기능을 모은 오브젝트
+public class BleScannerObj extends ScanCallback
+
+
+//생성자
+public BleScannerObj(BluetoothLeScanner scanner, Context cxt)
+
+
+//임시로 참조할 곳의 값들을 최종적으로 참조할 곳으로 옮김. 이걸 먼저 사용해줘야 함.
+public void blit() 
+
+//등록된 기기들(주소)의 개수 반환. 
+public int getDeviceNum()
+
+//n번째 디바이스의 주소 반환.
+public String getDeviceAddr(int idx)
+
+//주소로 디바이스 이름 찾기.
+public String getDeviceNameByAddr(String addr)
+
+//주소로 한 번이라도 스캔된 디바이스 찾기.
+public BluetoothDevice getDeviceByAddr(String addr)
+
+//주소로 스캔 중에 있는 디바이스 찾기.
+public BluetoothDevice getFoundDeviceByAddr(String addr) 
+
+//주소에 해당하는 기기의 rssi(신호 세기) 반환
+public int getRssiByAddr(String addr)
+
+//uuid로 기기 스캔 시작.
+public void startScan(String uuid)
+
+//주변에서 advertise하는 기기 Scan하기.
+public void startScan()
+
+//uuid를 ScanFilter로서 추가. 추가한 uuid 중 하나 이상에 해당하는 것들만 scan함. 중복해서 넣는 건 방지함.
+public void addScanFilter(String uuid)
+
+//스캔 필터 초기화
+public void clearScanFilter()
+
+//스캔 종료 및 임시로 쓰는 것들 초기화.
+public void stopScan()
+

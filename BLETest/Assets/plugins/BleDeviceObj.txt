@@ -1,0 +1,63 @@
+원본 : https://github.com/toio/ble-plugin-unity/tree/main/Assets/Plugins/Android/src
+
+package com.example.bleplugin.BleDeviceObj
+
+BleDeviceObj  extends BluetoothGattCallback :  ble디바이스를 더 편하게 개편.
+
+//BluetoothGattCharacteristic을 다루기 위해 정의.
+private class CharacteristicKey
+
+//Characteristic과 notify가 주어지면 Uuid, Value(byte 형태) 등을 저장함.
+private class ReadData
+
+//생성자
+public BleDeviceObj(BluetoothDevice device, Context cxt)
+
+//디바이스 연결 해제
+public void disconnect()
+
+//해당 디바이스가 연결된 상태인지 여부 반환.
+public boolean isDisconnected()
+
+//readDataBuffer를 비우고 pubDataBuffer를 채움.  Data를 읽을 때는 이걸 먼저 해야 함.
+public void blit()
+
+//CharcteristicKeyHashMap에서 자료를 pub 저장소와 Keys로 옮김.
+public void blitChara() 
+
+//key(Characteristc)들의 개수 반환
+public int getKeysNum()
+
+//n번째 특성 반환
+public String getCharacteristicUuidFromKeys(int idx)
+
+//n번째 특성의 서비스 uuid 반환
+public String getServiceUuidFromKeys(int idx)
+
+//주소 반환
+public String getAddress()
+
+//data의 개수 반환, 밑의 메소드들을 사용하기 전에 blit()을 먼저 사용해야 함.
+public int getReadNum()
+
+//n번째 data의 서비스 uuid 반환
+public String getServiceUuidFromReadData(int idx)
+
+//n번째 data의 특성의 uuid 반환
+public String getCharacteristicFromReadData(int idx) 
+
+//n번째 data에 저장된 (서비스-특성)의 notification이 true인지 false(존재하지 않는 경우 포함)인지 반환.
+public boolean isNotifyReadData(int idx)
+
+//n번째 data에 저장된 (서비스-특성)의 value를 byte[] 형태로 반환.
+public byte[] getDataFromReadData(int idx)
+
+//serviceUuid와 characteristicUuid에 해당하는 characteristic에 byte[] 형태로 입력.
+public void writeData(String serviceUuid, String characteristicUuid, byte[] data, boolean writeBack)
+
+//characteristic이 있으면 notification에 대한 flag 변경.
+public void setNotification(String serviceUuid, String characteristicUuid, boolean flag)
+
+//주어진 serviceUuid와 characteristicUuid를 가진 characteristic을 읽고 onReadCharacteristic 호출 -> characteristic으로 readData를 만들어서 this.readDatas (배열)에 추가.
+public void readRequest(String serviceUuid, String characteristicUuid)
+

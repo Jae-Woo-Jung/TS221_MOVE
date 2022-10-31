@@ -1,0 +1,151 @@
+https://firebase.google.com/docs/firestore/manage-data/add-data#unity_1
+
+
+문서 추가 : 
+
+collectionReference( ).Document( )
+DocumentReference => db.Collection : 위치 찾기. (collection/document/collection/document....)
+
+
+DocRef.SetAsyn(문서 내용).ContinueWithOnMainThread(  => )  : 문서 생성 or 덮어쓰기. 
+DocRef.SetAsyn(문서 내용, SetOptions.MergeAll)..ContinueWithOnMainThread(  => )  : 문서 생성 or 문서 병합
+
+db.Collection(abc).AddAsyn(문서 내용).ContinueWithOnMainThread(  => )  : collection에 문서 추가. (문서 ID(문서 제목)는 랜덤 생성.)
+
+또는 DocumentReference addedDocRef = db.Collection("cities").Document(); addedDocRef.SetAsync 사용해서 문서 랜덤 생성. 
+
+(문서 내용)은 Dictionary<string, object> 꼴 혹은 커스텀 클래스 (각 field는 [FirestoreProperty] 속성 명시)
+DocRef는 문서 위치를 가리키고 있음. 
+
+
+문서 업데이트 : 
+
+DocRef.UpdateAsyn(문서 내용).ContinueWithOnMainThread(  => )  : 문서 덮어쓰기. 
+
+문서의 서버 타임스탬프 필드 업데이트
+DocRef.SetAsyn("Timestamp", FieldValue.ServerTimestamp).ContinueWithOnMainThread(  => )  : 문서 생성 or 덮어쓰기.  
+
+중첩 객체로된 필드 : 
+        Dictionary<string, object> updates = new Dictionary<string, object>
+        {
+                { "Age", 13 },
+                { "Favorites.Color", "Red" },
+        };
+
+ 와 같이 A.B.C 로 참조 가능.
+
+
+Transaction 기능 지원. 
+Batch 기능 지원. (이 둘의 차이점은, transaction은 한 개 실패 시 모두 다 실패. batch는 각각의 작업을 성공 결과 상관 없이 별개로 수행.)
+
+
+
+데이터 삭제 : 
+DocumentReference cityRef = db.Collection("cities").Document("DC");
+cityRef.DeleteAsync();
+
+문서를 삭제해도 그 문서 밑의 하위 collection은 남아 있음. (명시적 삭제 필요)
+
+Collection 삭제를 위해서는 해당 Collection의 모든 문서를 삭제. 
+
+
+
+
+문서 가져오기 : 
+docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+{
+  DocumentSnapshot snapshot = task.Result;
+  if (snapshot.Exists) { // document가 없으면 false
+	//snapshot.ID
+    Dictionary<string, object> city = snapshot.ToDictionary();
+    foreach (KeyValuePair<string, object> pair in city) {
+      Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
+    }
+  } else {
+    Debug.Log(String.Format("Document {0} does not exist!", snapshot.Id));
+  }
+});
+
+snapshot은 커스텀 class 로도 변환 가능. (예시 : City city = snapshot.ConvertTo<City>();)
+
+
+여러 문서 가져오기 : 
+Query capitalQuery = db.Collection("cities").WhereEqualTo("Capital", true);
+capitalQuery.GetSnapshotAsync().ContinueWithOnMainThread(task =>{
+  QuerySnapshot capitalQuerySnapshot = task.Result;
+  foreach (DocumentSnapshot documentSnapshot in capitalQuerySnapshot.Documents)
+	....
+}
+
+WhereEqualTo 생략 시 해당 collection의 모든 문서 가져옴. 
+
+
+
+
+
+
+Cloud Firestore로 실시간 업데이트 가져오기
+
+문서 Reference 객체의 Listen 사용
+
+DocumentReference docRef = db.Collection("cities").Document("SF");
+docRef.Listen(snapshot => {
+    Dictionary<string, object> city = snapshot.ToDictionary();
+    foreach (KeyValuePair<string, object> pair in city) {
+        Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
+    }
+});
+
+ListenerRegistration listner= query.Listen( snapshot =>  ) 으로 여러 문서 리스닝 등록 가능. 
+
+listener.Stop()으로 listener 해제. 
+
+DocumentChange change in snapshot.GetChanges() 로 변경 사항만 확인 가능.
+(change.ChangeType으로 DocumentChange.Type.(Added/Modified, Removed 존재)
+
+
+쿼리 생성 시 DocRef.(WhereEqualTo/WhereGreaterThan/WhereGreaterThanOrEqualTo/WhereArrayContains/WhereIn/WhereArrayContainsAny...) 가능
+(!=, not-in 은 지원 안 함.) 
+Query whereInQuery = citiesRef.WhereIn("country", countriesList); -> countryList(단, 길이 10 이하)
+WhereArrayContainsAny는 field값이 배열인 경우에 사용. 
+
+
+복합 쿼리 : 
+오직 동일한 필드 하나에서만 범위(<, <=, >, >=) 비교 가능. 
+최대 1개의 array-contains 또는 array-contains-any 절을 포함.
+
+쿼리된 데이터의 정렬 및 제한 :
+citiesRef.OrderBy("Name").Limit(3);  Name 필드 기준으로 앞의 3개. (Name 필드가 없는 건 제외)
+
+citiesRef.OrderByDescending("Name").Limit(3);   뒤의 3개.
+
+OderBy, Where 필터를 여러 번 중첩 가능. 
+단, 필터에 범위 비교가 포함된 경우, 바로 다음 정렬은 동일한 필드를 기준으로 해야함. 
+
+StartAt( 값), StartAfter(값), EndAt(값), endBefore(값)을 설정해서 해당 필드의 값이 특정 값 이상 또는 이하가 되는 것만 가져올 수 있음. 
+
+예시 : Query query = citiesRef.OrderBy("Population").StartAt(1000000);
+
+
+
+
+
+
+
+
+
+
+
+
+타임스탬프 다루기
+
+파이어스토어의 Timestamp 구조. 
+Timestamp { _seconds: 1618381810, _nanoseconds: 792000000 }
+
+
+Timestamp Firebase::Firestore::Timestamp::GetCurrentTimestamp()  : 현재 시스템 타임 get
+
+date.formatDate((Timestamp 객체).toDate(), 'YYYY-MM-DD HH:mm:ss.fff tt');
+//2022-10-2 15:30:50.195 AM
+
+

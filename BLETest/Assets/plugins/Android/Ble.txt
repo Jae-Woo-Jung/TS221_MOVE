@@ -1,0 +1,65 @@
+
+public class BlePermissionRequest : FineLocation에 대한 권한 요청
+
+public class BleScannedDevice : 주소(aadress), 이름(name), 신호(rssi)
+
+public class Android.Data.BleDeviceDataEvents : readCharacteristicAct, writeCharacteristicAct, notifiedCharacteristicAct, unsubscribeAct
+
+pubilc class Android.Data.BleDiscoverEvents : connectedAct, discoveredServiceAct, discoveredCharacteristicAct, disconnectAct
+
+public class Android.Data.BleCharacteristicKeyInfo : address, serviceUUID, characteristicUUID
+
+public struct BleCharacteristicData : deviceAddr, serviceUuid, characteristic, byte[] data, int length;, bool isNotify;
+
+
+
+
+
+
+public class Ble :
+	//권한(FineLocation) 요청, BleBehaviour 스크립트를 가진 오브젝트 생성
+	//화면 업데이트마다 ConnectedDevice 목록, ScanResult, DeviceFoundEvents, DeviceData, DisconnectedDevices 업데이트되게 설정, 이후 초기 Action 수행.
+	static void Initialize(Action initializedAction, Action<string> errorAction = null)
+	
+	//BleBehaviour 스크립트를 가진 오브젝트 및 JavWrapper 소멸, 종료 행위.
+	static void Finalize(Action finalizedAction = null)
+
+	//??  아무 것도 안 함....? 수정 필요.
+	static void EnableBluetooth(bool enable)
+
+	//스캔 시작. Action의 패러미터는 device.address, device.name, device.rssi, null로, 발견할 때마다 취할 행동을 등록.
+	//uuids가 있으면 그것들만 찾아서 기기 등록, uuids가 null이면 무차별적으로 스캔 및 등록.
+	static void StartScan(string[] serviceUUIDs, Action<string, string, int, byte[]> discoveredAction = null)
+
+	//스캔 종료 및 discorverAction 등록 해제.
+	static void StopScan()
+
+	//identifier(=기기의 주소)에 해당하는 주변 기기와 연결.  
+	//해당 기기와 연결 성공 시 할 행동들 등록.
+	static void ConnectToPeripheral(string identifier, 
+            	Action<string> connectedPeripheralAction = null,
+            	Action<string, string> discoveredServiceAction = null,
+            	Action<string, string, string> discoveredCharacteristicAction = null,
+            	Action<string> disconnectedPeripheralAction = null)
+
+	//identifier에 해당하는 주변 기기와 연결 해제. DisconnectedPeripheralAction은 작동 안 함.
+	static void DisconnectPeripheral(string identifier, Action<string> disconnectedPeripheralAction = null)
+ 
+	//연결된 모든 기기와 연결 해제. (스캔된 장치들에 대해 disconnect 요청)
+	public static void DisconnectAllPeripherals()
+
+	//identifier(주소) 장치의 Service의 characteristic의 값을 읽고 해당 특성을 읽을 시의 일회용 행동을 등록. Action의 변수는 (serviceUUID, characteristicUUID, data)
+	//값을 읽으면 java 소스의 BleDeviceObj 클래스 내 onCharacteristicRead가 호출돼 ReadData에 저장. 
+	//UpdateConnectedDevices 호출되면 UpdateBleDevice(device)를 통해 읽은 characteristic을 담은 characteristicData가 BleJavaWrapper 객체의 readDatas에 등록됨. 
+	//UpdataeDeviceData() 함수에서 Action(readData.serviceUuid, readData.characteristic, readData.data)가 실행됨. 
+	static void ReadCharacteristic(string identifier, string serviceUUID, string characteristicUUID, Action<string, string, byte[]> didReadChracteristicAction)
+	
+	//identifier(주소) 장치의 Service의 characteristic에 값을 쓰고 값을 적을 시의 일회용 행동을 등록, Action의 변수는 (serviceUUID, characteristicUUID).
+	//byte[] 형태의 데이터를 해당 characteristic에 입력
+	static void WriteCharacteristic(string identifier, string serviceUUID, string characteristicUUID, byte[] data, int length, bool withResponse, Action<string, string> didWriteCharacteristicAction)
+
+	//identifier(주소) 장치의 Service의 notification의 flag를 활성화하고 자동으로 전달(notification)될 시의 (지속적) 행동을 등록, Action의 변수는 (serviceUUID, characteristicUUID).
+	static void SubscribeCharacteristic(string identifier, string serviceUUID, string characteristicUUID, Action<string, string, byte[]> notifiedCharacteristicAction)
+
+	
+	static void UnSubscribeCharacteristic(string identifier, string serviceUUID, string characteristicUUID, Action<string> action)
