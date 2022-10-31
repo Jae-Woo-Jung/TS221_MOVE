@@ -1,0 +1,141 @@
+BLEControl.aar 설명
+
+
+//current activity and context In Unity,
+// AndroidJavaClass jc = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
+// AndroidJavaObject activity = jc.GetStatic<AndroidJavaObject>("currentActivity");
+// AndroidJavaObject context = activity.Call<AndroidJavaObject>("getApplicationContext");
+
+
+//BLEControl이 여러 개 생기지 않도록 instance를 만들어서 한 개까지만 등록하고 등록된 instance를 반환.
+//등록된 BLEControl이 없으면 current_activity와 context를 설정하고 새로 만들어서 등록하고 그 instance를 반환.
+public static BLEControl getInstance()
+
+//set current activity by Unity
+public void setActivity(Activity _activity, Context _context)
+
+//화면 내에 주어진 string을 띄워줌. (main thread에서만 사용해야 함.)
+public void showText(String msg){
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
+    }
+
+//Unity calls this function. Initialize and Connect.
+public String connectExternal(String address)
+
+
+//scan된 디바이스 리스트를 반환
+public List<BluetoothDevice> getScanned_devices_(){
+        return scanned_devices_;
+    }
+
+//scan된 디바이스의 개수를 반환.
+public int getScanned_devicesNum(){
+        return scanned_devices_.size();
+    }
+
+
+//idx번째 디바이스 반환
+public BluetoothDevice getScanned_device(int idx){
+        return scanned_devices_.get(idx);
+    }
+
+//rssi는 신호 세기. idx번째의 rssi 반환.
+public int getRssi(int idx){
+        return rssi_list.get(idx);
+    }
+
+
+//CharacteristicKeyInfo의 개수 반환
+public int getCharacteristicKeyInfoNum(){
+        return characteristicKeyInfoList.size();
+    }
+
+//i번째 CharacteristicKeyInfo를 반환.
+public CharacteristicKeyInfo getCharacteristicKeyInfo(int i){
+        return characteristicKeyInfoList.get(i);
+    }
+
+
+//connect된 상태인지 여부 반환
+public boolean isConnected() {
+        return connected_;
+    }
+
+//ble_manager, ble_adapter, ble_lescanner 등록. 실패 시 오류 로그. 
+public String init()
+
+//스캔 시작. 
+//scanCallBack 설명 : 
+//디바이스 A가 스캔된 경우, 이름이 없으면 패스.
+//이름이 있으면, scanned_devices_를 update함.
+public void startScan()
+
+//스캔 중지
+public void stopScan()
+
+//스캔된 디바이스 목록에서 중복 제거.
+public void tidyUpScanned_devices()
+
+//기기와 연결 끊음.
+public void disconnectGattServer()
+
+//해당 uuid를 가진 characteristic의 value를 byte 형태로 가져옴.
+public byte[] getCharacteristicValue(String serviceUuid, String characteristicUuid)
+
+//해당 uuid를 가진 characteristic의 notification property를 true로 바꿈.
+public boolean setNotification(String serviceUuid, String characteristicUuid, boolean flag)
+
+
+//characteristic에 대한 정보를 저장함. 
+private class CharacteristicKeyInfo {
+        public String address;
+        public String device_name;
+        public String service_uuid;
+        public String characteristic_uuid = null;
+        public byte[] data;
+        public int properties;
+        public boolean isNotify;
+        public BluetoothGattCharacteristic characteristic;
+        public int hasData;
+
+        public String getAddress(){
+            return this.address;
+        }
+
+        public String getName() {
+            return this.device_name;
+        }
+
+        public String getServiceUuid() {
+            return service_uuid;
+        }
+
+        public String getCharacteristicUuid() {
+            return characteristic_uuid;
+        }
+
+        public int getDataAsInt(){
+            if (this.data==null){
+                return -1;
+            }
+            Log.e("Unity : BLEControl.java", "getDataAsInt called : " + characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT32, 0).intValue());
+            return characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_SINT32, 0).intValue();
+        }
+
+        public String getDataAsString(){
+            return characteristic.getStringValue(0);
+            //return new String(this.data, StandardCharsets.UTF_8);
+        }
+
+        public int getProperties(){
+            return this.properties;
+        }
+
+        public int getNotification(){
+            return this.isNotify?1:0;
+        }
+
+        public int getHasData(){
+            return this.hasData;
+        }
+    }

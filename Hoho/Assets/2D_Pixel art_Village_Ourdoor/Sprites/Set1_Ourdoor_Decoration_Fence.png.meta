@@ -1,0 +1,735 @@
+fileFormatVersion: 2
+guid: c2e4c2426c22eb548a56e28e2c887cd1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -17402497995177085
+    second: Set1_Ourdoor_Decoration_Fence_0
+  - first:
+      213: 1272982487397156154
+    second: Set1_Ourdoor_Decoration_Fence_1
+  - first:
+      213: 2916346098578170978
+    second: Set1_Ourdoor_Decoration_Fence_2
+  - first:
+      213: 8611289435103943021
+    second: Set1_Ourdoor_Decoration_Fence_3
+  - first:
+      213: 2773612782470855294
+    second: Set1_Ourdoor_Decoration_Fence_4
+  - first:
+      213: -5304035145761905759
+    second: Set1_Ourdoor_Decoration_Fence_5
+  - first:
+      213: -3785128865928104190
+    second: Set1_Ourdoor_Decoration_Fence_6
+  - first:
+      213: -8535310859960560871
+    second: Set1_Ourdoor_Decoration_Fence_7
+  - first:
+      213: -1869238616168117031
+    second: Set1_Ourdoor_Decoration_Fence_8
+  - first:
+      213: 5049356183642638616
+    second: Set1_Ourdoor_Decoration_Fence_9
+  - first:
+      213: 6979803667377365017
+    second: Set1_Ourdoor_Decoration_Fence_10
+  - first:
+      213: 7130514733818553625
+    second: Set1_Ourdoor_Decoration_Fence_11
+  - first:
+      213: 8357160753324690474
+    second: Set1_Ourdoor_Decoration_Fence_12
+  - first:
+      213: 6282777289879073903
+    second: Set1_Ourdoor_Decoration_Fence_13
+  - first:
+      213: -7690494322145016408
+    second: Set1_Ourdoor_Decoration_Fence_14
+  - first:
+      213: -386644295733455330
+    second: Set1_Ourdoor_Decoration_Fence_15
+  - first:
+      213: 4541902726576819310
+    second: Set1_Ourdoor_Decoration_Fence_16
+  - first:
+      213: -8876083733957964115
+    second: Set1_Ourdoor_Decoration_Fence_17
+  - first:
+      213: -3699085890391339111
+    second: Set1_Ourdoor_Decoration_Fence_18
+  - first:
+      213: -1330451489622853580
+    second: Set1_Ourdoor_Decoration_Fence_19
+  - first:
+      213: 4321593186940070004
+    second: Set1_Ourdoor_Decoration_Fence_20
+  - first:
+      213: 8282917736876827459
+    second: Set1_Ourdoor_Decoration_Fence_21
+  - first:
+      213: 1478407088739349901
+    second: Set1_Ourdoor_Decoration_Fence_22
+  - first:
+      213: 4785771833769649773
+    second: Set1_Ourdoor_Decoration_Fence_23
+  - first:
+      213: 9052313135028592293
+    second: Set1_Ourdoor_Decoration_Fence_24
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3830bc0358c22cff0800000000000000
+      internalID: -17402497995177085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_1
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a35c996e3da8aa110800000000000000
+      internalID: 1272982487397156154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26429df3351f87820800000000000000
+      internalID: 2916346098578170978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_3
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d69d17ddd12718770800000000000000
+      internalID: 8611289435103943021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7a78a3612add7620800000000000000
+      internalID: 2773612782470855294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_5
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a3acac03284466b0800000000000000
+      internalID: -5304035145761905759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_6
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2073745d955887bc0800000000000000
+      internalID: -3785128865928104190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_7
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9135480befb7c8980800000000000000
+      internalID: -8535310859960560871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dc4bdad1612f06e0800000000000000
+      internalID: -1869238616168117031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_9
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 819017642bae21640800000000000000
+      internalID: 5049356183642638616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_10
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9102ff3747e3dd060800000000000000
+      internalID: 6979803667377365017
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_11
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 96
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 915a1fe0f5da4f260800000000000000
+      internalID: 7130514733818553625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2c01c05d699af370800000000000000
+      internalID: 8357160753324690474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f64322658a8e03750800000000000000
+      internalID: 6282777289879073903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_14
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a54365f820e54590800000000000000
+      internalID: -7690494322145016408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_15
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e165062cf0d52aaf0800000000000000
+      internalID: -386644295733455330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_16
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6c4dfd3774180f30800000000000000
+      internalID: 4541902726576819310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_17
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dae00d81fd0d1d480800000000000000
+      internalID: -8876083733957964115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_18
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99f80953bf43aacc0800000000000000
+      internalID: -3699085890391339111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_19
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 438f3225b69498de0800000000000000
+      internalID: -1330451489622853580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_20
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 478af435b1269fb30800000000000000
+      internalID: 4321593186940070004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_21
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34363520cc5d2f270800000000000000
+      internalID: 8282917736876827459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_22
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d857abd0a6b548410800000000000000
+      internalID: 1478407088739349901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_23
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d66e8ef602a7a6240800000000000000
+      internalID: 4785771833769649773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Set1_Ourdoor_Decoration_Fence_24
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ae5bf8c5d640ad70800000000000000
+      internalID: 9052313135028592293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      Set1_Ourdoor_Decoration_Fence_20: 4321593186940070004
+      Set1_Ourdoor_Decoration_Fence_4: 2773612782470855294
+      Set1_Ourdoor_Decoration_Fence_18: -3699085890391339111
+      Set1_Ourdoor_Decoration_Fence_23: 4785771833769649773
+      Set1_Ourdoor_Decoration_Fence_22: 1478407088739349901
+      Set1_Ourdoor_Decoration_Fence_5: -5304035145761905759
+      Set1_Ourdoor_Decoration_Fence_13: 6282777289879073903
+      Set1_Ourdoor_Decoration_Fence_1: 1272982487397156154
+      Set1_Ourdoor_Decoration_Fence_19: -1330451489622853580
+      Set1_Ourdoor_Decoration_Fence_9: 5049356183642638616
+      Set1_Ourdoor_Decoration_Fence_2: 2916346098578170978
+      Set1_Ourdoor_Decoration_Fence_10: 6979803667377365017
+      Set1_Ourdoor_Decoration_Fence_14: -7690494322145016408
+      Set1_Ourdoor_Decoration_Fence_21: 8282917736876827459
+      Set1_Ourdoor_Decoration_Fence_6: -3785128865928104190
+      Set1_Ourdoor_Decoration_Fence_24: 9052313135028592293
+      Set1_Ourdoor_Decoration_Fence_15: -386644295733455330
+      Set1_Ourdoor_Decoration_Fence_17: -8876083733957964115
+      Set1_Ourdoor_Decoration_Fence_16: 4541902726576819310
+      Set1_Ourdoor_Decoration_Fence_3: 8611289435103943021
+      Set1_Ourdoor_Decoration_Fence_8: -1869238616168117031
+      Set1_Ourdoor_Decoration_Fence_0: -17402497995177085
+      Set1_Ourdoor_Decoration_Fence_7: -8535310859960560871
+      Set1_Ourdoor_Decoration_Fence_11: 7130514733818553625
+      Set1_Ourdoor_Decoration_Fence_12: 8357160753324690474
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

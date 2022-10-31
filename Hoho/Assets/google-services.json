@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "264789349242",
+    "project_id": "ts221-move",
+    "storage_bucket": "ts221-move.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:264789349242:android:4716f1f134cd991a2a3cc3",
+        "android_client_info": {
+          "package_name": "com.TS221_MOVE.Hoho"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "264789349242-5482e0pdnibrub5aoat760ic18blh6g8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_iC3Vr2_7tVX6jr0F6r9BLijkwfJ-QXw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "264789349242-5482e0pdnibrub5aoat760ic18blh6g8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
