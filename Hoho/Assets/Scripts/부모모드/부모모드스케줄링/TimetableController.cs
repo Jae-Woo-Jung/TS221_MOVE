@@ -31,19 +31,72 @@ public class TimetableController : MonoBehaviour
     {
         foreach(var dayToggle in daysList)
         {
-            GameObject day=daysTimeList.Find(x => x.name == dayToggle.name);
-            
+            GameObject dayColumn=daysTimeList.Find(x => x.name == dayToggle.name);
+            Transform table = dayColumn.transform.Find("일일시간표");
 
+            int siblingIndex = 0;
+            foreach(var currentTime in table.GetComponentsInChildren<Transform>())
+            {
+                if (currentTime.tag != "TimeOrAim")
+                {
+                    continue;
+                }
+                Debug.Log(currentTime.parent.name+", "+currentTime.name);
+
+                //횟수로 설정돼 있던 경우.
+                if (currentTime.Find("시간")== null)
+                {
+                    Destroy(currentTime.gameObject);
+                    continue;
+                }
+
+                string timeBefore = currentTime.Find("시간").GetComponent<TextMeshProUGUI>().text;
+                int hBefore; 
+                Int32.TryParse(timeBefore.Substring(0, 2), out hBefore);
+                int minBefore;
+                Int32.TryParse(timeBefore.Substring(3, 2), out minBefore);
+                
+                int hAfter;
+                Int32.TryParse(hour, out hAfter);
+                int minAfter;
+                Int32.TryParse(minute, out minAfter);
+
+                if (hBefore < hAfter || (hBefore==hAfter && minBefore<minAfter))
+                {
+                    siblingIndex++;
+                }
+            }
+
+            GameObject newTime = Instantiate(timePrefab, table);
+            newTime.transform.Find("제목").GetComponent<TextMeshProUGUI>().text = title;
+            newTime.transform.Find("시간").GetComponent<TextMeshProUGUI>().text = hour + ":" + minute;
+            var sp = newTime.transform.Find("모드아이콘").GetComponent<Image>().sprite;
+            sp=mode.transform.Find("Background").GetComponent<Image>().sprite;
+
+            Debug.Log(siblingIndex);
+            newTime.transform.SetSiblingIndex(siblingIndex);
         }
     }
 
-    public void addAim(List<Toggle> daysList, string title, string hour, string minute, Toggle mode)
+    public void addAim(List<Toggle> daysList, string aim)
     {
         foreach (var dayToggle in daysList)
         {
-            GameObject day = daysTimeList.Find(x => x.name == dayToggle.name);
+            GameObject dayColumn = daysTimeList.Find(x => x.name == dayToggle.name);
+            Transform table = dayColumn.transform.Find("일일시간표");
 
+            foreach (var currentTime in table.GetComponentsInChildren<Transform>())
+            {
+                if (currentTime.tag!="TimeOrAim")
+                {
+                    continue;
+                }
 
+                Destroy(currentTime);
+            }
+
+            GameObject newAim = Instantiate(aimPrefab, table);
+            newAim.transform.Find("제목").GetComponent<TextMeshProUGUI>().text = dayToggle.name + " 하루\n자유롭게\n"+aim+"번 이상";
         }
     }
 
@@ -84,9 +137,6 @@ public class TimetableController : MonoBehaviour
     }
 
     //transform.SetSiblingIndex 를 이용해서 순서 변경 가능.
-
-
-
 
 
 
