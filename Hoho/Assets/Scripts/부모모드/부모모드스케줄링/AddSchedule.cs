@@ -138,7 +138,7 @@ public class AddSchedule : MonoBehaviour
 
     void applyWithAim()
     {
-        List<Toggle> trueDayList = daySelectList.FindAll(x => x.isOn);        
+        List<Toggle> trueDayList = daySelectAimList.FindAll(x => x.isOn);        
 
         //Check the legibility of inputs.
         if (trueDayList.Count == 0)

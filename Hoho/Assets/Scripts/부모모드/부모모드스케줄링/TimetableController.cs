@@ -18,6 +18,8 @@ public class TimetableController : MonoBehaviour
     public GameObject timePrefab;
     public GameObject aimPrefab;
 
+    public GameObject deletePannel;
+
     /// <summary>
     /// 주어진 요일의 주어진 시간에 시간표를 설정하고 데이터 보내기. 
     /// </summary>
@@ -114,7 +116,7 @@ public class TimetableController : MonoBehaviour
         //오늘 날짜에 해당하는 요일 강조 표시. 
         foreach(var day in daysTimeList)
         {
-           Image dayImage=day.transform.Find("Image").GetComponent<Image>();
+           Image dayImage=day.GetComponent<Image>();
            
             if (day.name != dayOfToday())
             {
