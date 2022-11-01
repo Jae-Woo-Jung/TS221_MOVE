@@ -4228,7 +4228,7 @@ GameObject:
   - component: {fileID: 506610899}
   - component: {fileID: 506610898}
   m_Layer: 5
-  m_Name: "\uC124\uC815"
+  m_Name: "\uD648\uD654\uBA74"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4298,7 +4298,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 506610899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1469482783}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\uBD80\uBAA8\uBAA8\uB4DC\uD648\uD654\uBA74"
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &506610899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7901,7 +7913,7 @@ GameObject:
   - component: {fileID: 1001353141}
   - component: {fileID: 1001353140}
   m_Layer: 5
-  m_Name: "\uCE6D\uCC2C\uBA54\uC2DC\uC9C0 (1)"
+  m_Name: "\uC124\uC815\uD654\uBA74"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13214,6 +13226,10 @@ MonoBehaviour:
   - {fileID: 1292949355}
   timePrefab: {fileID: 1459804421939584435, guid: 3f50f038aead7744e91abce223ebba2f, type: 3}
   aimPrefab: {fileID: 8029214101500931146, guid: 11cb3e4dc447e564cb9e26f981bf51c4, type: 3}
+  modeImages:
+  - {fileID: 21300000, guid: 14f09f5864082bc499cee7bf1818e072, type: 3}
+  - {fileID: 21300000, guid: 47087f5a87d9f254db9b5cf664040a14, type: 3}
+  - {fileID: 21300000, guid: c369182d200d5ab43b766ae3171ec8d2, type: 3}
   deletePannel: {fileID: 312331915}
 --- !u!1 &1469849801
 GameObject:
@@ -14779,7 +14795,7 @@ GameObject:
   - component: {fileID: 1595054899}
   - component: {fileID: 1595054898}
   m_Layer: 5
-  m_Name: "\uD648\uD654\uBA74"
+  m_Name: "\uCE6D\uCC2C\uBA54\uC2DC\uC9C0"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14849,19 +14865,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1595054899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1469482783}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: "\uBD80\uBAA8\uBAA8\uB4DC\uD648\uD654\uBA74"
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1595054899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16929,7 +16933,7 @@ GameObject:
   - component: {fileID: 1795572457}
   - component: {fileID: 1795572456}
   m_Layer: 5
-  m_Name: "\uCE6D\uCC2C\uBA54\uC2DC\uC9C0"
+  m_Name: "\uC2A4\uCF00\uC904\uB9C1\uD654\uBA74"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16999,19 +17003,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1795572457}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1469482782}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1795572457
 MonoBehaviour:
   m_ObjectHideFlags: 0

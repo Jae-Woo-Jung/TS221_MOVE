@@ -55,7 +55,8 @@ public class AddSchedule : MonoBehaviour
 
     void hourChecker(string hr)
     {
-        int h = Int32.Parse(hr);
+        int h=0;
+        Int32.TryParse(hr, out h);
         h = Mathf.Clamp(h, 0, 23);
 
         hourInput.text = (h < 10 ? "0" : "") + h.ToString();
@@ -63,7 +64,9 @@ public class AddSchedule : MonoBehaviour
 
     void minuteChecker(string min)
     {
-        int m = Int32.Parse(min);
+
+        int m=0;
+        Int32.TryParse(min, out m);
         m = Mathf.Clamp(m, 0, 59);
 
         minuteInput.text=   (m<10? "0":"")+m.ToString();

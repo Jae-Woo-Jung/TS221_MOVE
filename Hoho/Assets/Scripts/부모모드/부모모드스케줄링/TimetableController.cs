@@ -18,6 +18,8 @@ public class TimetableController : MonoBehaviour
     public GameObject timePrefab;
     public GameObject aimPrefab;
 
+    public List<Sprite> modeImages = new List<Sprite>();
+
     public GameObject deletePannel;
 
     /// <summary>
@@ -72,8 +74,9 @@ public class TimetableController : MonoBehaviour
             GameObject newTime = Instantiate(timePrefab, table);
             newTime.transform.Find("제목").GetComponent<TextMeshProUGUI>().text = title;
             newTime.transform.Find("시간").GetComponent<TextMeshProUGUI>().text = hour + ":" + minute;
-            var sp = newTime.transform.Find("모드아이콘").GetComponent<Image>().sprite;
-            sp=mode.transform.Find("Background").GetComponent<Image>().sprite;
+            int imageIdx = mode.gameObject.name.Contains("표준") ? 0 : mode.gameObject.name.Contains("집중") ? 1 : 2;
+            
+            newTime.GetComponent<Image>().sprite=modeImages[imageIdx];
 
             Debug.Log(siblingIndex);
             newTime.transform.SetSiblingIndex(siblingIndex);
@@ -120,7 +123,7 @@ public class TimetableController : MonoBehaviour
            
             if (day.name != dayOfToday())
             {
-                dayImage.color = Color.white;
+                dayImage.color = new Color(1f, 1f, 1f, 0f);
             }
             else
             {
