@@ -31,6 +31,8 @@ public class PointListController : MonoBehaviour
 
     public ProgressController progressController;
 
+    public CardController cardController;
+
     public static List<pointContent> pointContentList = new List<pointContent> { new pointContent(), new pointContent(), new pointContent(), new pointContent() };
 
     //목록1, 목록2, 목록3, 목록4
@@ -85,11 +87,11 @@ public class PointListController : MonoBehaviour
 
     public void GetStackP()
     {
-        Debug.Log("GetStakP : "+ (ChildDataController.CPresult.Count));
+        //Debug.Log("GetStakP : "+ (ChildDataController.CPresult.Count));
         
         foreach(KeyValuePair<string, int> pair in ChildDataController.CPresult)
         {
-            Debug.Log( "pair : "+(pair.Key, pair.Value));
+            //Debug.Log( "pair : "+(pair.Key, pair.Value));
         }
         
         for (int i = 1; i < ChildDataController.CPresult.Count+1; i++)
@@ -97,15 +99,42 @@ public class PointListController : MonoBehaviour
             try
             {
 
-                Debug.Log("GetStackP iteration");
+                //Debug.Log("GetStackP iteration");
                 string msg = ChildDataController.CPresult["포인트_" + i].ToString();
                 //guideTexts[i - 1].text = msg;
-                Debug.Log(msg);
+                //Debug.Log(msg);
                 CPpointStack.Push(msg);
             }
             catch (Exception e)
             {
-                Debug.Log(e.Message);
+                //Debug.Log(e.Message);
+            }
+        }
+    }
+
+    public void GetStackP_str()
+    {
+        //Debug.Log("GetStakP : "+ (ChildDataController.CPresult.Count));
+
+        foreach (KeyValuePair<string, string> pair in ChildDataController.CPresult_str)
+        {
+            //Debug.Log( "pair : "+(pair.Key, pair.Value));
+        }
+
+        for (int i = 1; i < ChildDataController.CPresult_str.Count + 1; i++)
+        {
+            try
+            {
+
+                //Debug.Log("GetStackP iteration");
+                string msg = ChildDataController.CPresult_str["내용_" + i].ToString();
+                //guideTexts[i - 1].text = msg;
+                //Debug.Log(msg);
+                CPpointStack_str.Push(msg);
+            }
+            catch (Exception e)
+            {
+                //Debug.Log(e.Message);
             }
         }
     }
@@ -148,12 +177,20 @@ public class PointListController : MonoBehaviour
 
         Debug.Log("start of point list controller");
         ChildDataController.receiveCompPoint(GetStackP);
+        ChildDataController.receiveCompPoint_str(GetStackP_str);
     }
 
     // Update is called once per frame
     void Update()
     {
-         
+        if (CPpointStack.Count == 0)
+        {
+            cardController.cpmsg.GetComponent<Button>().interactable = false;
+        }
+        else
+        {
+            cardController.cpmsg.GetComponent<Button>().interactable = true;
+        }
     }
 
 

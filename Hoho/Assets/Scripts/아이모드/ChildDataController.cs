@@ -65,9 +65,9 @@ public class ChildDataController : MonoBehaviour
     public delegate void updateDelegate();
 
     static public Dictionary<string, int> RLresult = new Dictionary<string, int>();
-    static public Dictionary<string, int> RLresult_str = new Dictionary<string, int>();
+    static public Dictionary<string, string> RLresult_str = new Dictionary<string, string>();
     static public Dictionary<string, int> CPresult = new Dictionary<string, int>();
-    static public Dictionary<string, int> CPresult_str = new Dictionary<string, int>();
+    static public Dictionary<string, string> CPresult_str = new Dictionary<string, string>();
 
     static FirebaseFirestore db;
 
@@ -432,15 +432,20 @@ public class ChildDataController : MonoBehaviour
         Query RLquery = db.Collection("ParentUsers").Document(parentID).Collection("Point").WhereEqualTo("type", "list");
         RLquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
+            //Debug.Log(" receiveRewardList_str_1");
             QuerySnapshot RLQuerySnapshot = task.Result;
             foreach (DocumentSnapshot doc in RLQuerySnapshot.Documents)
             {
+
+                //Debug.Log(" receiveRewardList_str_2");
                 Dictionary<string, object> RewardLists = doc.ToDictionary();
                 foreach (KeyValuePair<string, object> pair in RewardLists)
-                {              
+                {
+                    //Debug.Log(" receiveRewardList_str_3");
                 }
                 int level = System.Int32.Parse(RewardLists["레벨"].ToString());
-                int str = System.Int32.Parse(RewardLists["제목"].ToString());
+                string str = RewardLists["제목"].ToString();
+                //Debug.Log("level : " + level + ", str : " + str);
                 ChildDataController.RLresult_str.Add("제목_" + level.ToString(), str);
 
             }
@@ -461,7 +466,7 @@ public class ChildDataController : MonoBehaviour
         {
             //Debug.Log("receiving CompPoint");
             QuerySnapshot CPQuerySnapshot = task.Result;
-            Debug.Log("receiving CompPoint : " + CPQuerySnapshot.Count);
+            //Debug.Log("receiving CompPoint : " + CPQuerySnapshot.Count);
             int idx = 1;
             foreach (DocumentSnapshot doc in CPQuerySnapshot.Documents)
             {
@@ -470,11 +475,11 @@ public class ChildDataController : MonoBehaviour
                 foreach (KeyValuePair<string, object> pair in CompPoint)
                 {
                     //Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
-                    Debug.Log("디버깅 : " + CompPoint[pair.Key]);
+                    //Debug.Log("디버깅 : " + CompPoint[pair.Key]);
                 }
 
                 int point = System.Int32.Parse(CompPoint["포인트"].ToString());
-                Debug.Log("포인트 파싱");
+                //Debug.Log("포인트 파싱");
                 //Debug.Log("level : "+level + ", point : " + point);
 
                 ChildDataController.CPresult.Add("포인트_" + idx, point);
@@ -496,9 +501,9 @@ public class ChildDataController : MonoBehaviour
         Query CPquery = db.Collection("ParentUsers").Document(parentID).Collection("Point").WhereEqualTo("type", "card");
         CPquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
-            //Debug.Log("receiving CompPoint");
+            //Debug.Log("receiveCompPoint_str_1");
             QuerySnapshot CPQuerySnapshot = task.Result;
-            Debug.Log("receiving CompPoint : " + CPQuerySnapshot.Count);
+            //Debug.Log("receiveCompPoint_str_2");
             int idx = 1;
             foreach (DocumentSnapshot doc in CPQuerySnapshot.Documents)
             {
@@ -506,13 +511,13 @@ public class ChildDataController : MonoBehaviour
 
                 foreach (KeyValuePair<string, object> pair in CompPoint)
                 {
-                    //Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
-                    Debug.Log("디버깅 : " + CompPoint[pair.Key]);
+                    //Debug.Log("receiveCompPoint_str_3");
+                    //Debug.Log("디버깅 : " + CompPoint[pair.Key]);
                 }
 
-                int str = System.Int32.Parse(CompPoint["내용"].ToString());
-                Debug.Log("포인트 파싱");
-                //Debug.Log("level : "+level + ", point : " + point);
+                string str = CompPoint["내용"].ToString();
+                //Debug.Log("receiveCompPoint_str_4");
+                //Debug.Log("level : "+level + ", 내용 : " + str);
 
                 ChildDataController.CPresult_str.Add("내용_" + idx, str);
                 idx++;

@@ -28,13 +28,13 @@ public class CardController : MonoBehaviour
     public void updateCard()
     {
         int CPPoint = System.Int32.Parse(pointListController.CPpointStack.Pop());
-        int CPPoint_str = System.Int32.Parse(pointListController.CPpointStack_str.Pop());
-        setCardInfo(CPPoint_str.ToString(), CPPoint_str.ToString(), CPPoint);
-        Debug.Log("getPoint : " + CPPoint);
-        if (pointListController.CPpointStack.Count == 0)
-        {
-            cpmsg.GetComponent<Button>().interactable = false;
-        }
+        string CPPoint_str = pointListController.CPpointStack_str.Pop();
+        setCardInfo("ºÎ¸ð´ÔÀÇ ÄªÂùÄ«µå!", CPPoint_str, CPPoint);
+        //Debug.Log("getPoint : " + CPPoint);
+        //if (pointListController.CPpointStack.Count == 0)
+        //{
+        //    cpmsg.GetComponent<Button>().interactable = false;
+        //}
     }
 
     // Start is called before the first frame update

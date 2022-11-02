@@ -17,7 +17,7 @@ public class RewardListController : MonoBehaviour
         {
             string msg = ChildDataController.RLresult["器牢飘_"+i].ToString() + "P";
             guideTexts[i-1].text = msg;
-            Debug.Log(msg);
+            //Debug.Log("dldidldi : " + msg);
             
 
         }
@@ -27,9 +27,9 @@ public class RewardListController : MonoBehaviour
     {
         for (int i = 1; i < guideTexts_str.Count + 1; i++)
         {
-            string msg = ChildDataController.RLresult_str["力格_" + i].ToString() + "P";
+            string msg = ChildDataController.RLresult_str["力格_" + i].ToString();
             guideTexts_str[i - 1].text = msg;
-            Debug.Log(msg);
+            //Debug.Log("dldidldi_str : " + msg);
 
 
         }
