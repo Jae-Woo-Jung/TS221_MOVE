@@ -41,9 +41,11 @@ public class PointListController : MonoBehaviour
     /// CP = Compensation Point, CPpointStack은 칭찬카드의 포인트를 쌓아두는 스택
     /// </summary>
     public Stack<String> CPpointStack = new Stack<String>();
+    public Stack<String> CPpointStack_str = new Stack<String>();
 
 
     public static List<TextMeshProUGUI> guideTexts = new List<TextMeshProUGUI>();
+    public static List<TextMeshProUGUI> guideTexts_str = new List<TextMeshProUGUI>();
 
     public void updateList(Sprite icon, string content, int point)
     {

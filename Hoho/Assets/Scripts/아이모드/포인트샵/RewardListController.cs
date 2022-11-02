@@ -9,6 +9,7 @@ public class RewardListController : MonoBehaviour
 {
 
     public List<TextMeshProUGUI> guideTexts = new List<TextMeshProUGUI>();
+    public List<TextMeshProUGUI> guideTexts_str = new List<TextMeshProUGUI>();
 
     private void setGuideText()
     {
@@ -22,10 +23,23 @@ public class RewardListController : MonoBehaviour
         }
     }
 
+    private void setGuideText_str()
+    {
+        for (int i = 1; i < guideTexts_str.Count + 1; i++)
+        {
+            string msg = ChildDataController.RLresult_str["Á¦¸ñ_" + i].ToString() + "P";
+            guideTexts_str[i - 1].text = msg;
+            Debug.Log(msg);
+
+
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         ChildDataController.receiveRewardList(setGuideText);
+        ChildDataController.receiveRewardList_str(setGuideText_str);
     }
 
     // Update is called once per frame

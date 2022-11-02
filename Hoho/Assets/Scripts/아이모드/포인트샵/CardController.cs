@@ -28,7 +28,8 @@ public class CardController : MonoBehaviour
     public void updateCard()
     {
         int CPPoint = System.Int32.Parse(pointListController.CPpointStack.Pop());
-        setCardInfo("제목", "칭찬포인트", CPPoint);
+        int CPPoint_str = System.Int32.Parse(pointListController.CPpointStack_str.Pop());
+        setCardInfo(CPPoint_str.ToString(), CPPoint_str.ToString(), CPPoint);
         Debug.Log("getPoint : " + CPPoint);
         if (pointListController.CPpointStack.Count == 0)
         {

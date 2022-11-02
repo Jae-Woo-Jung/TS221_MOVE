@@ -65,7 +65,9 @@ public class ChildDataController : MonoBehaviour
     public delegate void updateDelegate();
 
     static public Dictionary<string, int> RLresult = new Dictionary<string, int>();
+    static public Dictionary<string, int> RLresult_str = new Dictionary<string, int>();
     static public Dictionary<string, int> CPresult = new Dictionary<string, int>();
+    static public Dictionary<string, int> CPresult_str = new Dictionary<string, int>();
 
     static FirebaseFirestore db;
 
@@ -421,6 +423,33 @@ public class ChildDataController : MonoBehaviour
 
     }
 
+    static public void receiveRewardList_str(updateDelegate updateReward)
+    {
+        if (db == null)
+        {
+            db = FirebaseFirestore.DefaultInstance;
+        }
+        Query RLquery = db.Collection("ParentUsers").Document(parentID).Collection("Point").WhereEqualTo("type", "list");
+        RLquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            QuerySnapshot RLQuerySnapshot = task.Result;
+            foreach (DocumentSnapshot doc in RLQuerySnapshot.Documents)
+            {
+                Dictionary<string, object> RewardLists = doc.ToDictionary();
+                foreach (KeyValuePair<string, object> pair in RewardLists)
+                {              
+                }
+                int level = System.Int32.Parse(RewardLists["레벨"].ToString());
+                int str = System.Int32.Parse(RewardLists["제목"].ToString());
+                ChildDataController.RLresult_str.Add("제목_" + level.ToString(), str);
+
+            }
+            updateReward();
+        });
+
+
+    }
+
     static public void receiveCompPoint(updateDelegate updateReward)
     {
         if (db == null)
@@ -449,6 +478,43 @@ public class ChildDataController : MonoBehaviour
                 //Debug.Log("level : "+level + ", point : " + point);
 
                 ChildDataController.CPresult.Add("포인트_" + idx, point);
+                idx++;
+
+            }
+            updateReward();
+        });
+
+
+    }
+
+    static public void receiveCompPoint_str(updateDelegate updateReward)
+    {
+        if (db == null)
+        {
+            db = FirebaseFirestore.DefaultInstance;
+        }
+        Query CPquery = db.Collection("ParentUsers").Document(parentID).Collection("Point").WhereEqualTo("type", "card");
+        CPquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            //Debug.Log("receiving CompPoint");
+            QuerySnapshot CPQuerySnapshot = task.Result;
+            Debug.Log("receiving CompPoint : " + CPQuerySnapshot.Count);
+            int idx = 1;
+            foreach (DocumentSnapshot doc in CPQuerySnapshot.Documents)
+            {
+                Dictionary<string, object> CompPoint = doc.ToDictionary();
+
+                foreach (KeyValuePair<string, object> pair in CompPoint)
+                {
+                    //Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
+                    Debug.Log("디버깅 : " + CompPoint[pair.Key]);
+                }
+
+                int str = System.Int32.Parse(CompPoint["내용"].ToString());
+                Debug.Log("포인트 파싱");
+                //Debug.Log("level : "+level + ", point : " + point);
+
+                ChildDataController.CPresult_str.Add("내용_" + idx, str);
                 idx++;
 
             }
