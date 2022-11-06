@@ -6,6 +6,7 @@ using System;
 using TMPro;
 using Firebase.Firestore;
 using Firebase.Extensions;
+using System.Linq;
 
 
 /// <summary>
@@ -380,7 +381,86 @@ public class ChildDataController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// 호흡 기록을 가져와서 생성함.
+    /// </summary>
+    /// <param name="updateRecord"></param>
+    public static void ReceiveBreath(updateDelegate updateRecord)
+    {
+        if (db == null)
+        {
+            db = FirebaseFirestore.DefaultInstance;
+        }
 
+        Debug.Log("Receive point for GameResult");
+
+        string today = DateTime.Now.ToString("d");
+        Debug.Log(today);
+        Query todayQuery = db.Collection("ChildrenUsers").Document(childID).Collection("Point").Document("FishPoint").Collection("Results").WhereEqualTo("시작날짜", today);
+
+        todayQuery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            QuerySnapshot todayQuerySnapshot = task.Result;
+
+            foreach (DocumentSnapshot doc in todayQuerySnapshot.Documents)
+            {
+
+                fishGameResult = doc.ConvertTo<GameResult>();
+
+                Debug.Log("완성률 : " + fishGameResult.완성률);
+
+                Dictionary<int, float> data1 = new Dictionary<int, float>();
+                Dictionary<int, float> data2 = new Dictionary<int, float>();
+                Debug.Log("레벨 : " + fishGameResult.레벨);
+                try
+                {
+                    Debug.Log("시작 시간 : " + fishGameResult.호흡기록.First().Key);
+                    DateTime startTime = DateTime.Parse(fishGameResult.예상호흡기록.Keys.Min());
+
+
+                    List<string> keys = fishGameResult.호흡기록.Keys.ToList();
+                    keys.Sort();
+
+                    Debug.Log("시작 시간 파싱 : " + startTime);
+                    foreach (string key in keys)
+                    {
+                        DateTime time = DateTime.Parse(key);
+
+                        int sec = (int)Math.Round((time - startTime).TotalSeconds);
+                        data1.Add(sec, fishGameResult.호흡기록[key]);
+                        Debug.Log("호흡기록 : " + sec);
+                    }
+
+                    Debug.Log("호흡기록 done.");
+
+
+                    keys = fishGameResult.예상호흡기록.Keys.ToList();
+                    keys.Sort();
+
+                    foreach (string key in keys)
+                    {
+                        DateTime time = DateTime.Parse(key);
+
+                        int sec = (int)Math.Round((time - startTime).TotalSeconds);
+                        Debug.Log("시작 시간 : " + startTime + ", 기록 시간 : " + time + ", 예상 호흡 기록 경과 시간 (초):" + sec);
+                        data2.Add(sec, fishGameResult.예상호흡기록[key]);
+                    }
+
+                    Debug.Log("예상 호흡기록 done.");
+
+                    updateRecord();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log(e.Message);
+                }
+            }
+            //Debug.Log(documentName+"\n시작날짜 : " + fishGameResult.시작날짜 + "\n" + "시작시간 : " + fishGameResult.시작시간 + "\n" + "레벨 : "+ fishGameResult.레벨 + "\n별개수 : " + fishGameResult.별개수 + "\n플레이시간 : " + fishGameResult.플레이시간+"\n호흡기록 : "+fishGameResult.호흡기록.Keys.Count);
+        });
+
+
+
+    }
     static public void receiveTimeCustom()
     {
         var result = new Dictionary<string, float>();
