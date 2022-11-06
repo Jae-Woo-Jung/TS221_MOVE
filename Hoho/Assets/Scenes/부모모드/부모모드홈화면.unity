@@ -3392,7 +3392,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1223424506}
         m_TargetAssemblyTypeName: BreatheRecordController, Assembly-CSharp
-        m_MethodName: makeBar
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3411,7 +3411,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: "\uBD80\uBAA8\uBAA8\uB4DC\uCEE4\uC2A4\uD130\uB9C8\uC774\uC9D5"
+          m_StringArgument: "\uBD80\uBAA8\uBAA8\uB4DC\uC2A4\uCF00\uC904\uB9C1"
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &635899259

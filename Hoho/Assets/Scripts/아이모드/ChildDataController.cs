@@ -61,6 +61,41 @@ public class ChildDataController : MonoBehaviour
         public string 보상제목 { get; set; } = "놀이공원";
     }
 
+    [FirestoreData]
+    public class ScheduleInformation
+    {
+
+        [FirestoreProperty]
+        public string 요일 { get; set; } = "월요일";
+
+        [FirestoreProperty]
+        public string 제목 { get; set; } = "";
+
+        [FirestoreProperty]
+        public int 시 { get; set; } = 12;
+
+        [FirestoreProperty]
+        public int 분 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public string 모드 { get; set; } = "표준모드";
+
+        [FirestoreProperty]
+        public int 들숨시간 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public int 들숨후참는시간 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public int 날숨시간 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public int 날숨후참는시간 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public int 반복횟수 { get; set; } = 0;
+    }
+
 
     public delegate void updateDelegate();
 
@@ -115,7 +150,7 @@ public class ChildDataController : MonoBehaviour
     static string parentID = "001";
 
     /// <summary>
-    ///        시작날짜 = "", 시작시간 = "", 레벨 = 0, 별개수 = starNum, 플레이시간 = 0, 호흡기록, 예상호흡기록
+    /// 시작날짜 = "", 시작시간 = "", 레벨 = 0, 별개수 = starNum, 플레이시간 = 0, 호흡기록, 예상호흡기록
     /// </summary>
     public static GameResult fishGameResult = new GameResult();
 
@@ -129,6 +164,9 @@ public class ChildDataController : MonoBehaviour
     /// correctHookPos는 여기에 기록해서 SendGameResult로 보낼 것. timestamp와 0~1 사이의 넣으면 됨. 
     /// </summary>
     public static Dictionary<string, float> ExpectedBreatheResult = new Dictionary<string, float> { { "0", 0 }, };
+
+
+    public static List<ScheduleInformation> scheduleInformationList = new List<ScheduleInformation>();
 
     /// <summary>
     /// canSend(bool), point (int), level(int), rewardTitle(string), goalPoint(int), progressRatio(float), childID(string)를 담은 Dictionary 반환.
@@ -531,6 +569,35 @@ public class ChildDataController : MonoBehaviour
 
 
 
+    /// <summary>
+    /// scheduleInformationList를 비우고 ParentUsers/{parentId}/Schdule에 견본을 제외한 모든 문서를 가져와서 scheduleInformationList에 넣음. 
+    /// </summary>
+    /// <param name="updatePoint"></param>
+    public static void ReceiveScheduleInfo(updateDelegate updateSchedule)
+    {
+        scheduleInformationList.Clear();
+        if (db == null)
+        {
+            db = FirebaseFirestore.DefaultInstance;
+        }
+
+        string today=dayOfToday();
+
+        Query scheduleQuery = db.Collection("ParentUsers").Document(parentID).Collection("Schedule").WhereEqualTo("요일", today+"요일");
+
+        scheduleQuery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            foreach (var docSnapshot in task.Result.Documents)
+            {
+                scheduleInformationList.Add(docSnapshot.ConvertTo<ScheduleInformation>());
+            }
+            updateSchedule();
+        });
+    }
+
+
+
+
     public void UpdateData()
     {
         DocumentReference docRef = db.Collection("users").Document("aturing");
@@ -579,5 +646,29 @@ public class ChildDataController : MonoBehaviour
             db = FirebaseFirestore.DefaultInstance;
         }
         DontDestroyOnLoad(gameObject);  
+    }
+
+
+    static string dayOfToday()
+    {
+        DateTime nowDt = DateTime.Now;
+
+        string day = "";
+        if (nowDt.DayOfWeek == DayOfWeek.Monday)
+            day = "월";
+        else if (nowDt.DayOfWeek == DayOfWeek.Tuesday)
+            day = ("화");
+        else if (nowDt.DayOfWeek == DayOfWeek.Wednesday)
+            day = ("수");
+        else if (nowDt.DayOfWeek == DayOfWeek.Thursday)
+            day = ("목");
+        else if (nowDt.DayOfWeek == DayOfWeek.Friday)
+            day = ("금");
+        else if (nowDt.DayOfWeek == DayOfWeek.Saturday)
+            day = ("토");
+        else if (nowDt.DayOfWeek == DayOfWeek.Sunday)
+            day = ("일");
+
+        return day;
     }
 }

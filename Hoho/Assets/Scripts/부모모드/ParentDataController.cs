@@ -61,6 +61,42 @@ public class ParentDataController : MonoBehaviour
         public string 보상제목 { get; set; } = "놀이공원";
     }
 
+
+    [FirestoreData]
+    public class ScheduleInformation
+    {
+
+        [FirestoreProperty]
+        public string 요일 { get; set; } = "월요일";
+
+        [FirestoreProperty]
+        public string 제목 { get; set; } = "";
+
+        [FirestoreProperty]
+        public int 시 { get; set; } = 12;
+
+        [FirestoreProperty]
+        public int 분 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public string 모드 { get; set; } = "표준모드";
+
+        [FirestoreProperty]
+        public int 들숨시간 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public int 들숨후참는시간 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public int 날숨시간 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public int 날숨후참는시간 { get; set; } = 0;
+
+        [FirestoreProperty]
+        public int 반복횟수 { get; set; } = 0;
+    }
+
     static FirebaseFirestore db;
 
     /// <summary>
@@ -88,6 +124,8 @@ public class ParentDataController : MonoBehaviour
     /// 시작날짜 = "", 시작시간 = "", 레벨 = 0, 별개수 = starNum, 플레이시간 = 0, 호흡기록, 예상호흡기록
     /// </summary>
     public static GameResult fishGameResult = new GameResult();
+
+    public static List<ScheduleInformation> scheduleInformationList = new List<ScheduleInformation>();
 
 
     /// <summary>
@@ -165,6 +203,58 @@ public class ParentDataController : MonoBehaviour
     public static void setChildID(string id)
     {
         childID = id;
+    }
+
+    /// <summary>
+    /// ParentUsers/{parentId}/Schdule에 견본을 제외한 모든 문서를 삭제 후 scheduleInformationList의 모든 예약 내용을 각각 "요일_시_분"의 id로 문서화함.
+    /// </summary>
+    public static void SendScheduleInformation()
+    {
+
+        Debug.Log("Schedule Nums : " + scheduleInformationList.Count);
+
+        if (!canSend)
+        {
+            Debug.Log("Not yet prepared.");
+        }
+
+        Debug.Log("Send Schedule Information");
+
+        Query scheduleQuery = db.Collection("ParentUsers").Document(parentID).Collection("Schedule").WhereNotEqualTo("요일", "?");
+
+        //전체 삭제.        
+        scheduleQuery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+
+            foreach(DocumentSnapshot docSnap in task.Result.Documents)
+            {
+                docSnap.Reference.DeleteAsync();                
+            }
+        });
+
+        //수정.
+        foreach (ScheduleInformation schedule in scheduleInformationList)
+        {
+            string day = schedule.요일;
+            Debug.Log(day);            
+
+            scheduleQuery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+            {
+                string documentName = day + "_" + schedule.시 + "시" + schedule.분 + "분";
+
+                DocumentReference docRef = db.Collection("ParentUsers").Document(parentID).Collection("Schedule").Document(documentName);
+                Debug.Log(documentName);
+
+                docRef.SetAsync(schedule).ContinueWithOnMainThread(task => {
+
+                    if (task.IsCompleted)
+                    {
+                        Debug.Log("Added data to the document " + documentName + " in the parents collection.");
+                    }
+                    else { Debug.Log("Failed"); }
+                });
+            });
+        }
     }
 
     /*
@@ -351,6 +441,31 @@ public class ParentDataController : MonoBehaviour
 
 
 
+    }
+
+
+    /// <summary>
+    /// scheduleInformationList를 비우고 ParentUsers/{parentId}/Schdule에 견본을 제외한 모든 문서를 가져와서 scheduleInformationList에 넣음. 
+    /// </summary>
+    /// <param name="updatePoint"></param>
+    public static void ReceiveScheduleInfo(updateDelegate updatePoint)
+    {
+        scheduleInformationList.Clear();
+        if (db == null)
+        {
+            db = FirebaseFirestore.DefaultInstance;
+        }
+
+        Query scheduleQuery = db.Collection("ParentUsers").Document(parentID).Collection("Schedule").WhereNotEqualTo("요일", "?");
+
+        scheduleQuery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            foreach(var docSnapshot in task.Result.Documents)
+            {
+                scheduleInformationList.Add(docSnapshot.ConvertTo<ScheduleInformation>());
+            }
+            updatePoint();
+        });
     }
 
 
