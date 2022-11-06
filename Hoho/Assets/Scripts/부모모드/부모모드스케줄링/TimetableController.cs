@@ -47,13 +47,6 @@ public class TimetableController : MonoBehaviour
                 }
                 Debug.Log(currentTime.parent.name+", "+currentTime.name);
 
-                //횟수로 설정돼 있던 경우.
-                if (currentTime.Find("시간")== null)
-                {
-                    Destroy(currentTime.gameObject);
-                    continue;
-                }
-
                 string timeBefore = currentTime.Find("시간").GetComponent<TextMeshProUGUI>().text;
                 int hBefore; 
                 Int32.TryParse(timeBefore.Substring(0, 2), out hBefore);
@@ -80,31 +73,86 @@ public class TimetableController : MonoBehaviour
 
             Debug.Log(siblingIndex);
             newTime.transform.SetSiblingIndex(siblingIndex);
+
+            ParentDataController.ScheduleInformation schedule = new ParentDataController.ScheduleInformation();
+            schedule.모드 = mode.gameObject.name;
+            schedule.분 = Int32.Parse(minute);
+            schedule.시 = Int32.Parse(hour);
+            schedule.요일 = dayToggle.name + "요일";
+            schedule.제목 = title;
+
+            ParentDataController.scheduleInformationList.Add(schedule);
+
         }
+
+        Debug.Log("addCustomSchedule 10");
+
+        ParentDataController.SendScheduleInformation();
+
     }
 
-    public void addAim(List<Toggle> daysList, string aim)
+    public void addCustomSchedule(List<Toggle> daysList, string title, string hour, string minute,
+            string repeat, string inhale, string inhaleSustain, string exhale, string exhaleSustain)
     {
         foreach (var dayToggle in daysList)
         {
             GameObject dayColumn = daysTimeList.Find(x => x.name == dayToggle.name);
             Transform table = dayColumn.transform.Find("일일시간표");
 
+            int siblingIndex = 0;
             foreach (var currentTime in table.GetComponentsInChildren<Transform>())
             {
-                if (currentTime.tag!="TimeOrAim")
+                if (currentTime.tag != "TimeOrAim")
                 {
                     continue;
                 }
 
-                Destroy(currentTime);
+                string timeBefore = currentTime.Find("시간").GetComponent<TextMeshProUGUI>().text;
+                int hBefore;
+                Int32.TryParse(timeBefore.Substring(0, 2), out hBefore);
+                int minBefore;
+                Int32.TryParse(timeBefore.Substring(3, 2), out minBefore);
+
+                int hAfter;
+                Int32.TryParse(hour, out hAfter);
+                int minAfter;
+                Int32.TryParse(minute, out minAfter);
+
+                if (hBefore < hAfter || (hBefore == hAfter && minBefore < minAfter))
+                {
+                    siblingIndex++;
+                }
             }
 
-            GameObject newAim = Instantiate(aimPrefab, table);
-            newAim.transform.Find("제목").GetComponent<TextMeshProUGUI>().text = dayToggle.name + " 하루\n자유롭게\n"+aim+"번 이상";
-        }
-    }
+            GameObject newTime = Instantiate(timePrefab, table);
+            newTime.transform.Find("제목").GetComponent<TextMeshProUGUI>().text = title;
+            newTime.transform.Find("시간").GetComponent<TextMeshProUGUI>().text = hour + ":" + minute;
+            int imageIdx = 3;
 
+            newTime.GetComponent<Image>().sprite = modeImages[imageIdx];
+
+            newTime.transform.SetSiblingIndex(siblingIndex);
+
+
+            ParentDataController.ScheduleInformation schedule = new ParentDataController.ScheduleInformation();
+            schedule.날숨시간 = Int32.Parse(exhale);
+            schedule.날숨후참는시간 = Int32.Parse(exhaleSustain);
+            schedule.들숨시간 = Int32.Parse(inhale);
+            schedule.들숨후참는시간 = Int32.Parse(inhaleSustain);
+            schedule.모드 = "사용자정의모드";
+            schedule.반복횟수 = Int32.Parse(repeat);
+            schedule.분 = Int32.Parse(minute);
+            schedule.시 = Int32.Parse(hour);
+            schedule.요일 = dayToggle.name + "요일";
+            schedule.제목 = title;
+
+            ParentDataController.scheduleInformationList.Add(schedule);
+        }
+
+        Debug.Log("addCustomSchedule 10");
+
+        ParentDataController.SendScheduleInformation();
+    }
 
 
 
@@ -132,7 +180,7 @@ public class TimetableController : MonoBehaviour
         }
 
         //Firebase에서 데이터 불러와서 시간표 정리하기.
-
+        ParentDataController.ReceiveScheduleInfo(initializeSchedule);
     }
 
     // Update is called once per frame
@@ -144,6 +192,54 @@ public class TimetableController : MonoBehaviour
     //transform.SetSiblingIndex 를 이용해서 순서 변경 가능.
 
 
+    void initializeSchedule()
+    {
+        foreach(var schedule in ParentDataController.scheduleInformationList)
+        {
+            GameObject dayColumn = daysTimeList.Find(x => x.name == schedule.요일[0].ToString());
+            Transform table = dayColumn.transform.Find("일일시간표");
+            int siblingIndex = 0;
+
+            string title = schedule.제목;
+            string hour = (schedule.시 < 10 ? "0" : "") + schedule.시.ToString();
+            string minute = (schedule.분 < 10 ? "0" : "") + schedule.분.ToString();
+
+            GameObject newTime = Instantiate(timePrefab, table);
+            newTime.transform.Find("제목").GetComponent<TextMeshProUGUI>().text = title;
+            newTime.transform.Find("시간").GetComponent<TextMeshProUGUI>().text = hour + ":" + minute;
+            int imageIdx = schedule.모드.Contains("표준") ? 0 : schedule.모드.Contains("집중") ? 1 : schedule.모드.Contains("안정")? 2 : 3;
+
+            foreach (var currentTime in table.GetComponentsInChildren<Transform>())
+            {
+                if (currentTime.tag != "TimeOrAim")
+                {
+                    continue;
+                }
+                Debug.Log(currentTime.parent.name + ", " + currentTime.name);
+
+                string timeBefore = currentTime.Find("시간").GetComponent<TextMeshProUGUI>().text;
+                int hBefore;
+                Int32.TryParse(timeBefore.Substring(0, 2), out hBefore);
+                int minBefore;
+                Int32.TryParse(timeBefore.Substring(3, 2), out minBefore);
+
+                int hAfter;
+                Int32.TryParse(hour, out hAfter);
+                int minAfter;
+                Int32.TryParse(minute, out minAfter);
+
+                if (hBefore < hAfter || (hBefore == hAfter && minBefore < minAfter))
+                {
+                    siblingIndex++;
+                }
+            }
+
+            newTime.GetComponent<Image>().sprite = modeImages[imageIdx];
+            newTime.transform.SetSiblingIndex(siblingIndex);
+
+        }
+
+    }
 
     string dayOfToday()
     {

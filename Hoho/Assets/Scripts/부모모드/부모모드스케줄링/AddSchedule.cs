@@ -10,36 +10,64 @@ public class AddSchedule : MonoBehaviour
 
 
     public List<Toggle> daySelectList = new List<Toggle>();
-    public List<Toggle> daySelectAimList = new List<Toggle>();
+    public List<Toggle> daySelectCustomList = new List<Toggle>();
 
-    public TMP_InputField titleText;
+    public TMP_InputField titleInput;
     public TMP_InputField hourInput;
     public TMP_InputField minuteInput;
     public List<Toggle> modeList = new List<Toggle>();
 
-    public TMP_InputField aimInput;
+    public TMP_InputField titleCustomInput;
+    public TMP_InputField hourCustomInput;
+    public TMP_InputField minuteCustomInput;
+
+
+    public TMP_InputField repeatInput;
+    public TMP_InputField inhaleInput;
+    public TMP_InputField inhaleSustainInput;
+    public TMP_InputField exhaleInput;
+    public TMP_InputField exhaleSustainInput;
 
 
     public GameObject addSchedulePannel;
-    public GameObject addAimPannel;
+    public GameObject addCustomPannel;
 
     public Button applyWithTimeBtn;
     public Button cancelWithTimeBtn;
 
-    public Button applyWithAimBtn;
-    public Button cancelWithAimBtn;
+    public Button applyWithCustomBtn;
 
     // Start is called before the first frame update
     void Start()
     {
         applyWithTimeBtn.onClick.AddListener(applyWithTime);
         cancelWithTimeBtn.onClick.AddListener(cancelWithTime);
+        
         hourInput.onEndEdit.AddListener(hourChecker);
         minuteInput.onEndEdit.AddListener(minuteChecker);
 
-        aimInput.onEndEdit.AddListener(aimChecker);
-        cancelWithAimBtn.onClick.AddListener(cancelWithAim);
-        applyWithAimBtn.onClick.AddListener(applyWithAim);
+        hourCustomInput.onEndEdit.AddListener(hourChecker);
+        minuteCustomInput.onEndEdit.AddListener(minuteChecker);
+
+
+        titleInput.onEndEdit.AddListener(x => titleCustomInput.text = x);
+        titleCustomInput.onEndEdit.AddListener(x => titleInput.text = x);
+
+        hourInput.onEndEdit.AddListener(x=>hourCustomInput.text=x);
+        minuteInput.onEndEdit.AddListener(x=>minuteCustomInput.text=x);
+
+        hourCustomInput.onEndEdit.AddListener(x=>hourInput.text=x);
+        minuteCustomInput.onEndEdit.AddListener(x=>minuteInput.text=x);
+
+
+
+        repeatInput.onEndEdit.AddListener(x => repeatInput.text = breathTimeChecker(x));
+        inhaleInput.onEndEdit.AddListener(x => inhaleInput.text = breathTimeChecker(x));
+        inhaleSustainInput.onEndEdit.AddListener(x => inhaleSustainInput.text = breathTimeChecker(x));
+        exhaleInput.onEndEdit.AddListener(x => exhaleInput.text = breathTimeChecker(x));
+        exhaleSustainInput.onEndEdit.AddListener(x => exhaleSustainInput.text = breathTimeChecker(x));
+
+        applyWithCustomBtn.onClick.AddListener(applyWithCustom);
 
     }
 
@@ -84,6 +112,14 @@ public class AddSchedule : MonoBehaviour
         hourInput.text = (t < 10 ? "0" : "") + t.ToString();
     }
 
+    string breathTimeChecker(string time)
+    {
+        int t = Int32.Parse(time);
+        t=Mathf.Clamp(t, 0, 99);
+
+        return t.ToString();
+    }
+
 
     void applyWithTime()
     {
@@ -101,7 +137,7 @@ public class AddSchedule : MonoBehaviour
             Debug.LogError(modeList.Count+" modes are selected");
             return;
         }
-        if (titleText.text.Length ==0)
+        if (titleInput.text.Length ==0)
         {
             Debug.LogError("title is null.");
             return;
@@ -113,7 +149,35 @@ public class AddSchedule : MonoBehaviour
         }
 
         //this==GameManager
-        GetComponent<TimetableController>().addSchedule(trueDayList, titleText.text, hourInput.text, minuteInput.text, modeList[0]);
+        GetComponent<TimetableController>().addSchedule(trueDayList, titleInput.text, hourInput.text, minuteInput.text, modeList[0]);
+
+        cancelWithTime();
+    }
+
+    void applyWithCustom()
+    {
+        List<Toggle> trueDayList = daySelectCustomList.FindAll(x => x.isOn);
+
+        //Check the legibility of inputs.
+        if (trueDayList.Count == 0)
+        {
+            Debug.LogError("No days are selected.");
+            return;
+        }
+        if (titleCustomInput.text.Length == 0)
+        {
+            Debug.LogError("title is null.");
+            return;
+        }
+        if (hourCustomInput.text.Length * minuteCustomInput.text.Length * inhaleInput.text.Length * inhaleSustainInput.text.Length * exhaleInput.text.Length * exhaleSustainInput.text.Length == 0)
+        {
+            Debug.LogError("time is null");
+            return;
+        }
+
+        //this==GameManager
+        GetComponent<TimetableController>().addCustomSchedule(trueDayList, titleInput.text, hourInput.text, minuteInput.text, 
+            repeatInput.text, inhaleInput.text, inhaleSustainInput.text, exhaleInput.text, exhaleSustainInput.text);
 
         cancelWithTime();
     }
@@ -127,54 +191,28 @@ public class AddSchedule : MonoBehaviour
         {
             day.isOn = false;
         }
-        titleText.text = hourInput.text=minuteInput.text="";
+
+        foreach (Toggle day in daySelectCustomList)
+        {
+            day.isOn = false;
+        }
+
+        titleCustomInput.text = hourCustomInput.text = minuteCustomInput.text =titleInput.text = hourInput.text=minuteInput.text="";
+
+        inhaleInput.text = inhaleSustainInput.text = exhaleInput.text = exhaleSustainInput.text = "";
+
         foreach (Toggle mode in modeList)
         {
             mode.isOn = false;
         }
         
-        addAimPannel.SetActive(false);
+        addCustomPannel.SetActive(false);
         addSchedulePannel.SetActive(false);
 
     }
 
 
-    void applyWithAim()
-    {
-        List<Toggle> trueDayList = daySelectAimList.FindAll(x => x.isOn);        
 
-        //Check the legibility of inputs.
-        if (trueDayList.Count == 0)
-        {
-            Debug.LogError("No days are selected.");
-            return;
-        }
-        if (aimInput.text.Length == 0)
-        {
-            Debug.LogError("No aims are set");
-            return;
-        }
 
-        //this==GameManager
-        GetComponent<TimetableController>().addAim(trueDayList, aimInput.text);
-
-        cancelWithTime();
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    void cancelWithAim()
-    {
-        foreach (Toggle day in daySelectAimList)
-        {
-            day.isOn = false;
-        }
-        aimInput.text = "";
-
-        addAimPannel.SetActive(false);
-        addSchedulePannel.SetActive(false);
-
-    }
 
 }
