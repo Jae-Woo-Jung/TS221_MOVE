@@ -40,7 +40,15 @@ public class Characteristic : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
+        var objList = FindObjectsOfType<Characteristic>();
+        if (objList.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
 #if UNITY_ANDROID && !UNITY_EDITOR

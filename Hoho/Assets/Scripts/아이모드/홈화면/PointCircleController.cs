@@ -8,29 +8,41 @@ public class PointCircleController : MonoBehaviour
 {
     public void updateCircle()
     {
+        Debug.Log("updateCircle 0");
+        TextMeshProUGUI rewardTitle = GameObject.Find("ï¿½ï¿½ï¿½ï¿½text").GetComponent<TextMeshProUGUI>();
+        Debug.Log("updateCircle 1");
+        TextMeshProUGUI currentLevel = GameObject.Find("ï¿½Ü°ï¿½Text").GetComponent<TextMeshProUGUI>();
+        Debug.Log("updateCircle 2");
+        TextMeshProUGUI pointText = GameObject.Find("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®Text").GetComponent<TextMeshProUGUI>();
+        Debug.Log("updateCircle 3");
 
-<<<<<<< Updated upstream
-        TextMeshProUGUI rewardTitle = GameObject.Find("º¸»óÁ¦¸ñÅØ½ºÆ®").GetComponent<TextMeshProUGUI>();
-=======
-        TextMeshProUGUI rewardTitle = GameObject.Find("Á¦¸ñtext").GetComponent<TextMeshProUGUI>();
->>>>>>> Stashed changes
-        TextMeshProUGUI currentLevel = GameObject.Find("´Ü°èText").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI pointText = GameObject.Find("ÇöÀçÆ÷ÀÎÆ®Text").GetComponent<TextMeshProUGUI>();
+        rewardTitle.text = (string) ChildDataController.getValues()["rewardTitle"];
+        Debug.Log("updateCircle 4");
+        currentLevel.text = ((int)ChildDataController.getValues()["level"]).ToString();
+        Debug.Log("updateCircle 5");
+        
+        pointText.text = underlinePoint( ((int) ChildDataController.getValues()["point"]).ToString() );
 
-        rewardTitle.text = ProgressController.rewardTitle;
-        currentLevel.text = ProgressController.level.ToString();
-        pointText.text = ProgressController.pointString;
+        Debug.Log("updateCircle 6");
+        /*
+        level = pointInfo.ï¿½ï¿½ï¿½ï¿½;
+        goalPoint = pointInfo.ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½ï¿½;
+        rewardTitle = pointInfo.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½;
+        point = pointInfo.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®;
+        */
 
-        GetComponent<Slider>().value = ProgressController.progressRatio;
+        GetComponent<Slider>().value = (float) ChildDataController.getValues()["progressRatio"];
 
+        //Debug.Log("updateCircle progressRatio : " + (float)ChildDataController.getValues()["progressRatio"]);
 
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        if ((bool) ChildDataController.getValues()["isReceived"])
+        if ( !(bool) ChildDataController.getValues()["isReceived"])
         {
+            Debug.Log("PointCircleControl start");
             ChildDataController.ReceivePoint(updateCircle);
         }        
         else
@@ -42,6 +54,21 @@ public class PointCircleController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+
+    //<U>1</U> <U>2</U> <U>3</U> <U>4</U>
+    string underlinePoint(string text)
+    {
+        string result = "";
+
+        foreach(char a in text)
+        {
+            result += "<U>" + a + "</U> ";
+        }
+        //Debug.Log("underlinePoint : "+result);
+        return result;
+
     }
 }

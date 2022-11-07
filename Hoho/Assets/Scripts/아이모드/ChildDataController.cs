@@ -171,7 +171,7 @@ public class ChildDataController : MonoBehaviour
     public static List<ScheduleInformation> scheduleInformationList = new List<ScheduleInformation>();
 
     /// <summary>
-    /// canSend(bool), point (int), level(int), rewardTitle(string), goalPoint(int), progressRatio(float), childID(string)를 담은 Dictionary 반환.
+    /// isReceived (bool), canSend(bool), point (int), level(int), rewardTitle (string), goalPoint (int), progressRatio (float), childID (string), parentID (string) 를 담은 Dictionary 반환.
     /// </summary>
     /// <returns></returns>
     public static Dictionary<string, object> getValues()
@@ -353,7 +353,7 @@ public class ChildDataController : MonoBehaviour
         {
             db = FirebaseFirestore.DefaultInstance;
         }
-
+        Debug.Log("ReceivePoint 1");
         DocumentReference pointDoc = db.Collection("ChildrenUsers").Document(childID).Collection("Point").Document("CurrentPoint");
 
         pointDoc.GetSnapshotAsync().ContinueWithOnMainThread(task =>
@@ -369,7 +369,13 @@ public class ChildDataController : MonoBehaviour
                 rewardTitle=pointInfo.보상제목;
                 point=pointInfo.현재포인트;
 
+                progressRatio = pointInfo.현재포인트 / (float)pointInfo.목표점수;
+
+                Debug.Log("ReceivePoint 2 : "+pointInfo.레벨 + " " + pointInfo.목표점수 + ", " + pointInfo.보상제목 + ", " + pointInfo.현재포인트);
+
                 isReceived = true;
+                
+                updateCircle();
             }
             else
             {
@@ -378,7 +384,7 @@ public class ChildDataController : MonoBehaviour
           
         });
 
-        updateCircle();
+        
 
     }
 
@@ -696,7 +702,17 @@ public class ChildDataController : MonoBehaviour
         {
             db = FirebaseFirestore.DefaultInstance;
         }
-        DontDestroyOnLoad(gameObject);  
+        
+        var objList = FindObjectsOfType<ChildDataController>();
+        if (objList.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
 
 

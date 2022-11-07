@@ -477,7 +477,15 @@ public class ParentDataController : MonoBehaviour
         {
             db = FirebaseFirestore.DefaultInstance;
         }
-        DontDestroyOnLoad(gameObject);
+        var objList = FindObjectsOfType<ParentDataController>();
+        if (objList.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame

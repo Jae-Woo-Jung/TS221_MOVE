@@ -4,9 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;  //This template can be customized at C:\Program Files\Unity\Hub\Editor\2021.3.8f1\Editor\Data\Resources\ScriptTemplates\81-C# Script-NewBehaviourScript.cs.txt
 using System;
 using TMPro;
+using Assets.SimpleAndroidNotifications;
 
 public class TodaySchedule : MonoBehaviour
 {
+    
+    public static string mode = "";
 
     public GameObject timePrefab;
     public Slider gameProgress;
@@ -14,10 +17,37 @@ public class TodaySchedule : MonoBehaviour
 
     public List<Sprite> modeImages = new List<Sprite>();
 
+    static float gameProgressRatio=0f;
+
     // Start is called before the first frame update
     void Start()
     {
-        ChildDataController.ReceiveBreath( () => ChildDataController.ReceiveScheduleInfo(initializeSchedule));     
+        gameProgress.value = gameProgressRatio;
+        ChildDataController.ReceiveBreath( () => ChildDataController.ReceiveScheduleInfo(initializeSchedule));
+
+        Debug.Log(Convert.ToDateTime("2022 11 07 9:1"));
+        Debug.Log(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + 22 + ":" + 0);
+        Debug.Log("Start : "+Convert.ToDateTime(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + 22 + ":" + 0));
+
+
+        var notificationParams = new NotificationParams
+        {
+            Id = UnityEngine.Random.Range(0, int.MaxValue),
+            Delay = TimeSpan.FromSeconds(10),
+            Title = "Custom notification",
+            Message = "Message",
+            Ticker = "Ticker",
+            Sound = true,           
+            Vibrate = true,
+            Light = true,
+            SmallIcon = NotificationIcon.Heart,
+            SmallIconColor = new Color(0, 0.5f, 0),
+            LargeIcon = "app_icon"
+        };
+
+        Debug.Log("Start : " + notificationParams.Delay);
+        NotificationManager.SendCustom(notificationParams);
+
     }
 
     // Update is called once per frame
@@ -62,7 +92,7 @@ public class TodaySchedule : MonoBehaviour
             int siblingIndex = 0;
 
 
-            Debug.Log("initializeSchedul : "+schedule.요일+schedule.제목);
+            Debug.Log("initializeSchedul : "+schedule.요일+", 제목 : "+schedule.제목);
 
             string title = schedule.제목;
             string hour = (schedule.시 < 10 ? "0" : "") + schedule.시.ToString();
@@ -88,6 +118,17 @@ public class TodaySchedule : MonoBehaviour
 
             foreach (var currentTime in table.GetComponentsInChildren<Transform>())
             {
+
+                if (currentTime.tag != "TimeOrAim")
+                {
+                    continue;
+                }
+
+                int modeIndex=0;
+                modeIndex = modeImages.FindIndex(x => x == currentTime.GetComponent<Image>().sprite);
+
+                Debug.Log("initializeSchedule : modeIndex " + modeIndex);
+
                 if (hAfter<refH || (hAfter == refH && minAfter <= refM))
                 {
                     newTime.transform.Find("완료표시").gameObject.SetActive(true);
@@ -98,6 +139,35 @@ public class TodaySchedule : MonoBehaviour
                 else
                 {
                     newTime.transform.Find("완료표시").gameObject.SetActive(false);
+
+                    //notificatoin 추가.
+#if PLATFORM_ANDROID && UNITY_EDITOR
+
+                    DateTime date1 = Convert.ToDateTime(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + schedule.시 + ":" + schedule.분);
+
+                    if (date1 > DateTime.Now)
+                    {
+                    TimeSpan delay = date1 - DateTime.Now;
+
+                    var notificationParams = new NotificationParams{
+                            Id = UnityEngine.Random.Range(0, int.MaxValue),
+                            Delay = delay,
+                            Title = schedule.요일 + "_" + schedule.시 + "시" + schedule.분 + "분",
+                            Message = schedule.요일 + "_" + schedule.시 + "시" + schedule.분 + "분에 " + schedule.모드 + " 호흡 훈련을 진행해주세요.",
+                            Ticker = "Ticker",
+                            Sound = true,           
+                            Vibrate = true,
+                            Light = true,
+                            SmallIcon = NotificationIcon.Heart,
+                            SmallIconColor = new Color(0, 0.5f, 0),
+                            LargeIcon = "app_icon"
+                        };
+
+                    Debug.Log(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " "+  schedule.시 + ":" + schedule.분);
+
+                    NotificationManager.SendCustom(notificationParams);
+                    }
+#endif
                 }
 
 
@@ -106,7 +176,7 @@ public class TodaySchedule : MonoBehaviour
                 {
                     continue;
                 }
-                Debug.Log(currentTime.parent.name + ", " + currentTime.name);
+                //Debug.Log(currentTime.parent.name + ", " + currentTime.name);
 
                 //기존의 스케줄
                 string timeBefore = currentTime.Find("시간").GetComponent<TextMeshProUGUI>().text;
@@ -119,15 +189,18 @@ public class TodaySchedule : MonoBehaviour
                 if (hBefore < hAfter || (hBefore == hAfter && minBefore < minAfter))
                 {
                     siblingIndex++;
+                    
+                    mode = modeIndex == 0 ? "표준모드" : modeIndex == 1 ? "집중모드" : modeIndex == 2 ? "안정모드" : "사용자정의모드";
                 }
             }                        
 
             newTime.GetComponent<Image>().sprite = modeImages[imageIdx];
             newTime.transform.SetSiblingIndex(siblingIndex);
+            
         }
 
-        gameProgress.value = scheduleNum==0? 0 : finishedScheduleNum/(float) scheduleNum;
-
+        //Debug.Log("Current mode : " + mode);
+        gameProgressRatio= gameProgress.value = scheduleNum==0? 0 : finishedScheduleNum/(float) scheduleNum;
     }
 
     int compareStringTime(string time1, string time2)
@@ -145,5 +218,10 @@ public class TodaySchedule : MonoBehaviour
         }
 
         return 1;
+    }
+
+    TimeSpan computeTime(DateTime date1, DateTime date2)
+    {
+        return date1 - date2;
     }
 }
