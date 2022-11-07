@@ -140,7 +140,7 @@ public class ProgressController : MonoBehaviour
         currentPoint.text = "현재  " + ProgressController.point;
         ProgressController.level = Math.Max(1, level);
         updateLevel(level);
-        GameObject rewardTitle = GameObject.Find("보상제목");
+        GameObject rewardTitle = GameObject.Find("제목text");
         TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
         
