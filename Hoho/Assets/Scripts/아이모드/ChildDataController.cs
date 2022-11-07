@@ -393,7 +393,7 @@ public class ChildDataController : MonoBehaviour
             db = FirebaseFirestore.DefaultInstance;
         }
 
-        Debug.Log("Receive point for GameResult");
+        Debug.Log("ReceiveBreath 1");
 
         string today = DateTime.Now.ToString("d");
         Debug.Log(today);
@@ -407,7 +407,7 @@ public class ChildDataController : MonoBehaviour
 
             foreach (DocumentSnapshot doc in todayQuerySnapshot.Documents)
             {
-
+                Debug.Log("ReceiveBreath 2");
                 fishGameResult = doc.ConvertTo<GameResult>();
 
                 fishGameResultList.Add(fishGameResult);
@@ -418,8 +418,11 @@ public class ChildDataController : MonoBehaviour
 
                 Debug.Log("예상 호흡기록 done.");
 
-                updateRecord();
+                fishGameResultList.Add(fishGameResult);
+                
             }
+            
+            updateRecord();
             //Debug.Log(documentName+"\n시작날짜 : " + fishGameResult.시작날짜 + "\n" + "시작시간 : " + fishGameResult.시작시간 + "\n" + "레벨 : "+ fishGameResult.레벨 + "\n별개수 : " + fishGameResult.별개수 + "\n플레이시간 : " + fishGameResult.플레이시간+"\n호흡기록 : "+fishGameResult.호흡기록.Keys.Count);
         });
 
@@ -621,6 +624,9 @@ public class ChildDataController : MonoBehaviour
     public static void ReceiveScheduleInfo(updateDelegate updateSchedule)
     {
         scheduleInformationList.Clear();
+
+
+        Debug.Log("ReceiveScheduleInfo 1");
         if (db == null)
         {
             db = FirebaseFirestore.DefaultInstance;
