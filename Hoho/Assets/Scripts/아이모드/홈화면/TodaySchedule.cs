@@ -15,6 +15,8 @@ public class TodaySchedule : MonoBehaviour
     public Slider gameProgress;
     public GameObject scheduleContent;
 
+    public Button startBtn;
+
     public List<Sprite> modeImages = new List<Sprite>();
 
     static float gameProgressRatio=0f;
@@ -47,6 +49,9 @@ public class TodaySchedule : MonoBehaviour
 
         Debug.Log("Start : " + notificationParams.Delay);
         NotificationManager.SendCustom(notificationParams);
+
+
+        startBtn.onClick.AddListener(checkTest);
 
     }
 
@@ -220,8 +225,19 @@ public class TodaySchedule : MonoBehaviour
         return 1;
     }
 
-    TimeSpan computeTime(DateTime date1, DateTime date2)
+
+
+    void checkTest()
     {
-        return date1 - date2;
+
+        if (BreathingTest.isTested)
+        {
+            SceneLoader.LoadScene("낚시게임시작화면");
+        }
+        else
+        {
+            SceneLoader.LoadScene("아이모드테스트화면");
+        }
+
     }
 }

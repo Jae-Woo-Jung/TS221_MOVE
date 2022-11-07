@@ -9,11 +9,11 @@ public class PointCircleController : MonoBehaviour
     public void updateCircle()
     {
         Debug.Log("updateCircle 0");
-        TextMeshProUGUI rewardTitle = GameObject.Find("����text").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI rewardTitle = GameObject.Find("제목text").GetComponent<TextMeshProUGUI>();
         Debug.Log("updateCircle 1");
-        TextMeshProUGUI currentLevel = GameObject.Find("�ܰ�Text").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
         Debug.Log("updateCircle 2");
-        TextMeshProUGUI pointText = GameObject.Find("��������ƮText").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
         Debug.Log("updateCircle 3");
 
         rewardTitle.text = (string) ChildDataController.getValues()["rewardTitle"];

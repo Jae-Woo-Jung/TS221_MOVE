@@ -687,7 +687,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 686939026}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1079374047}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\uC544\uC774\uBAA8\uB4DC\uD648\uD654\uBA74"
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &686939026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -860,6 +872,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98a14a3016cb3214b9fa18e389fcb6af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  modeIcon: {fileID: 549694749}
+  modeIconList:
+  - {fileID: 21300000, guid: 945f5c55d5ed07a4d967e7c795818634, type: 3}
+  - {fileID: 21300000, guid: 47087f5a87d9f254db9b5cf664040a14, type: 3}
+  - {fileID: 21300000, guid: 49e8bfae555205643ba59c2d2f026470, type: 3}
+  - {fileID: 21300000, guid: 8edea58cb67942b4db7a9c20bd913cac, type: 3}
 --- !u!1 &1340621235
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +960,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1340621238}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1079374047}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\uC544\uC774\uBAA8\uB4DC\uD3EC\uC778\uD2B8\uC0F5"
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1340621238
 MonoBehaviour:
   m_ObjectHideFlags: 0

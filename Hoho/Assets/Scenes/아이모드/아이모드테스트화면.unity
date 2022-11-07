@@ -438,7 +438,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0d745cdfb46bbfa4e8c6f478ad12bf64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f88c9ba45215c0b4e9f5dd1ca8ba4373, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -540,6 +540,72 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1072890061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1072890062}
+  - component: {fileID: 1072890064}
+  - component: {fileID: 1072890063}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1072890062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072890061}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -181.44614, y: 1051.4336, z: -13.469869}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1072890063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072890061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ccdc0d23a4a9784f89bb7a7707c3b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1072890064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072890061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc36cec89c4fdf042a8617bfd9348168, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkList:
+  - {fileID: 890765547}
+  - {fileID: 1811054473}
+  - {fileID: 2099587561}
+  done: {fileID: 21300000, guid: 0d745cdfb46bbfa4e8c6f478ad12bf64, type: 3}
+  notYet: {fileID: 21300000, guid: f88c9ba45215c0b4e9f5dd1ca8ba4373, type: 3}
+  tooTightPannel: {fileID: 823828198}
+  tooLoosePannel: {fileID: 159639628}
+  guideVideo: {fileID: 2038327070}
 --- !u!1 &1351632130
 GameObject:
   m_ObjectHideFlags: 0
@@ -678,7 +744,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0d745cdfb46bbfa4e8c6f478ad12bf64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f88c9ba45215c0b4e9f5dd1ca8ba4373, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -789,6 +855,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1072890063}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\uC544\uC774\uBAA8\uB4DC\uD14C\uC2A4\uD2B8\uD654\uBA74"
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1829135945
@@ -922,6 +1000,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1072890063}
+        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: "\uC544\uC774\uBAA8\uB4DC\uD14C\uC2A4\uD2B8\uD654\uBA74"
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1860457203
@@ -1226,7 +1316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0d745cdfb46bbfa4e8c6f478ad12bf64, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f88c9ba45215c0b4e9f5dd1ca8ba4373, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

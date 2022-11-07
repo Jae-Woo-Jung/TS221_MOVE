@@ -3754,18 +3754,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1953244347}
-        m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: "\uB09A\uC2DC\uC2DC\uC791\uD654\uBA74"
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 457317464}
         m_TargetAssemblyTypeName: ChildDataController, Assembly-CSharp
         m_MethodName: receiveTimeCustom
@@ -3969,9 +3957,10 @@ MonoBehaviour:
   timePrefab: {fileID: 2844157134414857911, guid: b721c1de475e2894399533b5a9e888fd, type: 3}
   gameProgress: {fileID: 1700339008}
   scheduleContent: {fileID: 437457115}
+  startBtn: {fileID: 1866085057}
   modeImages:
-  - {fileID: 21300000, guid: 47087f5a87d9f254db9b5cf664040a14, type: 3}
   - {fileID: 21300000, guid: 14f09f5864082bc499cee7bf1818e072, type: 3}
+  - {fileID: 21300000, guid: 47087f5a87d9f254db9b5cf664040a14, type: 3}
   - {fileID: 21300000, guid: c369182d200d5ab43b766ae3171ec8d2, type: 3}
   - {fileID: 21300000, guid: 8edea58cb67942b4db7a9c20bd913cac, type: 3}
 --- !u!1 &2031533979
