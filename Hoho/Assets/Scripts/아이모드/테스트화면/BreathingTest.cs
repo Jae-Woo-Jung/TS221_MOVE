@@ -50,13 +50,15 @@ public class BreathingTest : MonoBehaviour
 
         if (isTesting)
         {
+            Debug.Log("Breathing Test : "+Characteristic.value);
+
             if (Characteristic.value > breathingMax)
             {
-                Characteristic.value = breathingMax;
+                breathingMax = Characteristic.value;
             }
             if (Characteristic.value < breathingMin)
             {
-                Characteristic.value = breathingMin;
+                 breathingMin = Characteristic.value;
             }
         }
 

@@ -255,7 +255,7 @@ public class FishGenerator : MonoBehaviour
         {
             //500->0, 850 ->1
 
-            hookPos = (Characteristic.value - BreathingTest.breathingMin) / (BreathingTest.breathingMax - BreathingTest.breathingMin);
+            hookPos = (float) (Characteristic.value - BreathingTest.breathingMin) /(float) (BreathingTest.breathingMax - BreathingTest.breathingMin);
         }
         GameObject.Find("³¬½Ë¹Ù´Ã").GetComponent<HookController>().setPosition(hookPos);
 

@@ -13,16 +13,6 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
     public void SceneLoad()
     {
 
-        int modeIndex = TodaySchedule.mode.Contains("표준") ? 0: TodaySchedule.mode.Contains("집중") ? 1 : TodaySchedule.mode.Contains("안정") ? 2 : TodaySchedule.mode.Contains("사용자") ? 3 : -1;
-
-
-        if (modeIndex >= 0)
-        {
-            modeIcon.sprite = modeIconList[modeIndex];
-
-        }
-
-
         DateTime nowDt = DateTime.Now;
         if ((nowDt.DayOfWeek == DayOfWeek.Saturday)||(nowDt.DayOfWeek == DayOfWeek.Sunday))
         {
@@ -37,7 +27,14 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        int modeIndex = TodaySchedule.mode.Contains("표준") ? 0 : TodaySchedule.mode.Contains("집중") ? 1 : TodaySchedule.mode.Contains("안정") ? 2 : TodaySchedule.mode.Contains("사용자") ? 3 : -1;
+
+
+        if (modeIndex >= 0)
+        {
+            modeIcon.sprite = modeIconList[modeIndex];
+
+        }
     }
 
     // Update is called once per frame

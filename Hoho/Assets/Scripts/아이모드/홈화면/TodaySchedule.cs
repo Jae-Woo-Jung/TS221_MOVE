@@ -230,14 +230,20 @@ public class TodaySchedule : MonoBehaviour
     void checkTest()
     {
 
+        if (!AndroidBLEPluginStart.isConnected)
+        {
+            AndroidBLEPluginStart.CallByAndroid("왼쪽 위의 버튼을 눌러 벨트랑 연결해주세요.");
+        }
+
+        //SceneLoader.LoadScene("낚시시작화면");
         if (BreathingTest.isTested)
         {
-            SceneLoader.LoadScene("낚시게임시작화면");
+            SceneLoader.LoadScene("낚시시작화면");
         }
         else
         {
             SceneLoader.LoadScene("아이모드테스트화면");
         }
-
+        
     }
 }
