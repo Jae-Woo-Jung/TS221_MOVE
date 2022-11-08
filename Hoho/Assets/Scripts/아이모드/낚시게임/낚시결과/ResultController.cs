@@ -23,11 +23,11 @@ public class ResultController : MonoBehaviour
     static int nowPoint=0;
 
     /// <summary>
-    /// 게임 레벨
+    /// 게임 모드.  표준 모드, 집중 모드, 안정 모드, 사용자정의모드
     /// </summary>
-    static int level=1;
+    static string mode="집중 모드";
 
-    public TextMeshProUGUI levelText;
+    public TextMeshProUGUI modeText;
     public List<GameObject> stars = new List<GameObject>();
 
     public TextMeshProUGUI pointText;
@@ -85,14 +85,14 @@ public class ResultController : MonoBehaviour
         return nowPoint;
     }
 
-    public static void setLevel(int level)
+    public static void setMode(string mode)
     {
-        ResultController.level = level;
+        ResultController.mode = mode;
     }
 
-    public static int getLevel()
+    public static string getMode()
     {
-        return level;
+        return mode;
     }
 
 
@@ -101,7 +101,7 @@ public class ResultController : MonoBehaviour
     {
         pointText.text = gamePoint.ToString();
         nowPointText.text = nowPoint.ToString();
-        levelText.text = level.ToString();
+        modeText.text = mode;
         showStars(achievement);
     }
 

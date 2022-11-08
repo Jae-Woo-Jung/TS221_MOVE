@@ -492,7 +492,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -551,6 +551,7 @@ GameObject:
   - component: {fileID: 1072890062}
   - component: {fileID: 1072890064}
   - component: {fileID: 1072890063}
+  - component: {fileID: 1072890065}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -606,6 +607,20 @@ MonoBehaviour:
   tooTightPannel: {fileID: 823828198}
   tooLoosePannel: {fileID: 159639628}
   guideVideo: {fileID: 2038327070}
+--- !u!114 &1072890065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072890061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e8107fab53dc9f4bb27f59431259015, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  backgroundRect: {fileID: 1351632131}
+  videoRect: {fileID: 1863924626}
 --- !u!1 &1351632130
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,7 +736,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -132.29999, y: -80}
+  m_AnchoredPosition: {x: -132.2998, y: -80}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1811054473
@@ -1085,11 +1100,11 @@ RectTransform:
   m_Father: {fileID: 1351632131}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -9.447, y: 467.2859}
-  m_SizeDelta: {x: 686.8059, y: 826.3599}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50.348145, y: 64}
+  m_SizeDelta: {x: 699.3038, y: 935.2819}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1863924627
 MonoBehaviour:
   m_ObjectHideFlags: 0

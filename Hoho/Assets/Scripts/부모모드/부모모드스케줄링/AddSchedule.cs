@@ -43,11 +43,11 @@ public class AddSchedule : MonoBehaviour
         applyWithTimeBtn.onClick.AddListener(applyWithTime);
         cancelWithTimeBtn.onClick.AddListener(cancelWithTime);
         
-        hourInput.onEndEdit.AddListener(hourChecker);
-        minuteInput.onEndEdit.AddListener(minuteChecker);
+        hourInput.onEndEdit.AddListener(x=> hourCustomInput.text=hourChecker(x));
+        minuteInput.onEndEdit.AddListener(x=> minuteCustomInput.text=minuteChecker(x));
 
-        hourCustomInput.onEndEdit.AddListener(hourChecker);
-        minuteCustomInput.onEndEdit.AddListener(minuteChecker);
+        hourCustomInput.onEndEdit.AddListener(x=> hourCustomInput.text=hourChecker(x));
+        minuteCustomInput.onEndEdit.AddListener(x=> minuteCustomInput.text= minuteChecker(x));
 
 
         titleInput.onEndEdit.AddListener(x => titleCustomInput.text = x);
@@ -81,23 +81,23 @@ public class AddSchedule : MonoBehaviour
 
 
 
-    void hourChecker(string hr)
+    string hourChecker(string hr)
     {
         int h=0;
         Int32.TryParse(hr, out h);
         h = Mathf.Clamp(h, 0, 23);
 
-        hourInput.text = (h < 10 ? "0" : "") + h.ToString();
+        return (h < 10 ? "0" : "") + h.ToString();
     }
 
-    void minuteChecker(string min)
+    string minuteChecker(string min)
     {
 
         int m=0;
         Int32.TryParse(min, out m);
         m = Mathf.Clamp(m, 0, 59);
 
-        minuteInput.text=   (m<10? "0":"")+m.ToString();
+        return  (m<10? "0":"")+m.ToString();
     }
 
     /// <summary>
