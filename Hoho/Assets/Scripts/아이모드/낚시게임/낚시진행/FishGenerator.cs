@@ -16,7 +16,7 @@ public class FishGenerator : MonoBehaviour
     /// <summary>
     /// 0->표준, 1->집중, 2->안정 3->사용자정의
     /// </summary>
-    public static int modeIndex = 0;
+    public static int modeIndex = 1;
 
     [Tooltip("기록 주기.")]
     public float recordingPeriod = 1.0f;
@@ -89,11 +89,19 @@ public class FishGenerator : MonoBehaviour
 
 
 
-    //막대를 한 번만 생성하기 위해 필요.
+    [Header("막대를 한 번만 생성하기 위해 필요.")]
     public bool needInhaleLine = true;
     public bool needInhaleSustainLine = true;
     public bool needExhaleLine = true;
     public bool needExhaleSustainLine = true;
+
+
+    [Header("소리를 한 번만 생성하기 위해 필요.")]
+    public bool needInhaleSound = true;
+    public bool needInhaleSustainSound = true;
+    public bool needExhaleSound = true;
+    public bool needExhaleSustainSound = true;
+
 
     //막대를 제대로 생성하기 위해 필요.
     private BreathLineController pastLine=null;
@@ -107,26 +115,32 @@ public class FishGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (TodaySchedule.mode.Contains("표준"))
+        switch (modeIndex)
         {
-            upTime = 3;
-            upWaitTime = 0;
-            downTime = 9;
-            downWaitTime = 0;
-        }
-        if (TodaySchedule.mode.Contains("집중") || true)
-        {
-            upTime = 3;
-            upWaitTime = 6;
-            downTime = 6;
-            downWaitTime = 0;
-        }
-        if (TodaySchedule.mode.Contains("안정"))
-        {
-            upTime = 3;
-            upWaitTime = 0;
-            downTime = 6;
-            downWaitTime = 6;
+            case 0:
+                upTime = 3;
+                upWaitTime = 0;
+                downTime = 9;
+                downWaitTime = 0;
+                break;
+            case 1:
+                upTime = 3;
+                upWaitTime = 6;
+                downTime = 6;
+                downWaitTime = 0;
+                break;
+            case 2:
+                upTime = 3;
+                upWaitTime = 0;
+                downTime = 6;
+                downWaitTime = 6;
+                break;
+            case 3:
+                upTime = 3;
+                upWaitTime = 0;
+                downTime = 6;
+                downWaitTime = 6;
+                break;
         }
 
         
@@ -224,6 +238,7 @@ public class FishGenerator : MonoBehaviour
             //ScreenMin~ScreenMax -> 0~1
             correctHookPos = (correctHookPos - screenMin) / (screenMax - screenMin);
             idealPosition.position = new Vector3(idealPosition.position.x, breathPos(Mathf.Clamp(timeController.getProgressedTime() - FishArrivalTime.getArrivalTime(), 0f, timeController.getProgressedTime())), 0);
+            playSound(Mathf.Clamp(timeController.getProgressedTime() - FishArrivalTime.getArrivalTime(), 0f, timeController.getProgressedTime()));
             //Debug.Log("hookPos : " + hookPos);
         }
         else
@@ -298,7 +313,7 @@ public class FishGenerator : MonoBehaviour
     }
 
     /// <summary>
-    /// 들숨 시간, 날숨 시간, 숨 참는 시간을 고려한, 시간에 따른 함숫값 반환. 사인파 형태.
+    /// 막대 생성.
     /// </summary>
     /// <param name="x"></param>
     /// <returns></returns>
@@ -339,7 +354,7 @@ public class FishGenerator : MonoBehaviour
                 switch (modeIndex)
                 {
                     case 0:
-                        material = standardInhale;
+                        material = standardInhale;                        
                         break;
                     case 1:
                         material = attentionInhale;
@@ -449,6 +464,84 @@ public class FishGenerator : MonoBehaviour
 
 
 
+    /// <summary>
+    /// 막대 생성.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    private void playSound(float x)
+    {
+        if (x == 0)  //아직 게임 시작 안 함.
+        {
+            return;
+        }
+
+        float period = upTime + upWaitTime + downTime + downWaitTime;
+        float phase = x % period;
+
+        Material material = standardInhale;
+
+        GameObject line = null;
+
+
+        float xPos = (pastLine != null) ? pastLine.vertex2.transform.position.x : 11f * xScreenHalfSize / ScalingOnGaming.xScreenHalfSizeBase;
+        //phase에 따라 다름.
+        if (phase < 0.0f)
+        {
+            Debug.Log("Wrong period.");
+            return;
+        }
+        if (phase < upTime)
+        {
+            needInhaleSustainSound = needExhaleSound = needExhaleSustainSound = true;
+
+            if (needInhaleSound)
+            {
+                Debug.Log(" Sound : inhaleSound");
+
+                needInhaleSound = false;
+                changeAudioClip(modeIndex, 0);
+            }
+        }
+        else if (phase < upTime + upWaitTime)
+        {
+            needInhaleSound = needExhaleSound = needExhaleSustainSound= true;
+
+            if (needInhaleSustainSound)
+            {
+                Debug.Log(" Sound : inhaleSustainSound");
+                needInhaleSustainSound = false;
+                changeAudioClip(modeIndex, 1);
+            }
+        }
+
+        else if (phase < upTime + upWaitTime + downTime)
+        {
+            needInhaleSound = needInhaleSustainSound = needExhaleSustainSound = true;
+
+            if (needExhaleSound)
+            {
+                Debug.Log(" Sound : exhaleSound");
+                needExhaleSound = false;
+                changeAudioClip(modeIndex, 2);
+            }
+        }
+
+        else
+        {
+            needInhaleSound = needInhaleSustainSound = needExhaleSound = true;
+
+            if (needExhaleSustainLine)
+            {
+                Debug.Log(" Sound : exhaleSustainSound");
+                needExhaleSustainSound = false;
+                changeAudioClip(modeIndex, 3);
+            }
+        }
+    }
+
+
+
     private void setGuideText(float x)
     {
         float period = upTime + upWaitTime + downTime + downWaitTime;
@@ -547,6 +640,8 @@ public class FishGenerator : MonoBehaviour
                 }
                 break;
             case 1:
+
+                Debug.Log("집중모드 소리");
                 switch (phase)
                 {
                     case 0:
