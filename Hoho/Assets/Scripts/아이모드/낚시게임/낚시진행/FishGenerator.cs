@@ -13,6 +13,11 @@ public class FishGenerator : MonoBehaviour
         set { arrivalTime = value; }
     }
 
+    /// <summary>
+    /// 0->표준, 1->집중, 2->안정 3->사용자정의
+    /// </summary>
+    public static int modeIndex = 0;
+
     [Tooltip("기록 주기.")]
     public float recordingPeriod = 1.0f;
     public float recordingTime = 0.0f;
@@ -22,8 +27,15 @@ public class FishGenerator : MonoBehaviour
 
     [Header("물고기들")]
     public GameObject bubble;
-    public GameObject wooper_looper;
-    public GameObject fish1;
+    public GameObject fish2;
+    public GameObject fish3;
+    public GameObject fish4;
+    public GameObject fish5;
+    public GameObject fish6;
+
+    [Header("호흡막대")]
+    public GameObject breathLine;
+
 
     [Header("생성 높낮이 최저 ")]
     public float screenMin = -3.0f;
@@ -35,10 +47,29 @@ public class FishGenerator : MonoBehaviour
     public static float downTime;
     public static float downWaitTime;
 
+    [Header("호흡 그래프 매터리얼")]
+    public Material standardInhale;
+    public Material standardExhale;
+
+    public Material attentionInhale;
+    public Material attentionInhaleSustain;
+    public Material attentionExhale;
+
+    public Material antiStressInhale;
+    public Material antiStressExhale;
+    public Material antiStressExhaleSustain;
 
 
+    //표준 : 3 0 9 0, 집중모드 : 3 6 6 0, 안정: 3 0 6 6
 
-
+    [Header("오디오")]
+    public AudioSource audioSource; 
+    [Tooltip("3 0 9 0 : 표준 들숨, 표준 날숨")]
+    public List<AudioClip> audioStandard = new List<AudioClip>();
+    [Tooltip("3 6 6 0 : 집중 들숨, 집중 유지, 집중 날숨")]
+    public List<AudioClip> audioAttention = new List<AudioClip>();
+    [Tooltip("3 0 6 6 : 안정 들숨, 안정 날숨, 안정 날숨 유지")]
+    public List<AudioClip> audioAntiStress = new List<AudioClip>();
 
     public float hookPos = 0.0f;
 
@@ -50,16 +81,58 @@ public class FishGenerator : MonoBehaviour
         "piranha fish", "ramirezi", "silver shark fish", "sword tail", "wooper looper", "Yellow Cichlid" };
 
     [Tooltip("생성 주기. 단, 물방울이 아닌 물고기 생성 시에는 0.5초 딜레이.")]
-    public float respawnPeriod=0.7f;
+    public float respawnPeriod=0.5f;
     private float respawnTime = 0.0f;
 
     [SerializeField] private float yScreenHalfSize;
-    [SerializeField] private float xScreenHalfSize;    
+    [SerializeField] private float xScreenHalfSize;
 
 
+
+    //막대를 한 번만 생성하기 위해 필요.
+    public bool needInhaleLine = true;
+    public bool needInhaleSustainLine = true;
+    public bool needExhaleLine = true;
+    public bool needExhaleSustainLine = true;
+
+    //막대를 제대로 생성하기 위해 필요.
+    private BreathLineController pastLine=null;
+
+
+
+    public Transform triangle;
+    public Transform idealPosition;
+
+    //표준 : 3 0 9 0, 집중모드 : 3 6 6 0, 안정: 3 0 6 6
     // Start is called before the first frame update
     void Start()
     {
+        if (TodaySchedule.mode.Contains("표준"))
+        {
+            upTime = 3;
+            upWaitTime = 0;
+            downTime = 9;
+            downWaitTime = 0;
+        }
+        if (TodaySchedule.mode.Contains("집중") || true)
+        {
+            upTime = 3;
+            upWaitTime = 6;
+            downTime = 6;
+            downWaitTime = 0;
+        }
+        if (TodaySchedule.mode.Contains("안정"))
+        {
+            upTime = 3;
+            upWaitTime = 0;
+            downTime = 6;
+            downWaitTime = 6;
+        }
+
+        
+
+        pastLine = null;
+
         Invoke("StartFunction", 0.4f);
     }
 
@@ -70,6 +143,8 @@ public class FishGenerator : MonoBehaviour
         xScreenHalfSize = yScreenHalfSize * Camera.main.aspect;
         screenMin = yScreenHalfSize / 5.0f * -3.0f;
         screenMax = yScreenHalfSize / 5.0f * 2.0f;
+        
+        respawnTime = respawnPeriod-1f;
     }
 
     // Update is called once per frame
@@ -79,33 +154,62 @@ public class FishGenerator : MonoBehaviour
         {
             respawnTime += Time.deltaTime;
             recordingTime += Time.deltaTime;
+
+            triangle.position = new Vector3((11f) * xScreenHalfSize / ScalingOnGaming.xScreenHalfSizeBase, breathPos(timeController.getProgressedTime()), 0);
         }
 
         if (respawnTime > respawnPeriod)
         {
-            int idx = UnityEngine.Random.Range(-10, 3);
+
+            int idx =  UnityEngine.Random.Range(1, 6);
+            float correction = 0.0f;
+
+            if (timeController.getProgressedTime() < 0.3)
+            {
+                idx = -1;  //초반에는 물방울 나오게.
+            }
+
+            respawnTime = -1f;
             GameObject fish;
             switch (idx)
             {
+                
                 case 1:
-                    fish = Instantiate(wooper_looper);
-                    respawnTime = -0.5f;
+                    fish = Instantiate(fish2);
+                    correction = 0.5f;
                     break;
                 case 2:
-                    fish = Instantiate(fish1);
-                    respawnTime = -0.5f;
+                    fish = Instantiate(fish3);
+                    correction = 0.4f;
                     break;
+                case 3:
+                    fish = Instantiate(fish4);
+                    correction = 0.3f;
+                    break;
+                case 4:
+                    fish = Instantiate(fish5);
+                    correction = 0.5f;
+                    break;
+                case 5:
+                    fish = Instantiate(fish6);
+                    correction = 0.1f;
+                    break;                
                 default:
                     fish = Instantiate(bubble);
                     respawnTime = 0.0f;
                     break;
             }
             float yPos = breathPos(timeController.getProgressedTime());
-            float xPos = (11f + ((idx < 1) ? 0.0f : 0.5f)) * xScreenHalfSize / ScalingOnGaming.xScreenHalfSizeBase;
+            
+            float xPos = (11f + correction) * xScreenHalfSize / ScalingOnGaming.xScreenHalfSizeBase;
 
-            fish.transform.position = new Vector3(xPos, yPos, 0.0f);
+            fish.transform.position = new Vector3(xPos, yPos, 0f);
         }
 
+
+
+        makeModeLine(timeController.getProgressedTime());
+   
         setGuideText(timeController.getProgressedTime());
 
         /*나중에 수정해야 함.*/
@@ -119,6 +223,7 @@ public class FishGenerator : MonoBehaviour
             //hookPos = (hookPos - (screenMax + screenMin) / 2) / (screenMax - screenMin) * (3.75f + 2.3f) + (3.75f - 2.3f) / 2.0f * ScalingOnGaming.yScaler;            
             //ScreenMin~ScreenMax -> 0~1
             correctHookPos = (correctHookPos - screenMin) / (screenMax - screenMin);
+            idealPosition.position = new Vector3(idealPosition.position.x, breathPos(Mathf.Clamp(timeController.getProgressedTime() - FishArrivalTime.getArrivalTime(), 0f, timeController.getProgressedTime())), 0);
             //Debug.Log("hookPos : " + hookPos);
         }
         else
@@ -158,9 +263,10 @@ public class FishGenerator : MonoBehaviour
     {
         float period = upTime + upWaitTime + downTime + downWaitTime;
         float phase = x % period;   
-        float textPhase = (x + FishArrivalTime.getArrivalTime()) % period;
 
         float yPos;
+
+        Material material= standardInhale;
         
         //phase에 따른 yPos 생성값 다룸.
         if (phase<0.0f) 
@@ -191,13 +297,164 @@ public class FishGenerator : MonoBehaviour
         return yPos;
     }
 
+    /// <summary>
+    /// 들숨 시간, 날숨 시간, 숨 참는 시간을 고려한, 시간에 따른 함숫값 반환. 사인파 형태.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <returns></returns>
+    private void makeModeLine(float x)
+    {
+        if (x == 0)  //아직 게임 시작 안 함.
+        {
+            return;
+        }
+
+        float period = upTime + upWaitTime + downTime + downWaitTime;
+        float phase = x % period;
+
+        Material material = standardInhale;
+
+        GameObject line=null;
+
+
+        float xPos = (pastLine != null) ? pastLine.vertex2.transform.position.x : 11f * xScreenHalfSize / ScalingOnGaming.xScreenHalfSizeBase;
+        //phase에 따른 yPos 생성값 다룸.
+        if (phase < 0.0f)
+        {
+            Debug.Log("Wrong period.");
+            return;
+        }
+        if (phase < upTime)
+        {
+            needInhaleSustainLine = needExhaleLine = needExhaleSustainLine = true;
+
+            if (needInhaleLine)
+            {
+                Debug.Log(" makeModeLine : inhaleLine");
+
+                needInhaleLine = false;
+                Vector3 pos1 = new Vector3(xPos, screenMin, -0.5f);
+                Vector3 pos2 = new Vector3(pos1.x + FishMove.speed * upTime, screenMax, -0.5f);
+                line = generateLine(pos1, pos2);
+                switch (modeIndex)
+                {
+                    case 0:
+                        material = standardInhale;
+                        break;
+                    case 1:
+                        material = attentionInhale;
+                        break;
+                    case 2:
+                        material = antiStressInhale;
+                        break;
+                    case 3:
+                        break;
+                }
+                line.GetComponent<LineRenderer>().material = material;
+            }
+        }
+        else if (phase < upTime + upWaitTime)
+        {
+            needInhaleLine = needExhaleLine = needExhaleSustainLine = true;
+
+            if (needInhaleSustainLine)
+            {
+                Debug.Log(" makeModeLine : inhaleSustainLine");
+                needInhaleSustainLine = false;
+                Vector3 pos1 = new Vector3(xPos, screenMax, -0.5f);
+                Vector3 pos2 = new Vector3(pos1.x + FishMove.speed * upWaitTime, screenMax, -0.5f);
+                line = generateLine(pos1, pos2);
+                switch (modeIndex)
+                {
+                    case 0:
+                        //material = standardInhale;
+                        break;
+                    case 1:
+                        material = attentionInhaleSustain;
+                        break;
+                    case 2:
+                        //material = antiStressInhale;
+                        break;
+                    case 3:
+                        break;
+                }
+                line.GetComponent<LineRenderer>().material = material;
+            }
+        }
+
+        else if (phase < upTime + upWaitTime + downTime)
+        {   
+            needInhaleLine = needInhaleSustainLine = needExhaleSustainLine = true;
+
+            if (needExhaleLine)
+            {
+                Debug.Log(" makeModeLine : exhaleLine");
+                needExhaleLine = false;
+                Vector3 pos1 = new Vector3(xPos, screenMax, -0.5f);
+                Vector3 pos2 = new Vector3(pos1.x + FishMove.speed * downTime, screenMin, -0.5f);
+                line = generateLine(pos1, pos2);
+                switch (modeIndex)
+                {
+                    case 0:
+                        material = standardExhale;
+                        break;
+                    case 1:
+                        material = attentionExhale;
+                        break;
+                    case 2:
+                        material = antiStressExhale;
+                        break;
+                    case 3:
+                        break;
+                }
+                line.GetComponent<LineRenderer>().material = material;
+            }
+        }
+
+        else
+        {
+            needInhaleLine = needInhaleSustainLine = needExhaleLine = true;
+
+            if (needExhaleSustainLine)
+            {
+                Debug.Log(" makeModeLine : exhaleSustainLine");
+
+                needExhaleSustainLine = false;
+                Vector3 pos1 = new Vector3(xPos, screenMin, -0.5f);
+                Vector3 pos2 = new Vector3(pos1.x + FishMove.speed * downWaitTime, screenMin, -0.5f);
+                line = generateLine(pos1, pos2);
+                switch (modeIndex)
+                {
+                    case 0:
+                        material = standardExhale;
+                        break;
+                    case 1:
+                        material = attentionExhale;
+                        break;
+                    case 2:
+                        material = antiStressExhale;
+                        break;
+                    case 3:
+                        break;
+                }
+                line.GetComponent<LineRenderer>().material = material;
+            }
+        }
+
+        if (line != null)
+        {
+            pastLine = line.GetComponent<BreathLineController>();
+        }       
+    }
+
+
 
     private void setGuideText(float x)
     {
         float period = upTime + upWaitTime + downTime + downWaitTime;
         float phase = (x - FishArrivalTime.getArrivalTime()) % period;
 
-        Debug.Log(FishArrivalTime.getArrivalTime());
+        //Debug.Log(FishArrivalTime.getArrivalTime());
         string msg=null;
 
         if (FishArrivalTime.getArrivalTime() == 0.0f)
@@ -206,7 +463,7 @@ public class FishGenerator : MonoBehaviour
         }
         else if (Pause.isPaused)
         {
-            msg = "호흡을 통해 낚시바늘을 하늘색 사각형 안으로 움직여주세요.";
+            msg = "호흡을 통해 낚시바늘을 하늘색 사각형 안으로 움직여주세요.";            
         }
         /*
         else if (timeController.getRemainingTime() <= 0.0f)
@@ -219,8 +476,8 @@ public class FishGenerator : MonoBehaviour
             Debug.Log("Wrong period.");           
         }
         else if (phase < upTime)
-        {
-            float remainingPahse = upTime - phase;
+        {                        
+            float remainingPahse = upTime - phase;            
             msg = Mathf.CeilToInt(remainingPahse) + "초간 깊게 들이마쉬세요.";
         }
         else if (phase < upTime + upWaitTime)
@@ -243,6 +500,111 @@ public class FishGenerator : MonoBehaviour
         }
 
         guideText.text = msg;
+    }
+
+    GameObject generateLine(Vector3 pos1, Vector3 pos2)
+    {
+
+        GameObject line = Instantiate(breathLine);
+        BreathLineController lineController = line.GetComponent<BreathLineController>();
+
+        lineController.vertex1.transform.position = pos1;
+        lineController.vertex2.transform.position = pos2;
+        return line;
+    }
+
+    /// <summary>
+    /// mode : 0->표준, 1->집중, 2->안정 3->사용자정의
+    /// phase : 0->들숨, 1->들숨 후 유지, 2->날숨, 3->날숨 후 유지
+    /// </summary>
+    /// <param name="mode"></param>
+    /// <param name="phase"></param>
+    void changeAudioClip(int mode, int phase)
+    {
+        switch (mode)
+        {
+            case 0:
+                switch (phase)
+                {
+                    case 0:
+                        if (audioSource.clip!= audioStandard[0])
+                        {
+                            audioSource.clip = audioStandard[0];
+                            audioSource.Play();
+                        }
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        if (audioSource.clip != audioStandard[1])
+                        {
+                            audioSource.clip = audioStandard[1];
+                            audioSource.Play();
+                        }
+                        break;
+                    case 3:
+                        break;
+                }
+                break;
+            case 1:
+                switch (phase)
+                {
+                    case 0:
+                        if (audioSource.clip != audioAttention[0])
+                        {
+                            audioSource.clip = audioAttention[0];
+                            audioSource.Play();
+                        }
+                        break;
+                    case 1:
+                        if (audioSource.clip != audioAttention[1])
+                        {
+                            audioSource.clip = audioAttention[1];
+                            audioSource.Play();
+                        }
+                        break;
+                    case 2:
+                        if (audioSource.clip != audioAttention[2])
+                        {
+                            audioSource.clip = audioAttention[2];
+                            audioSource.Play();
+                        }
+                        break;
+                    case 3:
+                        break;
+                }
+                break;
+            case 2:
+                switch (phase)
+                {
+                    case 0:
+                        if (audioSource.clip != audioAntiStress[0])
+                        {
+                            audioSource.clip = audioAntiStress[0];
+                            audioSource.Play();
+                        }
+                        break;
+                    case 1:
+                        break;
+                    case 2:
+                        if (audioSource.clip != audioAntiStress[1])
+                        {
+                            audioSource.clip = audioAntiStress[1];
+                            audioSource.Play();
+                        }
+                        break;
+                    case 3:
+                        if (audioSource.clip != audioAntiStress[2])
+                        {
+                            audioSource.clip = audioAntiStress[2];
+                            audioSource.Play();
+                        }
+                        break;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 }

@@ -7,6 +7,7 @@ TagManager:
   - Fish
   - row
   - TimeOrAim
+  - Vertex
   layers:
   - Default
   - TransparentFX

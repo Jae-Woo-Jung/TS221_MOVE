@@ -43,11 +43,11 @@ public class BreatheRecordController : MonoBehaviour
         
         GameObject ratio=bar.transform.Find("달성률").gameObject;        
         GameObject button= bar.transform.Find("Button").gameObject;
-        GameObject icon = bar.transform.Find("아이콘").gameObject;
+        //GameObject icon = bar.transform.Find("아이콘").gameObject;
         TextMeshProUGUI timeText = bar.transform.Find("시간").gameObject.GetComponent<TextMeshProUGUI>();
 
         //icon 변경
-        icon.GetComponent<Image>();
+        //icon.GetComponent<Image>();
 
         //버튼 조절
         button.GetComponent<Button>().onClick.AddListener(makeGraph);

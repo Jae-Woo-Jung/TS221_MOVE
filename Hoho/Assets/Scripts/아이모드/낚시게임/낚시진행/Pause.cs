@@ -26,12 +26,13 @@ public class Pause : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+/*
         if (AndroidBLEPluginStart.isConnected == false)
         {
             isPaused = true;
             connectionChecker.SetActive(true);
         }
-
+*/
 
         if (GameStart.isStarted && heart3.activeSelf) // ||(pauseBtn.GetComponentInChildren<TextMeshProUGUI>().text == "Àç°³")
         {

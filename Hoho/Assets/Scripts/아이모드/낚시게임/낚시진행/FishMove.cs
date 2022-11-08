@@ -5,7 +5,7 @@ using UnityEngine;
 public class FishMove : MonoBehaviour
 {
     public string fishName;
-    public static float speed=2.0f;
+    public static float speed=1.0f;
 
     [Tooltip("static 변수로서 오브젝트끼리 공유함.")]
     public float speedStatic
@@ -14,11 +14,7 @@ public class FishMove : MonoBehaviour
         set { speed = value; }   // value 키워드 사용
     }
 
-    public bool isArrived;
-
-    public string[] fishList = { "bubble","angel", "arowana fish", "asian arowana fish", "betta fish", "calvary fish", "coelacanth fish", 
-        "discus", "flower fish", "golden archer fish", "guppy", "lnflatable molly fish", "Monodactylus", 
-        "piranha fish", "ramirezi", "silver shark fish", "sword tail", "wooper looper", "Yellow Cichlid" };    
+    public bool isArrived; 
 
     /// <summary>
     /// move만큼 x축으로 이동시킴. 오른쪽에서 왼쪽 이동은 음수.
