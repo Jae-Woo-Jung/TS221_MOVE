@@ -80,10 +80,7 @@ public class BreathingTest : MonoBehaviour
         float delta = (breathingMax - breathingMin);
 
         breathingMin = (int) (0.1f*delta +breathingMin);
-        breathingMax =(int)  (0.9 * delta+ breathingMin);
-
-
-        delta= (breathingMax - breathingMin);
+        breathingMax =(int)  (-0.1f * delta+ breathingMax);
 
 
         if (delta < 50)
@@ -115,6 +112,8 @@ public class BreathingTest : MonoBehaviour
 
         isTested = true;
         isTesting = false;
+
+        Debug.Log("showResult : Min :" + breathingMin + ", Max : " + breathingMax);
         SceneLoader.LoadScene("낚시시작화면");
     }
 
