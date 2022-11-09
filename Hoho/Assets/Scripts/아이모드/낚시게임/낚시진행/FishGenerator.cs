@@ -493,6 +493,8 @@ public class FishGenerator : MonoBehaviour
         }
         if (phase < upTime)
         {
+
+            audioSource.volume = (1 + phase / upTime) / 2;
             needInhaleSustainSound = needExhaleSound = needExhaleSustainSound = true;
 
             if (needInhaleSound)
@@ -505,6 +507,7 @@ public class FishGenerator : MonoBehaviour
         }
         else if (phase < upTime + upWaitTime)
         {
+            audioSource.volume = 1;
             needInhaleSound = needExhaleSound = needExhaleSustainSound= true;
 
             if (needInhaleSustainSound)
@@ -517,6 +520,7 @@ public class FishGenerator : MonoBehaviour
 
         else if (phase < upTime + upWaitTime + downTime)
         {
+            audioSource.volume = 1 - ((phase - upTime-downTime) / downTime / 2f);
             needInhaleSound = needInhaleSustainSound = needExhaleSustainSound = true;
 
             if (needExhaleSound)
@@ -529,6 +533,7 @@ public class FishGenerator : MonoBehaviour
 
         else
         {
+            audioSource.volume = 0.5f;
             needInhaleSound = needInhaleSustainSound = needExhaleSound = true;
 
             if (needExhaleSustainLine)
@@ -701,5 +706,4 @@ public class FishGenerator : MonoBehaviour
                 break;
         }
     }
-
 }
