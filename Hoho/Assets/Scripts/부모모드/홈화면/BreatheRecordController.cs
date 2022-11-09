@@ -65,7 +65,9 @@ public class BreatheRecordController : MonoBehaviour
         {
             breathePannel.SetActive(true);
             breathePannel.GetComponent<GraphGenerator>().drawGraph(data1, data2);
-            GameObject.Find("홈화면패널").SetActive(false);
+            GameObject.Find("일간호흡기록창").SetActive(false);
+            GameObject.Find("칭찬카드").SetActive(false);
+            GameObject.Find("진행상황영역").SetActive(false);
             return;
         }
     }

@@ -5,6 +5,7 @@ using UnityEngine.UI;  //This template can be customized at C:\Program Files\Uni
 using System;
 using TMPro;
 using Assets.SimpleAndroidNotifications;
+using System.Linq;
 
 public class TodaySchedule : MonoBehaviour
 {
@@ -74,7 +75,8 @@ public class TodaySchedule : MonoBehaviour
         {
             var LastResult=ChildDataController.fishGameResultList.FindLast(x=>true);
 
-            DateTime RefDate = Convert.ToDateTime(LastResult.시작날짜);
+            DateTime RefDate = Convert.ToDateTime(LastResult.시작시간);
+            Debug.Log("initializeSchedule Last Result : "+LastResult.시작시간);
 
             //마지막으로 호흡한 시간. 
             refH = RefDate.Hour;
@@ -86,16 +88,19 @@ public class TodaySchedule : MonoBehaviour
         int scheduleNum = 0;
         int finishedScheduleNum = 0;
 
+        Transform table = scheduleContent.transform;
+
+        int nowH = new DateTime().Hour;
+        int nowM = new DateTime().Minute;
+        int modeIndex = 0;
+        
         foreach (var schedule in ChildDataController.scheduleInformationList)
         {
             scheduleNum++;
 
-            int nowH = new DateTime().Hour;
-            int nowM = new DateTime().Minute;
-
-            Transform table = scheduleContent.transform;
+            
             int siblingIndex = 0;
-
+            
 
             Debug.Log("initializeSchedul : "+schedule.요일+", 제목 : "+schedule.제목);
 
@@ -118,41 +123,30 @@ public class TodaySchedule : MonoBehaviour
             int minAfter;
             Int32.TryParse(minute, out minAfter);
 
-            
-
-
-            foreach (var currentTime in table.GetComponentsInChildren<Transform>())
+            if (hAfter < refH || (hAfter == refH && minAfter <= refM))
             {
+                newTime.transform.Find("완료표시").gameObject.SetActive(true);
+                Debug.Log("initializeSchedule : 완료표시" + true);
+                hAfter += 24;
+                minAfter += 60;
+                finishedScheduleNum++;
+            }                
+            else
+            {
+                //newTime.transform.Find("완료표시").gameObject.SetActive(false);
+                Debug.Log("initializeSchedule : 완료표시" + false);
 
-                if (currentTime.tag != "TimeOrAim")
-                {
-                    continue;
-                }
-
-                int modeIndex=0;
-                modeIndex = modeImages.FindIndex(x => x == currentTime.GetComponent<Image>().sprite);
-
-                Debug.Log("initializeSchedule : modeIndex " + modeIndex);
-
-                if (hAfter<refH || (hAfter == refH && minAfter <= refM))
-                {
-                    newTime.transform.Find("완료표시").gameObject.SetActive(true);
-                    hAfter += 24;
-                    minAfter += 60;
-                    finishedScheduleNum++;
-                }
-                else
-                {
-                    newTime.transform.Find("완료표시").gameObject.SetActive(false);
-
-                    //notificatoin 추가.
+                //notificatoin 추가.
 #if PLATFORM_ANDROID && UNITY_EDITOR
 
-                    DateTime date1 = Convert.ToDateTime(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + schedule.시 + ":" + schedule.분);
+                DateTime date1 = Convert.ToDateTime(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + schedule.시 + ":" + schedule.분);
 
-                    if (date1 > DateTime.Now)
-                    {
+                Debug.Log("initializeSchedule target schedule : "+date1);
+                if (date1 > DateTime.Now)
+                {
+                    Debug.Log("initializeSchedule : notification setting start.");
                     TimeSpan delay = date1 - DateTime.Now;
+                    Debug.Log(delay.ToString());
 
                     var notificationParams = new NotificationParams{
                             Id = UnityEngine.Random.Range(0, int.MaxValue),
@@ -168,19 +162,18 @@ public class TodaySchedule : MonoBehaviour
                             LargeIcon = "app_icon"
                         };
 
-                    Debug.Log(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " "+  schedule.시 + ":" + schedule.분);
-
-                    NotificationManager.SendCustom(notificationParams);
-                    }
+                NotificationManager.SendCustom(notificationParams);
+                }
 #endif
-                }
+            }
 
+            var currentTime = table.GetComponentsInChildren<Transform>().ToList<Transform>().FindLast(x => x.tag == "TimeOrAim");
+            {
+                modeIndex=0;
+                modeIndex = modeImages.FindIndex(x => x == currentTime.GetComponent<Image>().sprite);
 
+                Debug.Log("initializeSchedule : modeIndex " + modeIndex+", 시간 : "+schedule.시+": "+schedule.분);
 
-                if (currentTime.tag != "TimeOrAim")
-                {
-                    continue;
-                }
                 //Debug.Log(currentTime.parent.name + ", " + currentTime.name);
 
                 //기존의 스케줄
@@ -190,22 +183,31 @@ public class TodaySchedule : MonoBehaviour
                 int minBefore;
                 Int32.TryParse(timeBefore.Substring(3, 2), out minBefore);
 
+                if (newTime.transform.Find("완료표시").gameObject.activeSelf)
+                {
+                    hBefore += 24;
+                    minBefore += 60;                    
+                }
+
+                siblingIndex = currentTime.transform.GetSiblingIndex();
                 //뒤에 있어야 할 조건 : 
                 if (hBefore < hAfter || (hBefore == hAfter && minBefore < minAfter))
                 {
-                    siblingIndex++;
-                    
-                    mode = modeIndex == 0 ? "표준모드" : modeIndex == 1 ? "집중모드" : modeIndex == 2 ? "안정모드" : "사용자정의모드";
+                    siblingIndex++;                   
                 }
-            }                        
+            }
 
             newTime.GetComponent<Image>().sprite = modeImages[imageIdx];
             newTime.transform.SetSiblingIndex(siblingIndex);
             
         }
 
+        var firstTime = table.GetComponentsInChildren<Transform>().ToList<Transform>().Find(x => x.tag == "TimeOrAim");
+        modeIndex = modeImages.FindIndex(x => x == firstTime.GetComponent<Image>().sprite);
+
+        mode = modeIndex == 0 ? "표준모드" : modeIndex == 1 ? "집중모드" : modeIndex == 2 ? "안정모드" : "사용자정의모드";
         //Debug.Log("Current mode : " + mode);
-        gameProgressRatio= gameProgress.value = scheduleNum==0? 0 : finishedScheduleNum/(float) scheduleNum;
+        gameProgressRatio = gameProgress.value = scheduleNum==0? 0 : finishedScheduleNum/(float) scheduleNum;
     }
 
     int compareStringTime(string time1, string time2)
@@ -233,6 +235,7 @@ public class TodaySchedule : MonoBehaviour
         if (!AndroidBLEPluginStart.isConnected)
         {
             AndroidBLEPluginStart.CallByAndroid("왼쪽 위의 버튼을 눌러 벨트랑 연결해주세요.");
+            return;
         }
 
         //SceneLoader.LoadScene("낚시시작화면");
