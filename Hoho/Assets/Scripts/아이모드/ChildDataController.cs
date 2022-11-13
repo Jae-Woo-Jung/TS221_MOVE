@@ -102,7 +102,7 @@ public class ChildDataController : MonoBehaviour
 
     static public Dictionary<string, int> RLresult = new Dictionary<string, int>();
     static public Dictionary<string, string> RLresult_str = new Dictionary<string, string>();
-    static public Dictionary<string, int> CPresult = new Dictionary<string, int>();
+    static public Dictionary<string, int> CPresult= new Dictionary<string, int>();
     static public Dictionary<string, string> CPresult_str = new Dictionary<string, string>();
 
     static FirebaseFirestore db;
@@ -549,6 +549,8 @@ public class ChildDataController : MonoBehaviour
 
     static public void receiveCompPoint(updateDelegate updateReward)
     {
+        CPresult.Clear();
+
         if (db == null)
         {
             db = FirebaseFirestore.DefaultInstance;
@@ -571,7 +573,7 @@ public class ChildDataController : MonoBehaviour
                 }
 
                 int point = System.Int32.Parse(CompPoint["포인트"].ToString());
-                //Debug.Log("포인트 파싱");
+                //Debug.Log("receiveCompPoint 포인트 파싱");
                 //Debug.Log("level : "+level + ", point : " + point);
 
                 ChildDataController.CPresult.Add("포인트_" + idx, point);
@@ -586,6 +588,7 @@ public class ChildDataController : MonoBehaviour
 
     static public void receiveCompPoint_str(updateDelegate updateReward)
     {
+        CPresult_str.Clear();
         if (db == null)
         {
             db = FirebaseFirestore.DefaultInstance;

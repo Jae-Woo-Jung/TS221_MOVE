@@ -25,8 +25,8 @@ public class BreathingTest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        breathingMax = 1;
-        breathingMin = 0;
+        breathingMax = 0;
+        breathingMin = 1024;
         isTested = false;
         
         guideVideo.Stop();
