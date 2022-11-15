@@ -91,7 +91,7 @@ public class PointListController : MonoBehaviour
         
         foreach(KeyValuePair<string, int> pair in ChildDataController.CPresult)
         {
-            //Debug.Log( "pair : "+(pair.Key, pair.Value));
+            Debug.Log( "GetStackP pair : "+(pair.Key, pair.Value));
         }
         
         for (int i = 1; i < ChildDataController.CPresult.Count+1; i++)
@@ -107,9 +107,10 @@ public class PointListController : MonoBehaviour
             }
             catch (Exception e)
             {
-                //Debug.Log(e.Message);
+                Debug.Log("GetStackP : "+e.Message);
             }
         }
+        Debug.Log("GetStackP, CPpointStack.Count : "+CPpointStack.Count);
     }
 
     public void GetStackP_str()
@@ -134,7 +135,7 @@ public class PointListController : MonoBehaviour
             }
             catch (Exception e)
             {
-                //Debug.Log(e.Message);
+                Debug.Log(e.Message);
             }
         }
     }
@@ -184,7 +185,7 @@ public class PointListController : MonoBehaviour
     void Update()
     {
         if (CPpointStack.Count == 0)
-        {
+        {            
             cardController.cpmsg.GetComponent<Button>().interactable = false;
         }
         else

@@ -23,9 +23,21 @@ public class HookController : MonoBehaviour
         //0~1 -> -1~2.5로 보내기.
         y = Mathf.Clamp(y, 0f, 1f);
         y = ((chainYmax-chainYmin) * y + chainYmin) * ScalingOnGaming.yScaler;
-        
-        this.transform.parent.transform.localPosition = new Vector2(this.transform.parent.localPosition.x, y);
-        //Debug.Log("사슬의 실제 pos :" + transform.parent.localPosition);
+
+
+        //y = y < 1f ? -1f : 2.5f;
+
+        Vector3 localPos= new Vector3(this.transform.parent.localPosition.x/ this.transform.parent.localScale.x, y/this.transform.parent.localScale.y);
+        //Debug.Log("사슬의 예상 localPos :" + this.transform.parent.localPosition);
+        //Debug.Log("사실의 Position : "+this.transform.parent.position);
+        Vector3 worldPos = localPos + this.transform.parent.parent.transform.position;
+
+        //Debug.Log("사슬의 최종 목표 : " + world_target);
+        //Debug.Log("Vector3.Lerp(this.transform.parent.position, world_target, 0.1f) : " + Vector3.Lerp(this.transform.parent.position, world_target, 0.1f));
+
+        this.transform.parent.position = Vector3.Lerp(this.transform.parent.position, worldPos, 0.01f);
+        //this.transform.parent.localPosition = new Vector3(this.transform.parent.localPosition.x, y);
+        //Debug.Log("사슬의 실제 pos :" + transform.parent.position);
         //Debug.Log("사슬의 y : "+y);
     }
 
