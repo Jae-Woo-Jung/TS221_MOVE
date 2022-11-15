@@ -68,11 +68,10 @@ public class AndroidBLEPluginStart : MonoBehaviour
     // makeToast. 안드로이드 화면 상에 Text를 잠깐 띄워줌.
     public static void CallByAndroid(string message)
     {
-        try
-        {
+        Debug.Log("CallByAndroid : " + message);
+#if UNITY_ANDROID && !UNITY_EDITOR
             _bleControlObj.Call("showText", message);
-        }
-        catch { Debug.LogError("Not yet inited."); }
+#endif        
     }
 
     public void startScan()

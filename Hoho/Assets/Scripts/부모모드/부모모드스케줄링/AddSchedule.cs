@@ -129,22 +129,26 @@ public class AddSchedule : MonoBehaviour
         //Check the legibility of inputs.
         if (trueDayList.Count == 0)
         {
-            Debug.LogError("No days are selected.");
+            AndroidBLEPluginStart.CallByAndroid("요일을 선택해주세요.");
+            //Debug.LogError("No days are selected.");
             return;
         }
         if (modeList.Count !=1)
         {
-            Debug.LogError(modeList.Count+" modes are selected");
+            AndroidBLEPluginStart.CallByAndroid("모드를 하나 선택해주세요.");
+            //Debug.LogError(modeList.Count+" modes are selected");
             return;
         }
         if (titleInput.text.Length ==0)
         {
-            Debug.LogError("title is null.");
+            AndroidBLEPluginStart.CallByAndroid("제목을 입력해주세요.");
+            //Debug.LogError("title is null.");
             return;
         }
         if (hourInput.text.Length == 0 || minuteInput.text.Length == 0)
         {
-            Debug.LogError("time is null");
+            AndroidBLEPluginStart.CallByAndroid("시간을 입력해주세요.");
+            //Debug.LogError("time is null");
             return;
         }
 
@@ -161,17 +165,20 @@ public class AddSchedule : MonoBehaviour
         //Check the legibility of inputs.
         if (trueDayList.Count == 0)
         {
-            Debug.LogError("No days are selected.");
+            AndroidBLEPluginStart.CallByAndroid("요일을 선택해주세요.");
+            //Debug.LogError("No days are selected.");
             return;
         }
         if (titleCustomInput.text.Length == 0)
         {
-            Debug.LogError("title is null.");
+            AndroidBLEPluginStart.CallByAndroid("제목을 입력해주세요.");
+            //Debug.LogError("title is null.");
             return;
         }
         if (hourCustomInput.text.Length * minuteCustomInput.text.Length * inhaleInput.text.Length * inhaleSustainInput.text.Length * exhaleInput.text.Length * exhaleSustainInput.text.Length == 0)
         {
-            Debug.LogError("time is null");
+            AndroidBLEPluginStart.CallByAndroid("시간 및 반복횟수를 모두 입력해주세요.");
+            //Debug.LogError("time is null");
             return;
         }
 

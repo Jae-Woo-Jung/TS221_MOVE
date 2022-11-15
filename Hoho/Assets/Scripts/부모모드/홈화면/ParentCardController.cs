@@ -24,8 +24,12 @@ public class ParentCardController : MonoBehaviour
 
         string content = cardMessage.text;
 
-        int point = 0;
-        if (System.Int32.TryParse(cardPoint.text, out point) && point != 0)
+        int point = -1;
+        if (!System.Int32.TryParse(cardPoint.text, out point))
+        {
+            AndroidBLEPluginStart.CallByAndroid("포인트를 입력해주세요.");
+        }
+        else
         {
 
             FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
@@ -63,8 +67,6 @@ public class ParentCardController : MonoBehaviour
                 cardPoint.text = cardMessage.text = "";
             });
         }
-        else
-        Debug.Log("Please set point");
     }
 
     
