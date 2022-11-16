@@ -29,7 +29,8 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
         }
         else
         {
-            SceneManager.LoadScene("낚시진행");
+            SceneManager.LoadScene("낚시모드선택");
+            //SceneManager.LoadScene("낚시진행");
         }
     }
     

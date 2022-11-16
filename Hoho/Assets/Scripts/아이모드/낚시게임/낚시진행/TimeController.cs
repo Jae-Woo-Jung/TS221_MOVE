@@ -25,7 +25,7 @@ public class TimeController : MonoBehaviour
     /// <summary>
     /// 게임 전체 시간을 미리 결정.
     /// </summary>
-    public static float fullTimeStatic=50;
+    public static float fullTimeStatic = 100;
 
 
     [SerializeField][Tooltip("게임 진행 시간")]
