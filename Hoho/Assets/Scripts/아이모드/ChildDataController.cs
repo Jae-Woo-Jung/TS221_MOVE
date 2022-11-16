@@ -478,6 +478,7 @@ public class ChildDataController : MonoBehaviour
             db = FirebaseFirestore.DefaultInstance;
         }
         Query RLquery = db.Collection("ParentUsers").Document(parentID).Collection("Point").WhereEqualTo("type", "list");
+        RLquery = RLquery.WhereEqualTo("isChecked", false);
         RLquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             QuerySnapshot RLQuerySnapshot = task.Result;
@@ -556,6 +557,7 @@ public class ChildDataController : MonoBehaviour
             db = FirebaseFirestore.DefaultInstance;
         }
         Query CPquery = db.Collection("ParentUsers").Document(parentID).Collection("Point").WhereEqualTo("type", "card");
+        CPquery = CPquery.WhereEqualTo("isChecked", false);
         CPquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             //Debug.Log("receiving CompPoint");
@@ -578,6 +580,11 @@ public class ChildDataController : MonoBehaviour
 
                 ChildDataController.CPresult.Add("Æ÷ÀÎÆ®_" + idx, point);
                 idx++;
+                /*Dictionary<string, object> updates = new Dictionary<string, object>
+                {
+                    { "isChecked", true }
+                };
+                CPQuerySnapshot.Documents.up(updates);*/
 
             }
             updateReward();
@@ -594,6 +601,7 @@ public class ChildDataController : MonoBehaviour
             db = FirebaseFirestore.DefaultInstance;
         }
         Query CPquery = db.Collection("ParentUsers").Document(parentID).Collection("Point").WhereEqualTo("type", "card");
+        CPquery = CPquery.WhereEqualTo("isChecked_str", false);
         CPquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
             //Debug.Log("receiveCompPoint_str_1");

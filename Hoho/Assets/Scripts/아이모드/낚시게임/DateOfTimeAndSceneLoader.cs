@@ -13,8 +13,17 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
     public void SceneLoad()
     {
 
-        DateTime nowDt = DateTime.Now;
+        /*DateTime nowDt = DateTime.Now;
         if ((nowDt.DayOfWeek == DayOfWeek.Saturday)||(nowDt.DayOfWeek == DayOfWeek.Sunday))
+        {
+            SceneManager.LoadScene("낚시모드선택");
+        }
+        else
+        {
+            SceneManager.LoadScene("낚시진행");
+        }*/
+
+        if (TodaySchedule.mode.Contains("자유"))
         {
             SceneManager.LoadScene("낚시모드선택");
         }

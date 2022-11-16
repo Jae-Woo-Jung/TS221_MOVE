@@ -48,7 +48,9 @@ public class ParentCardController : MonoBehaviour
                 {
                     { "내용", cardMessage.text },
                     { "포인트", cardPoint.text },
-                    {"type", "card" }
+                    {"type", "card" },
+                    {"isChecked", false },
+                    {"isChecked_str", false }
                 };
                 string filePath = "ParentUsers/" + parentID + "/Point/CompPoint";
 

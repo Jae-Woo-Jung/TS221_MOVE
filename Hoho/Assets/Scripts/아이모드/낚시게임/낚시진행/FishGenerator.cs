@@ -16,7 +16,7 @@ public class FishGenerator : MonoBehaviour
     /// <summary>
     /// 0->표준, 1->집중, 2->안정 3->사용자정의
     /// </summary>
-    public static int modeIndex = 1;
+    public static int modeIndex;
 
     [Tooltip("기록 주기.")]
     public float recordingPeriod = 1.0f;
