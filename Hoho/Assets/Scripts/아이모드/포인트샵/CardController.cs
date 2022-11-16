@@ -34,15 +34,15 @@ public class CardController : MonoBehaviour
         string parentID = ChildDataController.parentID;
 
 
-        int CPPoint = System.Int32.Parse(pointListController.CPpointStack.Pop());
-        string CPPoint_str = pointListController.CPpointStack_str.Pop();
+        int CPPoint = System.Int32.Parse(pointListController.CPpointQueue.Dequeue());
+        string CPPoint_str = pointListController.CPpointQueue_str.Dequeue();
 
         
         if (db == null)
         {
             db = FirebaseFirestore.DefaultInstance;
         }
-        DocumentReference CPRef = db.Collection("ParentUsers").Document(parentID).Collection("Point").Document("적절변수");
+        DocumentReference CPRef = db.Collection("ParentUsers").Document(parentID).Collection("Point").Document(pointListController.CPpointQueue.Dequeue());
         Dictionary<string, object> updates = new Dictionary<string, object>
         {
             { "isChecked", true },

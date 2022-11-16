@@ -99,11 +99,36 @@ public class ChildDataController : MonoBehaviour
 
 
 
+
+
+    [FirestoreData]
+    public class CompPoint
+    {
+        /*[FirestoreProperty]
+        public Timestamp Timestamp { get; set; } = '00';*/
+
+        [FirestoreProperty]
+        public bool isChecked { get; set; } = false;
+
+        [FirestoreProperty]
+        public bool isChecked_str { get; set; } = false;
+
+        [FirestoreProperty]
+        public string type { get; set; } = "card";
+        
+        [FirestoreProperty]
+        public string 내용 { get; set; } = "안녕";
+
+        [FirestoreProperty]
+        public string 포인트 { get; set; } = "100";
+    }
+
+
     public delegate void updateDelegate();
 
     static public Dictionary<string, int> RLresult = new Dictionary<string, int>();
     static public Dictionary<string, string> RLresult_str = new Dictionary<string, string>();
-    static public Dictionary<string, int> CPresult= new Dictionary<string, int>();
+    static public Dictionary<string, string> CPresult= new Dictionary<string, string>();
     static public Dictionary<string, string> CPresult_str = new Dictionary<string, string>();
 
     static FirebaseFirestore db;
@@ -561,7 +586,7 @@ public class ChildDataController : MonoBehaviour
         CPquery = CPquery.WhereEqualTo("isChecked", false);
         CPquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
-            //Debug.Log("receiving CompPoint");
+            Debug.Log("receiving CompPoint");
             QuerySnapshot CPQuerySnapshot = task.Result;
             //Debug.Log("receiving CompPoint : " + CPQuerySnapshot.Count);
             int idx = 1;
@@ -569,24 +594,24 @@ public class ChildDataController : MonoBehaviour
             {
                 Dictionary<string, object> CompPoint = doc.ToDictionary();
 
-                CompPoint.Add("id", doc.Id);
                 foreach (KeyValuePair<string, object> pair in CompPoint)
                 {
                     //Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
                     //Debug.Log("디버깅 : " + CompPoint[pair.Key]);
                 }
 
-                int point = System.Int32.Parse(CompPoint["포인트"].ToString());
-                //Debug.Log("receiveCompPoint 포인트 파싱");
+                string point = CompPoint["포인트"].ToString();
+                Debug.Log("receiveCompPoint 포인트 파싱");
                 //Debug.Log("level : "+level + ", point : " + point);
 
                 ChildDataController.CPresult.Add("포인트_" + idx, point);
+                ChildDataController.CPresult.Add("ID_" + idx, doc.Id);
                 idx++;
                 /*Dictionary<string, object> updates = new Dictionary<string, object>
                 {
                     { "isChecked", true }
                 };
-                CPRef.UpdateAsync(updates);*/
+                CPQuerySnapshot.Documents.up(updates);*/
 
             }
             updateReward();
@@ -606,7 +631,7 @@ public class ChildDataController : MonoBehaviour
         CPquery = CPquery.WhereEqualTo("isChecked_str", false);
         CPquery.GetSnapshotAsync().ContinueWithOnMainThread(task =>
         {
-            //Debug.Log("receiveCompPoint_str_1");
+            Debug.Log("receiveCompPoint_str_1");
             QuerySnapshot CPQuerySnapshot = task.Result;
             //Debug.Log("receiveCompPoint_str_2");
             int idx = 1;

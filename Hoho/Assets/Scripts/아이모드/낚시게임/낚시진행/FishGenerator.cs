@@ -481,7 +481,7 @@ public class FishGenerator : MonoBehaviour
 
         Material material = standardInhale;
 
-        GameObject line = null;
+        //GameObject line = null;
 
 
         float xPos = (pastLine != null) ? pastLine.vertex2.transform.position.x : 11f * xScreenHalfSize / ScalingOnGaming.xScreenHalfSizeBase;
