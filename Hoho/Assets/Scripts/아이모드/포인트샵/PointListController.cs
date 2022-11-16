@@ -45,6 +45,9 @@ public class PointListController : MonoBehaviour
     public Stack<String> CPpointStack = new Stack<String>();
     public Stack<String> CPpointStack_str = new Stack<String>();
 
+    public List<String> CPpointList = new List<string>();
+    public List<String> CPpointList_str = new List<string>();
+
 
     public static List<TextMeshProUGUI> guideTexts = new List<TextMeshProUGUI>();
     public static List<TextMeshProUGUI> guideTexts_str = new List<TextMeshProUGUI>();

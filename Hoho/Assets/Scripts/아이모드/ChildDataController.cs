@@ -148,7 +148,7 @@ public class ChildDataController : MonoBehaviour
     /// <summary>
     /// 부모 ID.
     /// </summary>
-    static string parentID = "001";
+    public static string parentID = "001";
 
     /// <summary>
     /// 시작날짜 = "", 시작시간 = "", 레벨 = 0, 별개수 = starNum, 플레이시간 = 0, 호흡기록, 예상호흡기록
@@ -584,7 +584,7 @@ public class ChildDataController : MonoBehaviour
                 {
                     { "isChecked", true }
                 };
-                CPQuerySnapshot.Documents.up(updates);*/
+                CPRef.UpdateAsync(updates);*/
 
             }
             updateReward();
