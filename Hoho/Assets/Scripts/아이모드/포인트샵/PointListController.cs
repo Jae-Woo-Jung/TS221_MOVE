@@ -42,11 +42,9 @@ public class PointListController : MonoBehaviour
     /// <summary>
     /// CP = Compensation Point, CPpointStack은 칭찬카드의 포인트를 쌓아두는 스택
     /// </summary>
-    public Stack<String> CPpointStack = new Stack<String>();
-    public Stack<String> CPpointStack_str = new Stack<String>();
 
-    public List<String> CPpointList = new List<string>();
-    public List<String> CPpointList_str = new List<string>();
+    public Queue<String> CPpointQueue = new Queue<string>();
+    public Queue<String> CPpointQueue_str = new Queue<string>();
 
 
     public static List<TextMeshProUGUI> guideTexts = new List<TextMeshProUGUI>();
@@ -92,7 +90,7 @@ public class PointListController : MonoBehaviour
     {
         //Debug.Log("GetStakP : "+ (ChildDataController.CPresult.Count));
         
-        foreach(KeyValuePair<string, int> pair in ChildDataController.CPresult)
+        foreach(KeyValuePair<string, string> pair in ChildDataController.CPresult)
         {
             Debug.Log( "GetStackP pair : "+(pair.Key, pair.Value));
         }
@@ -102,18 +100,24 @@ public class PointListController : MonoBehaviour
             try
             {
 
+                
+
                 //Debug.Log("GetStackP iteration");
                 string msg = ChildDataController.CPresult["포인트_" + i].ToString();
                 //guideTexts[i - 1].text = msg;
                 //Debug.Log(msg);
-                CPpointStack.Push(msg);
+                CPpointQueue.Enqueue(msg);
+
+                string ID = ChildDataController.CPresult["ID_" + i];
+                CPpointQueue.Enqueue(ID);
+
             }
             catch (Exception e)
             {
                 Debug.Log("GetStackP : "+e.Message);
             }
         }
-        Debug.Log("GetStackP, CPpointStack.Count : "+CPpointStack.Count);
+        Debug.Log("GetStackP, CPpointStack.Count : "+ CPpointQueue.Count);
     }
 
     public void GetStackP_str()
@@ -134,7 +138,7 @@ public class PointListController : MonoBehaviour
                 string msg = ChildDataController.CPresult_str["내용_" + i].ToString();
                 //guideTexts[i - 1].text = msg;
                 //Debug.Log(msg);
-                CPpointStack_str.Push(msg);
+                CPpointQueue_str.Enqueue(msg);
             }
             catch (Exception e)
             {
@@ -187,7 +191,7 @@ public class PointListController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (CPpointStack.Count == 0)
+        if (CPpointQueue.Count == 0)
         {            
             cardController.cpmsg.GetComponent<Button>().interactable = false;
         }

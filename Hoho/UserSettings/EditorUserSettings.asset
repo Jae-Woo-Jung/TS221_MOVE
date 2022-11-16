@@ -6,35 +6,31 @@ EditorUserSettings:
   serializedVersion: 4
   m_ConfigSettings:
     RecentlyUsedSceneGuid-0:
-      value: 5507500756575e0b580a597b4577074445164a7878292033287e4436b4b9626a
+      value: 535552515c065c025b580e23437006444e164072297e74622c7b1b36e0b26261
       flags: 0
     RecentlyUsedSceneGuid-1:
-      value: 515501525054585f555d5a7447730744134f487f7e7a23337a794e64b1b6316e
-      flags: 0
-    RecentlyUsedSceneGuid-2:
-      value: 570250505102085d085e0e2416720744124e4872782a73342f7f4562e7b5613a
-      flags: 0
-    RecentlyUsedSceneGuid-3:
       value: 5252060457510f5d080d0e2415710f44464e1b7d7f7e25697c2c4437b0e3646d
       flags: 0
-    RecentlyUsedSceneGuid-4:
+    RecentlyUsedSceneGuid-2:
       value: 0257555606000d0a0b5f0e7a1275594446151e2e74297e317c2a4d32b7e46d3d
       flags: 0
-    RecentlyUsedSceneGuid-5:
+    RecentlyUsedSceneGuid-3:
       value: 5306000401040b0f5b0c5c21457a0744454e1e7a7d7c25667c7f4465b1e1603a
       flags: 0
+    RecentlyUsedSceneGuid-4:
+      value: 0704060751510c0f595d0d7a11255b4447151a2c2a7a7764797f1e63b7e43539
+      flags: 0
+    RecentlyUsedSceneGuid-5:
+      value: 515501525054585f555d5a7447730744134f487f7e7a23337a794e64b1b6316e
+      flags: 0
     RecentlyUsedSceneGuid-6:
-      value: 0706550053005c0f5556547312715a44414f4c7a752c7436787a4b30e4b8326a
+      value: 5507500756575e0b580a597b4577074445164a7878292033287e4436b4b9626a
       flags: 0
     RecentlyUsedSceneGuid-7:
-<<<<<<< Updated upstream
-      value: 535552515c065c025b580e23437006444e164072297e74622c7b1b36e0b26261
-=======
-      value: 0000555251560d595e08592147250a44444e4c2b287c70672c2f4930e4e56c6d
->>>>>>> Stashed changes
+      value: 015256020604510d5c0a092312715d4413151e2e7b2e22357b2a1b31bbb1376a
       flags: 0
     RecentlyUsedSceneGuid-8:
-      value: 02550656540208580f0d5b26457a5b4445164a2e287a7e66747e4563b1b0376b
+      value: 0000555251560d595e08592147250a44444e4c2b287c70672c2f4930e4e56c6d
       flags: 0
     RecentlyUsedSceneGuid-9:
       value: 02550656540208580f0d5b26457a5b4445164a2e287a7e66747e4563b1b0376b
