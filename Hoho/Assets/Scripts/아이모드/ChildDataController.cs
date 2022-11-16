@@ -98,6 +98,7 @@ public class ChildDataController : MonoBehaviour
     }
 
 
+
     public delegate void updateDelegate();
 
     static public Dictionary<string, int> RLresult = new Dictionary<string, int>();
@@ -568,6 +569,7 @@ public class ChildDataController : MonoBehaviour
             {
                 Dictionary<string, object> CompPoint = doc.ToDictionary();
 
+                CompPoint.Add("id", doc.Id);
                 foreach (KeyValuePair<string, object> pair in CompPoint)
                 {
                     //Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
