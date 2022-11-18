@@ -15,6 +15,7 @@ public class CardController : MonoBehaviour
     public TextMeshProUGUI point;
     public Button receive;
     public Button cpmsg;
+    public Image bell;
 
     public ProgressController progressController;
     public PointListController pointListController;

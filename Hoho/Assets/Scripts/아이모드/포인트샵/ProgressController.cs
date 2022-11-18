@@ -141,7 +141,7 @@ public class ProgressController : MonoBehaviour
         ProgressController.level = Math.Max(1, level);
         updateLevel(level);
         GameObject rewardTitle = GameObject.Find("제목text");
-        TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
+        //TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
         TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
         
 
@@ -166,7 +166,7 @@ public class ProgressController : MonoBehaviour
         ChildDataController.setRewardTitleList(rewardList);
         
 
-        currentLevel.GetComponent<TextMeshProUGUI>().text = level.ToString();
+        //currentLevel.GetComponent<TextMeshProUGUI>().text = level.ToString();
 
         ProgressController.pointString = pointText.text = pointToString(parsePoint(currentPoint));
         ProgressController.rewardTitle=rewardTitle.GetComponent<TextMeshProUGUI>().text = getContentfromRow(rows[level-1]);

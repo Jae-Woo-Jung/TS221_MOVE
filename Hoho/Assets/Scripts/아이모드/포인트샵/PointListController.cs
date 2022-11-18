@@ -194,10 +194,12 @@ public class PointListController : MonoBehaviour
         if (CPpointQueue.Count == 0)
         {            
             cardController.cpmsg.GetComponent<Button>().interactable = false;
+            cardController.bell.GetComponent<Image>().gameObject.SetActive(false);
         }
         else
         {
             cardController.cpmsg.GetComponent<Button>().interactable = true;
+            cardController.bell.GetComponent<Image>().gameObject.SetActive(true);
         }
     }
 
@@ -207,7 +209,7 @@ public class PointListController : MonoBehaviour
     /// </summary>
     private void setList()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (i >= pointContentList.Count)
             {
