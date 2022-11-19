@@ -36,6 +36,9 @@ EditorBuildSettings:
     path: "Assets/Scenes/\uBD80\uBAA8\uBAA8\uB4DC/\uBD80\uBAA8\uBAA8\uB4DC\uD648\uD654\uBA74.unity"
     guid: bcbdc1861deab2b4ebfd7fde6cfb91c2
   - enabled: 1
+    path: "Assets/Scenes/\uBD80\uBAA8\uBAA8\uB4DC/\uCE6D\uCC2C\uCE74\uB4DC\uB3C4\uC6C0\uB9D0.unity"
+    guid: 67910b100dd359347b511526bccea658
+  - enabled: 1
     path: "Assets/Scenes/\uBD80\uBAA8\uBAA8\uB4DC/\uBD80\uBAA8\uBAA8\uB4DC\uBCF4\uC0C1\uBAA9\uB85D.unity"
     guid: 43d647afe0bff184d9084b5db681e55b
   - enabled: 1
