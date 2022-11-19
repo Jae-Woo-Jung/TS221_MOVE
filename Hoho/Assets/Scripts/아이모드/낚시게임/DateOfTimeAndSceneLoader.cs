@@ -37,7 +37,7 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int modeIndex = TodaySchedule.mode.Contains("표준") ? 0 : TodaySchedule.mode.Contains("집중") ? 1 : TodaySchedule.mode.Contains("안정") ? 2 : TodaySchedule.mode.Contains("사용자") ? 3 : -1;
+        int modeIndex = TodaySchedule.mode.Contains("표준") ? 0 : TodaySchedule.mode.Contains("집중") ? 1 : TodaySchedule.mode.Contains("안정") ? 2 : TodaySchedule.mode.Contains("사용자") ? 3 : TodaySchedule.mode.Contains("자유") ? 4 : - 1;
 
 
         if (modeIndex >= 0)
