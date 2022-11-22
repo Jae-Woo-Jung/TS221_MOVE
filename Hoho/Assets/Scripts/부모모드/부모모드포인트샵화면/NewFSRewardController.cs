@@ -11,6 +11,7 @@ public class NewFSRewardController : MonoBehaviour
     public TMP_InputField titleInput;
     public TMP_InputField contentInput;
     public TMP_InputField pointInput;
+    public GameObject 보상목록배경;
     // Start is called before the first frame update
     public void SendRewardList()
     {
@@ -37,8 +38,13 @@ public class NewFSRewardController : MonoBehaviour
 
     public void newAddReward()
     {
-        
+        if (titleInput.text == "" || contentInput.text == "" || pointInput.text == "")
+        {
+            return;
+        }
         SendRewardList();
+        보상목록배경.SetActive(false);
+
     }
 
 

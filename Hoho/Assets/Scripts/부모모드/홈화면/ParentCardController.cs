@@ -25,9 +25,11 @@ public class ParentCardController : MonoBehaviour
         string content = cardMessage.text;
 
         int point = -1;
-        if (!System.Int32.TryParse(cardPoint.text, out point))
+        if ((!System.Int32.TryParse(cardPoint.text, out point)) || cardMessage.text == "")
         {
+            
             AndroidBLEPluginStart.CallByAndroid("포인트를 입력해주세요.");
+            return;
         }
         else
         {
