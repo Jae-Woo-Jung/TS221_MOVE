@@ -21,6 +21,62 @@ public class TodaySchedule : MonoBehaviour
     public List<Sprite> modeImages = new List<Sprite>();
 
     static float gameProgressRatio=0f;
+    public static int compareSchedule(ChildDataController.ScheduleInformation info1, ChildDataController.ScheduleInformation info2)
+    {
+        int currentTime = DateTime.Now.Hour*60+DateTime.Now.Minute;
+        int info1Time = info1.시 * 60 + info1.분;
+        int info2Time = info2.시 * 60 + info2.분;
+
+        if ((info1Time < currentTime - 5 && info2Time < currentTime - 5) || (info1Time > currentTime + 5 && info2Time > currentTime + 5))
+        {
+            if (info1Time<info2Time)
+            {
+                return -1;
+            }
+            else if (info1.시 == info2.시 && info1.분 == info2.분)
+            {
+                return 0;
+            }
+
+            return 1;
+        }
+
+        //info1이 과거.
+        if (info1Time < currentTime - 5 && info2Time > currentTime + 5)
+        {
+            return 1;
+        }
+
+        if (info1Time < currentTime - 5 && info2Time >= currentTime - 5 && info2.완료==false)
+        {
+            return 1;
+        }
+
+        if (info1Time < currentTime - 5 && info2Time >= currentTime - 5 && info2.완료 == true)
+        {
+            return -1;
+        }
+
+        //info1이 미래. 둘 다 미래인 경우는 위에서 이미 처리.
+        if (info1Time > currentTime + 5)
+        {
+            return -1;
+        }
+
+        //info1이 현재
+
+        if (info1.완료)
+        {
+            return 1;
+        }
+
+        if (!info1.완료)
+        {
+            return -1;
+        }
+
+        return 0;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -197,62 +253,7 @@ public class TodaySchedule : MonoBehaviour
         return 1;
     }
 
-    int compareSchedule(ChildDataController.ScheduleInformation info1, ChildDataController.ScheduleInformation info2)
-    {
-        int currentTime = DateTime.Now.Hour*60+DateTime.Now.Minute;
-        int info1Time = info1.시 * 60 + info1.분;
-        int info2Time = info2.시 * 60 + info2.분;
 
-        if ((info1Time < currentTime - 5 && info2Time < currentTime - 5) || (info1Time > currentTime + 5 && info2Time > currentTime + 5))
-        {
-            if (info1Time<info2Time)
-            {
-                return -1;
-            }
-            else if (info1.시 == info2.시 && info1.분 == info2.분)
-            {
-                return 0;
-            }
-
-            return 1;
-        }
-
-        //info1이 과거.
-        if (info1Time < currentTime - 5 && info2Time > currentTime + 5)
-        {
-            return 1;
-        }
-
-        if (info1Time < currentTime - 5 && info2Time >= currentTime - 5 && info2.완료==false)
-        {
-            return 1;
-        }
-
-        if (info1Time < currentTime - 5 && info2Time >= currentTime - 5 && info2.완료 == true)
-        {
-            return -1;
-        }
-
-        //info1이 미래. 둘 다 미래인 경우는 위에서 이미 처리.
-        if (info1Time > currentTime + 5)
-        {
-            return -1;
-        }
-
-        //info1이 현재
-
-        if (info1.완료)
-        {
-            return 1;
-        }
-
-        if (!info1.완료)
-        {
-            return -1;
-        }
-
-        return 0;
-    }
 
 
 

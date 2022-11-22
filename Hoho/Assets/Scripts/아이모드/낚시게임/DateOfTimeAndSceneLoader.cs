@@ -25,11 +25,11 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
 
         if (TodaySchedule.mode.Contains("자유"))
         {
-            SceneManager.LoadScene("낚시모드선택");
+            SceneManager.LoadScene("낚시모드선택");            
         }
         else
         {
-            SceneManager.LoadScene("낚시모드선택");
+            SceneManager.LoadScene("낚시진행");
             //SceneManager.LoadScene("낚시진행");
         }
     }
@@ -37,19 +37,41 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int modeIndex = TodaySchedule.mode.Contains("표준") ? 0 : TodaySchedule.mode.Contains("집중") ? 1 : TodaySchedule.mode.Contains("안정") ? 2 : TodaySchedule.mode.Contains("사용자") ? 3 : TodaySchedule.mode.Contains("자유") ? 4 : - 1;
 
-
-        if (modeIndex >= 0)
-        {
-            modeIcon.sprite = modeIconList[modeIndex];
-
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+        updateMode();
+        int modeIndex = TodaySchedule.mode.Contains("표준") ? 0 : TodaySchedule.mode.Contains("집중") ? 1 : TodaySchedule.mode.Contains("안정") ? 2 : TodaySchedule.mode.Contains("사용자") ? 3 : TodaySchedule.mode.Contains("자유") ? 4 : -1;
+
+        if (modeIndex >= 0)
+        {
+            modeIcon.sprite = modeIconList[modeIndex];
+        }
     }
+
+    void updateMode()
+    {
+        if (ChildDataController.scheduleInformationList.Count == 0)
+        {
+            TodaySchedule.mode = "자유모드";
+            return;
+        }
+
+        ChildDataController.scheduleInformationList.Sort(TodaySchedule.compareSchedule);
+        var info = ChildDataController.scheduleInformationList[0];
+
+        if (info.완료 || Math.Abs(info.시*60+info.분 - DateTime.Now.Hour*60+DateTime.Now.Minute )>5)
+        {
+            TodaySchedule.mode = "자유모드";
+        }
+        if (!info.완료)
+        {
+            TodaySchedule.mode = info.모드;            
+        }
+    }
+
 }

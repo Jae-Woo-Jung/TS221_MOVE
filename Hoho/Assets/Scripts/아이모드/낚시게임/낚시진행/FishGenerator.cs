@@ -136,14 +136,14 @@ public class FishGenerator : MonoBehaviour
                 downWaitTime = 6;
                 break;
             case 3:
-                upTime = 3;
-                upWaitTime = 0;
-                downTime = 6;
-                downWaitTime = 6;
+                var info=ChildDataController.scheduleInformationList[0];
+                upTime = info.들숨시간;
+                upWaitTime = info.들숨후참는시간;
+                downTime = info.날숨시간;
+                downWaitTime = info.날숨후참는시간;
+                TimeController.fullTimeStatic = info.반복횟수 * (upTime + upWaitTime + downTime + downWaitTime) +23;
                 break;
         }
-
-        
 
         pastLine = null;
 
