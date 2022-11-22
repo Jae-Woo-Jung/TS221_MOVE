@@ -6,11 +6,14 @@ using TMPro;
 
 public class HookController : MonoBehaviour
 {
-
+    public static float idealTime = 0.0f;
+    
     public TextMeshProUGUI point;
 
     public float chainYmin=-1.0f;
     public float chainYmax=2.5f;
+
+    
 
     /// <summary>
     /// 낚싯대의 y좌표를 조절. y값이 너무 작거나 큰 경우에 대비해 Mathf.Clamp 사용.
@@ -35,7 +38,7 @@ public class HookController : MonoBehaviour
         //Debug.Log("사슬의 최종 목표 : " + world_target);
         //Debug.Log("Vector3.Lerp(this.transform.parent.position, world_target, 0.1f) : " + Vector3.Lerp(this.transform.parent.position, world_target, 0.1f));
 
-        this.transform.parent.position = Vector3.Lerp(this.transform.parent.position, worldPos, 0.01f);
+        this.transform.parent.position = Vector3.Lerp(this.transform.parent.position, worldPos, 0.1f);
         //this.transform.parent.localPosition = new Vector3(this.transform.parent.localPosition.x, y);
         //Debug.Log("사슬의 실제 pos :" + transform.parent.position);
         //Debug.Log("사슬의 y : "+y);
@@ -45,6 +48,7 @@ public class HookController : MonoBehaviour
     void Start()
     {
         setPosition(-2.3f * ScalingOnGaming.yScaler);
+        idealTime = 0.0f;
     }
 
     // Update is called once per frame
@@ -70,6 +74,20 @@ public class HookController : MonoBehaviour
             GameObject.Destroy(fish);
             Physics2D.IgnoreCollision(collision, GetComponent<Collider2D>());
         }
+
+ 
+
         //handle point
     }
+
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        GameObject idealPosition = collision.gameObject;
+        if (idealPosition.tag=="hookIdealPosition" && !Pause.isPaused && FishArrivalTime.getArrivalTime() > 0.0f)
+        {
+            idealTime += Time.deltaTime/2;  //낚시바늘의 collider가 2개임.
+        }
+    }
+
 }

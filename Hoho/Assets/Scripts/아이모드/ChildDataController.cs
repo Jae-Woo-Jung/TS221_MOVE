@@ -39,10 +39,23 @@ public class ChildDataController : MonoBehaviour
         public int 완성률 { get; set; } = 0;
 
         [FirestoreProperty]
+        public string 모드 { get; set; } = "";
+
+        [FirestoreProperty]
+        public bool 스케줄적용 { get; set; } = false;
+
+        [FirestoreProperty]
+        public int 스케줄시 { get; set; } = -1;
+
+        [FirestoreProperty]
+        public int 스케줄분 { get; set; } = -1;
+
+        [FirestoreProperty]
         public Dictionary<string, float> 호흡기록 { get; set; } = ChildDataController.BreatheResult;
 
         [FirestoreProperty]
         public Dictionary<string, float> 예상호흡기록 { get; set; } = ChildDataController.ExpectedBreatheResult;
+
     };
 
 
@@ -127,6 +140,8 @@ public class ChildDataController : MonoBehaviour
 
         [FirestoreProperty]
         public int 반복횟수 { get; set; } = 0;
+
+        public bool 완료 { get; set; } = false;
     }
 
 

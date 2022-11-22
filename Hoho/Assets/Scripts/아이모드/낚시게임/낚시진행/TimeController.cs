@@ -70,7 +70,11 @@ public class TimeController : MonoBehaviour
             ChildDataController.fishGameResult.별개수 = getStarNum();
             ChildDataController.fishGameResult.플레이시간 = (int) fullTime;
             ChildDataController.fishGameResult.훈련시간 = (int) (fullTime - FishArrivalTime.getArrivalTime());
-            ChildDataController.fishGameResult.완성률 = System.Int32.Parse(point.text) / FishArrivalTime.getFishNum();
+
+            if (progressedTime - FishArrivalTime.getArrivalTime() > 0.0f)
+            {
+                ChildDataController.fishGameResult.완성률 = (int) Mathf.Round( (HookController.idealTime*100f / (progressedTime - FishArrivalTime.getArrivalTime()) ) );
+            }
             PointListController.pointContent cont = new PointListController.pointContent();
             cont.content = "낚시 게임";
             cont.point = FishArrivalTime.getFishNum() * 10;//System.Int32.Parse(point.text)/10;

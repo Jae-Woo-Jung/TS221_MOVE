@@ -36,7 +36,7 @@ public class TimetableController : MonoBehaviour
         foreach(var dayToggle in daysList)
         {
             GameObject dayColumn=daysTimeList.Find(x => x.name == dayToggle.name);
-            Transform table = dayColumn.transform.Find("일일시간표");
+            Transform table = dayColumn.transform.Find("Scroll View/Viewport/일일시간표");
 
             int siblingIndex = 0;
             foreach(var currentTime in table.GetComponentsInChildren<Transform>())
@@ -97,7 +97,7 @@ public class TimetableController : MonoBehaviour
         foreach (var dayToggle in daysList)
         {
             GameObject dayColumn = daysTimeList.Find(x => x.name == dayToggle.name);
-            Transform table = dayColumn.transform.Find("일일시간표");
+            Transform table = dayColumn.transform.Find("Scroll View/Viewport/일일시간표");
 
             int siblingIndex = 0;
             foreach (var currentTime in table.GetComponentsInChildren<Transform>())
@@ -197,8 +197,12 @@ public class TimetableController : MonoBehaviour
         foreach(var schedule in ParentDataController.scheduleInformationList)
         {
             GameObject dayColumn = daysTimeList.Find(x => x.name == schedule.요일[0].ToString());
-            Transform table = dayColumn.transform.Find("일일시간표");
-            int siblingIndex = 0;
+            Transform table =this.transform;
+            
+            Debug.Log("??");
+            table = dayColumn.transform.Find("Scroll View/Viewport/일일시간표");
+                
+           int siblingIndex = 0;
 
             string title = schedule.제목;
             string hour = (schedule.시 < 10 ? "0" : "") + schedule.시.ToString();

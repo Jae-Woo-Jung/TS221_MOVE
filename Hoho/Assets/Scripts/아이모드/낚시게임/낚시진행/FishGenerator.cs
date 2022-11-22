@@ -190,7 +190,7 @@ public class FishGenerator : MonoBehaviour
                 
                 case 1:
                     fish = Instantiate(fish2);
-                    correction = 0.5f;
+                    correction = 0.3f;
                     break;
                 case 2:
                     fish = Instantiate(fish3);

@@ -31,6 +31,12 @@ public class AddSchedule : MonoBehaviour
 
     public GameObject addSchedulePannel;
     public GameObject addCustomPannel;
+    public GameObject customBackground;
+
+
+    public Toggle mode1;
+    public Toggle mode2;
+    public Toggle mode3;
 
     public Button applyWithTimeBtn;
     public Button cancelWithTimeBtn;
@@ -59,6 +65,35 @@ public class AddSchedule : MonoBehaviour
         hourCustomInput.onEndEdit.AddListener(x=>hourInput.text=x);
         minuteCustomInput.onEndEdit.AddListener(x=>minuteInput.text=x);
 
+        mode1.onValueChanged.AddListener((bool b) =>             
+            {
+                if (b)
+                {
+                    mode2.isOn = false;
+                    mode3.isOn = false;
+                }
+            }        
+        );
+
+        mode2.onValueChanged.AddListener((bool b) =>
+            {
+                if (b)
+                {
+                    mode1.isOn = false;
+                    mode3.isOn = false;
+                }
+            }
+        );
+
+        mode3.onValueChanged.AddListener((bool b) =>
+            {
+                if (b)
+                {
+                    mode1.isOn = false;
+                    mode2.isOn = false;
+                }
+            }
+        );
 
 
         repeatInput.onEndEdit.AddListener(x => repeatInput.text = breathTimeChecker(x));
@@ -215,6 +250,7 @@ public class AddSchedule : MonoBehaviour
         
         addCustomPannel.SetActive(false);
         addSchedulePannel.SetActive(false);
+        customBackground.SetActive(false);
 
     }
 

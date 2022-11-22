@@ -69,7 +69,7 @@ public class AndroidBLEPluginStart : MonoBehaviour
     public static void CallByAndroid(string message)
     {
         Debug.Log("CallByAndroid : " + message);
-#if UNITY_ANDROID && !UNITY_EDITOR
+#if PLATFORM_ANDROID && !UNITY_EDITOR
             _bleControlObj.Call("showText", message);
 #endif        
     }

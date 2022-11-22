@@ -65,11 +65,9 @@ public class TodaySchedule : MonoBehaviour
     void initializeSchedule()
     {
 
+        int finishedScheduleNum = 0;
+
         ChildDataController.fishGameResultList.Sort((result1, result2) => compareStringTime(result1.시작날짜, result2.시작날짜));
-
-
-        int refH = -1;
-        int refM = -1;
 
         if (ChildDataController.fishGameResultList.Count> 0)
         {
@@ -77,32 +75,54 @@ public class TodaySchedule : MonoBehaviour
 
             DateTime RefDate = Convert.ToDateTime(LastResult.시작시간);
             Debug.Log("initializeSchedule Last Result : "+LastResult.시작시간);
-
-            //마지막으로 호흡한 시간. 
-            refH = RefDate.Hour;
-            refM = RefDate.Minute;
         }
-        Debug.Log("initializeSchedule. refH : " + refH + ", refM : " + refM);
-
-
-        int scheduleNum = 0;
-        int finishedScheduleNum = 0;
 
         Transform table = scheduleContent.transform;
+        NotificationManager.CancelAll();
 
-        int nowH = new DateTime().Hour;
-        int nowM = new DateTime().Minute;
-        int modeIndex = 0;
-        
-        foreach (var schedule in ChildDataController.scheduleInformationList)
+        foreach  (var schedule in ChildDataController.scheduleInformationList)
         {
-            scheduleNum++;
 
-            
-            int siblingIndex = 0;
-            
+            foreach (var result in ChildDataController.fishGameResultList)
+            {
+                if (result.스케줄적용 && schedule.분 == result.스케줄분 && schedule.시 == result.스케줄시)
+                {
+                    schedule.완료 = true;
+                    finishedScheduleNum++;
+                }
+            }
 
-            Debug.Log("initializeSchedul : "+schedule.요일+", 제목 : "+schedule.제목);
+            //notification 추가
+#if PLATFORM_ANDROID && UNITY_EDITOR
+
+            DateTime date1 = Convert.ToDateTime(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + schedule.시 + ":" + schedule.분);
+
+            Debug.Log("initializeSchedule target schedule : " + date1);
+            if (date1 > DateTime.Now+TimeSpan.FromMinutes(5))
+            {
+                Debug.Log("initializeSchedule : notification setting start.");
+                TimeSpan delay = date1 - DateTime.Now- TimeSpan.FromMinutes(5);
+
+                Debug.Log(delay.ToString());
+
+                var notificationParams = new NotificationParams
+                {
+                    Id = UnityEngine.Random.Range(0, int.MaxValue),
+                    Delay = delay,
+                    Title = schedule.요일 + "_" + schedule.시 + "시" + schedule.분 + "분",
+                    Message = schedule.요일 + "_" + schedule.시 + "시" + schedule.분 + "분에 " + schedule.모드 + " 호흡 훈련을 진행해주세요.",
+                    Ticker = "Ticker",
+                    Sound = true,
+                    Vibrate = true,
+                    Light = true,
+                    SmallIcon = NotificationIcon.Heart,
+                    SmallIconColor = new Color(0, 0.5f, 0),
+                    LargeIcon = "app_icon"
+                };
+
+                NotificationManager.SendCustom(notificationParams);
+            }
+#endif
 
             string title = schedule.제목;
             string hour = (schedule.시 < 10 ? "0" : "") + schedule.시.ToString();
@@ -116,102 +136,52 @@ public class TodaySchedule : MonoBehaviour
             int imageIdx = schedule.모드.Contains("표준") ? 0 : schedule.모드.Contains("집중") ? 1 : schedule.모드.Contains("안정") ? 2 : 3;
 
             newTime.GetComponent<Image>().sprite = modeImages[imageIdx];
+            newTime.GetComponent<ScheduleContainer>().schedule = schedule;
 
-            //추가할 스케줄
-            int hAfter;
-            Int32.TryParse(hour, out hAfter);
-            int minAfter;
-            Int32.TryParse(minute, out minAfter);
-
-            if (hAfter < refH || (hAfter == refH && minAfter <= refM))
+            if (schedule.완료)
             {
                 newTime.transform.Find("완료표시").gameObject.SetActive(true);
-                Debug.Log("initializeSchedule : 완료표시" + true);
-                hAfter += 24;
-                minAfter += 60;
-                finishedScheduleNum++;
-            }                
-            else
-            {
-                //newTime.transform.Find("완료표시").gameObject.SetActive(false);
-                Debug.Log("initializeSchedule : 완료표시" + false);
-
-                //notificatoin 추가.
-#if PLATFORM_ANDROID && UNITY_EDITOR
-
-                DateTime date1 = Convert.ToDateTime(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + schedule.시 + ":" + schedule.분);
-
-                Debug.Log("initializeSchedule target schedule : "+date1);
-                if (date1 > DateTime.Now)
-                {
-                    Debug.Log("initializeSchedule : notification setting start.");
-                    TimeSpan delay = date1 - DateTime.Now;
-                    Debug.Log(delay.ToString());
-
-                    var notificationParams = new NotificationParams{
-                            Id = UnityEngine.Random.Range(0, int.MaxValue),
-                            Delay = delay,
-                            Title = schedule.요일 + "_" + schedule.시 + "시" + schedule.분 + "분",
-                            Message = schedule.요일 + "_" + schedule.시 + "시" + schedule.분 + "분에 " + schedule.모드 + " 호흡 훈련을 진행해주세요.",
-                            Ticker = "Ticker",
-                            Sound = true,           
-                            Vibrate = true,
-                            Light = true,
-                            SmallIcon = NotificationIcon.Heart,
-                            SmallIconColor = new Color(0, 0.5f, 0),
-                            LargeIcon = "app_icon"
-                        };
-
-                NotificationManager.SendCustom(notificationParams);
-                }
-#endif
+                newTime.transform.Find("미완료표시").gameObject.SetActive(false);
             }
-
-            var currentTime = table.GetComponentsInChildren<Transform>().ToList<Transform>().FindLast(x => x.tag == "TimeOrAim");
-            {
-                modeIndex=0;
-                modeIndex = modeImages.FindIndex(x => x == currentTime.GetComponent<Image>().sprite);
-
-                Debug.Log("initializeSchedule : modeIndex " + modeIndex+", 시간 : "+schedule.시+": "+schedule.분);
-
-                //Debug.Log(currentTime.parent.name + ", " + currentTime.name);
-
-                //기존의 스케줄
-                string timeBefore = currentTime.Find("시간").GetComponent<TextMeshProUGUI>().text;
-                int hBefore;
-                Int32.TryParse(timeBefore.Substring(0, 2), out hBefore);
-                int minBefore;
-                Int32.TryParse(timeBefore.Substring(3, 2), out minBefore);
-
-                if (newTime.transform.Find("완료표시").gameObject.activeSelf)
-                {
-                    hBefore += 24;
-                    minBefore += 60;                    
-                }
-
-                siblingIndex = currentTime.transform.GetSiblingIndex();
-                //뒤에 있어야 할 조건 : 
-                if (hBefore < hAfter || (hBefore == hAfter && minBefore < minAfter))
-                {
-                    siblingIndex++;                   
-                }
-            }
-
-            newTime.GetComponent<Image>().sprite = modeImages[imageIdx];
-            newTime.transform.SetSiblingIndex(siblingIndex);
-            
         }
 
-        var firstTime = table.GetComponentsInChildren<Transform>().ToList<Transform>().Find(x => x.tag == "TimeOrAim");
-        modeIndex = modeImages.FindIndex(x => x == firstTime.GetComponent<Image>().sprite);
-
-        mode = modeIndex == 0 ? "표준모드" : modeIndex == 1 ? "집중모드" : modeIndex == 2 ? "안정모드" : "사용자정의모드";
-        //Debug.Log("Current mode : " + mode);
-        gameProgressRatio = gameProgress.value = scheduleNum==0? 0 : finishedScheduleNum/(float) scheduleNum;
+        gameProgressRatio = gameProgress.value = ChildDataController.scheduleInformationList.Count == 0 ? 0 : finishedScheduleNum / (float) ChildDataController.scheduleInformationList.Count;
+        orderSchedule();
     }
+
+    void orderSchedule()
+    {
+        int scheduleNum = 0;
+        int finishedScheduleNum = 0;
+
+        Transform table = scheduleContent.transform;
+
+        int currentTime=DateTime.Now.Hour*60+DateTime.Now.Minute;
+
+        List<Transform> scheduleList = table.GetComponentsInChildren<Transform>().Where(x=>x.GetComponent<ScheduleContainer>()!=null).ToList<Transform>();
+
+        scheduleList.Sort((s1, s2) => compareSchedule(s1.GetComponent<ScheduleContainer>().schedule, s2.GetComponent<ScheduleContainer>().schedule));
+
+        for (int i=0; i<scheduleList.Count; i++)
+        {
+            Transform newTime = scheduleList[i];
+            var info = newTime.GetComponent<ScheduleContainer>().schedule;
+            newTime.SetSiblingIndex(i);
+            
+
+            if (info.시*60+info.분 < currentTime-5  && !info.완료)
+            {
+                newTime.transform.Find("완료표시").gameObject.SetActive(false);
+                newTime.transform.Find("미완료표시").gameObject.SetActive(true);
+            }
+        }
+
+    }
+
 
     int compareStringTime(string time1, string time2)
     {
+
         DateTime date1 = Convert.ToDateTime(time1);
         DateTime date2 = Convert.ToDateTime(time2);
 
@@ -225,6 +195,63 @@ public class TodaySchedule : MonoBehaviour
         }
 
         return 1;
+    }
+
+    int compareSchedule(ChildDataController.ScheduleInformation info1, ChildDataController.ScheduleInformation info2)
+    {
+        int currentTime = DateTime.Now.Hour*60+DateTime.Now.Minute;
+        int info1Time = info1.시 * 60 + info1.분;
+        int info2Time = info2.시 * 60 + info2.분;
+
+        if ((info1Time < currentTime - 5 && info2Time < currentTime - 5) || (info1Time > currentTime + 5 && info2Time > currentTime + 5))
+        {
+            if (info1Time<info2Time)
+            {
+                return -1;
+            }
+            else if (info1.시 == info2.시 && info1.분 == info2.분)
+            {
+                return 0;
+            }
+
+            return 1;
+        }
+
+        //info1이 과거.
+        if (info1Time < currentTime - 5 && info2Time > currentTime + 5)
+        {
+            return 1;
+        }
+
+        if (info1Time < currentTime - 5 && info2Time >= currentTime - 5 && info2.완료==false)
+        {
+            return 1;
+        }
+
+        if (info1Time < currentTime - 5 && info2Time >= currentTime - 5 && info2.완료 == true)
+        {
+            return -1;
+        }
+
+        //info1이 미래. 둘 다 미래인 경우는 위에서 이미 처리.
+        if (info1Time > currentTime + 5)
+        {
+            return -1;
+        }
+
+        //info1이 현재
+
+        if (info1.완료)
+        {
+            return 1;
+        }
+
+        if (!info1.완료)
+        {
+            return -1;
+        }
+
+        return 0;
     }
 
 

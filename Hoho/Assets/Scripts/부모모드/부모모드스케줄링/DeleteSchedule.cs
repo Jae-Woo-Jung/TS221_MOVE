@@ -36,7 +36,7 @@ public class DeleteSchedule : MonoBehaviour
         Button deleteAllBtn= deletePannel.transform.Find("전체삭제").GetComponent<Button>();
 
         deletePannel.transform.Find("내용").GetComponent<TextMeshProUGUI>().text = 
-            this.transform.parent.parent.name + "요일 " + titleText.text + ",\n" + timeText.text + "의 일정을\n삭제하시겠습니까?";
+            this.transform.parent.parent.parent.parent.name + "요일 " + titleText.text + ",\n" + timeText.text + "의 일정을\n삭제하시겠습니까?";
 
         deleteBtn.onClick.RemoveAllListeners();
         deleteBtn.onClick.AddListener(deleteClicked);
