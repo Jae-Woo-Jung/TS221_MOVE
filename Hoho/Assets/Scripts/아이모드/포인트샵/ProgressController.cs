@@ -135,7 +135,7 @@ public class ProgressController : MonoBehaviour
     /// <summary>
     /// 현재 점수, 레벨 진행 상황, 진행률, 
     /// </summary>
-    private void initProgress()
+    public void initProgress()
     {
         currentPoint.text = ProgressController.point.ToString();
         ProgressController.level = Math.Max(1, level);
@@ -155,25 +155,29 @@ public class ProgressController : MonoBehaviour
             Debug.Log("레벨 상한 도달");
         }
 
+        List<string> rewardList = new List<string>();
+        rewardList.Add(ChildDataController.getValues()["rewardTitle"].ToString());
+        ChildDataController.setRewardTitleList(rewardList);
 
-        //보상 목록 업데이트.
+        /*//보상 목록 업데이트.
 
         List<string> rewardList = new List<string>();
         for (int i=0; i<rows.Length; i++)
         {
             rewardList.Add(getContentfromRow(rows[i]));
         }
-        ChildDataController.setRewardTitleList(rewardList);
-        
+        ChildDataController.setRewardTitleList(rewardList);*/
+
 
         //currentLevel.GetComponent<TextMeshProUGUI>().text = level.ToString();
 
         ProgressController.pointString = pointText.text = pointToString(parsePoint(currentPoint));
-        ProgressController.rewardTitle=rewardTitle.GetComponent<TextMeshProUGUI>().text = getContentfromRow(rows[level-1]);
-        goalPoint.text = "완성  " + getGoalfromRow(rows[level-1]);
-        ChildDataController.setGoalPoint(getGoalfromRow(rows[level - 1]));
+        ProgressController.rewardTitle=rewardTitle.GetComponent<TextMeshProUGUI>().text = ChildDataController.getValues()["rewardTitle"].ToString();
+        //goalPoint.text = getGoalfromRow(rows[level-1]).ToString();
+        goalPoint.text = ChildDataController.getValues()["goalPoint"].ToString();
+        ChildDataController.setGoalPoint(System.Int32.Parse(goalPoint.text));
 
-        Debug.Log(goalPoint.text);
+        Debug.Log("initProgress" + goalPoint.text);
 
         updateProgress();
     }
@@ -319,10 +323,12 @@ public class ProgressController : MonoBehaviour
 
             currentLevel.text = level.ToString();
             pointString = pointText.text = pointToString(parsePoint(currentPoint));
-            ProgressController.rewardTitle = rewardTitle.GetComponent<TextMeshProUGUI>().text = getContentfromRow(rows[level-1]);
+            ProgressController.rewardTitle = rewardTitle.GetComponent<TextMeshProUGUI>().text = ChildDataController.getValues()["rewardTitle"].ToString();
 
-            goalPoint.text = "완성  " + getGoalfromRow(rows[level-1]);
-            ChildDataController.setGoalPoint(getGoalfromRow(rows[level - 1]));
+            //goalPoint.text = getGoalfromRow(rows[level-1]).ToString();
+            //ChildDataController.setGoalPoint(getGoalfromRow(rows[level - 1]));
+            goalPoint.text = ChildDataController.getValues()["goalPoint"].ToString();
+            ChildDataController.setGoalPoint(System.Int32.Parse(goalPoint.text));
             pointRatio.text = "0%";
             pointCircle.GetComponent<Slider>().value = 0f;
             ProgressController.point = 0;

@@ -16,7 +16,8 @@ public class NewFSRewardController : MonoBehaviour
     public void SendRewardList()
     {
         FirebaseFirestore db = FirebaseFirestore.DefaultInstance;
-        DocumentReference docRef = db.Collection("ParentUsers").Document("001").Collection("Point").Document("RewardList_1");
+        DocumentReference docRef = db.Collection("ChildrenUsers").Document("001").Collection("Point").Document("CurrentPoint");
+        DocumentReference docRef2 = db.Collection("ParentUsers").Document("001").Collection("Point").Document("RewardList_1");
 
 
         Dictionary<string, object> RewardList = new Dictionary<string, object>
@@ -25,11 +26,19 @@ public class NewFSRewardController : MonoBehaviour
             { "내용", contentInput.text },
             { "포인트", System.Int32.Parse(pointInput.text) },
             { "완성여부", false }, //AddRewardController에 완성여부관련 변수 추가해야 할 듯.
-            { "type", "list" }
+            { "type", "list" },
+            { "현재포인트", System.Int32.Parse("0") }
         };
         docRef.SetAsync(RewardList).ContinueWithOnMainThread(task => {
             Debug.Log("Added data to the RewardList document in the Point collection.");
         });
+
+        docRef2.SetAsync(RewardList).ContinueWithOnMainThread(task => {
+            Debug.Log("Added data to the RewardList document in the Point collection.");
+        });
+
+
+
         titleInput.text = "";
         contentInput.text = "";
         pointInput.text = "";

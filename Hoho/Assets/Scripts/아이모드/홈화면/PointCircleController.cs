@@ -6,19 +6,22 @@ using UnityEngine.UI;
 
 public class PointCircleController : MonoBehaviour
 {
+    public ProgressController progressController;
     public void updateCircle()
     {
+        //progressController.initProgress();
+
         Debug.Log("updateCircle 0");
         TextMeshProUGUI rewardTitle = GameObject.Find("제목text").GetComponent<TextMeshProUGUI>();
         Debug.Log("updateCircle 1");
-        TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
+        //TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
         Debug.Log("updateCircle 2");
         TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
         Debug.Log("updateCircle 3");
 
         rewardTitle.text = (string) ChildDataController.getValues()["rewardTitle"];
         Debug.Log("updateCircle 4");
-        currentLevel.text = ((int)ChildDataController.getValues()["level"]).ToString();
+        //currentLevel.text = ((int)ChildDataController.getValues()["level"]).ToString();
         Debug.Log("updateCircle 5");
         
         pointText.text = underlinePoint( ((int) ChildDataController.getValues()["point"]).ToString() );
@@ -44,11 +47,13 @@ public class PointCircleController : MonoBehaviour
         {
             Debug.Log("PointCircleControl start");
             ChildDataController.ReceivePoint(updateCircle);
+
         }        
         else
         {
             updateCircle();
         }
+
     }
 
     // Update is called once per frame

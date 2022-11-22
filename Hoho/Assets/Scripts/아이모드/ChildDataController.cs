@@ -46,7 +46,7 @@ public class ChildDataController : MonoBehaviour
     };
 
 
-    [FirestoreData]
+    /*[FirestoreData]
     public class PointInformation
     {
         [FirestoreProperty]
@@ -60,7 +60,39 @@ public class ChildDataController : MonoBehaviour
 
         [FirestoreProperty]
         public string 보상제목 { get; set; } = "놀이공원";
+    }*/
+
+
+
+
+
+    [FirestoreData]
+    public class NewPointInformation
+    {
+        [FirestoreProperty]
+        public string type { get; set; } = "list";
+
+        [FirestoreProperty]
+        public string 내용 { get; set; } = "내용";
+
+        [FirestoreProperty]
+        public bool 완성여부 { get; set; } = false;
+
+        [FirestoreProperty]
+        public string 제목 { get; set; } = "제목";
+
+        [FirestoreProperty]
+        public int 포인트 { get; set; } = 4000;
+
+        [FirestoreProperty]
+        public int 현재포인트 { get; set; } = 0;
     }
+
+
+
+
+
+
 
     [FirestoreData]
     public class ScheduleInformation
@@ -177,6 +209,22 @@ public class ChildDataController : MonoBehaviour
     public static string parentID = "001";
 
     /// <summary>
+    /// 보상목록의 type.
+    /// </summary>
+    static string type = "list";
+
+    /// <summary>
+    /// 보상목록의 완성여부.
+    /// </summary>
+    public static bool TorF = false;
+
+    /// <summary>
+    /// 보상목록의 내용.
+    /// </summary>
+    public static string rewardContent = "내용";
+
+
+    /// <summary>
     /// 시작날짜 = "", 시작시간 = "", 레벨 = 0, 별개수 = starNum, 플레이시간 = 0, 호흡기록, 예상호흡기록
     /// </summary>
     public static GameResult fishGameResult = new GameResult();
@@ -200,7 +248,7 @@ public class ChildDataController : MonoBehaviour
     /// isReceived (bool), canSend(bool), point (int), level(int), rewardTitle (string), goalPoint (int), progressRatio (float), childID (string), parentID (string) 를 담은 Dictionary 반환.
     /// </summary>
     /// <returns></returns>
-    public static Dictionary<string, object> getValues()
+    /*public static Dictionary<string, object> getValues()
     {
 
         Dictionary<string, object> A = new Dictionary<string, object>();
@@ -214,9 +262,12 @@ public class ChildDataController : MonoBehaviour
         A.Add("progressRatio", progressRatio);
         A.Add("childID", childID);
         A.Add("parentID", parentID);
+        A.Add("type", type);
+        A.Add("TorF", TorF);
+        A.Add("rewardContent", rewardContent);
 
         return A;
-    }
+    }*/
 
     /// <summary>
     /// true로 설정해야 보낼 수 있음. 
@@ -318,10 +369,12 @@ public class ChildDataController : MonoBehaviour
         DocumentReference docRef = db.Collection("ChildrenUsers").Document(childID).Collection("Point").Document("CurrentPoint");
         Dictionary<string, object> user = new Dictionary<string, object>
         {
-                { "현재포인트", point},
-                { "레벨", level },
-                { "보상제목", rewardTitle },
-                { "목표점수", goalPoint },
+                { "type", type},
+                { "내용", rewardContent },
+                { "완성여부", TorF },
+                { "제목", rewardTitle },
+                { "포인트", goalPoint },
+                { "현재포인트", point }
         };
 
         docRef.SetAsync(user).ContinueWithOnMainThread(task => {
@@ -389,15 +442,24 @@ public class ChildDataController : MonoBehaviour
             { // document가 없으면 false
               //snapshot.ID
                 Debug.Log("ChildDataController.receivePoint");
-                PointInformation pointInfo = snapshot.ConvertTo<PointInformation>();
-                level = pointInfo.레벨;
-                goalPoint=pointInfo.목표점수;
-                rewardTitle=pointInfo.보상제목;
+                NewPointInformation pointInfo = snapshot.ConvertTo<NewPointInformation>();
+                type = pointInfo.type;
+                goalPoint=pointInfo.포인트;
+                rewardTitle=pointInfo.제목;
                 point=pointInfo.현재포인트;
+                rewardContent = pointInfo.내용;
+                TorF = pointInfo.완성여부;
+                //getValues()["type"] = type;
+                //getValues()["goalPoint"] = goalPoint;
+                //getValues()["rewardTitle"] = rewardTitle;
+                //getValues()["point"] = point;
+                //getValues()["rewardContent"] = rewardContent;
+                //getValues()["TorF"] = TorF;
 
-                progressRatio = pointInfo.현재포인트 / (float)pointInfo.목표점수;
 
-                Debug.Log("ReceivePoint 2 : "+pointInfo.레벨 + " " + pointInfo.목표점수 + ", " + pointInfo.보상제목 + ", " + pointInfo.현재포인트);
+                progressRatio = pointInfo.현재포인트 / (float)pointInfo.포인트;
+
+                Debug.Log("ReceivePoint 2 : "+pointInfo.type + " " + pointInfo.포인트 + ", " + pointInfo.제목 + ", " + pointInfo.현재포인트);
 
                 isReceived = true;
                 
@@ -413,6 +475,93 @@ public class ChildDataController : MonoBehaviour
         
 
     }
+
+
+
+
+
+    /// <summary>
+    /// isReceived (bool), canSend(bool), point (int), level(int), rewardTitle (string), goalPoint (int), progressRatio (float), childID (string), parentID (string) 를 담은 Dictionary 반환.
+    /// </summary>
+    /// <returns></returns>
+    public static Dictionary<string, object> getValues()
+    {
+
+        Dictionary<string, object> A = new Dictionary<string, object>();
+        A.Add("isReceived", isReceived);
+        A.Add("canSend", canSend);
+        A.Add("point", point);
+        A.Add("level", level);
+        A.Add("goalPoint", goalPoint);
+        A.Add("rewardTitle", rewardTitle);
+        A.Add("rewardTitleList", rewardTitleList);
+        A.Add("progressRatio", progressRatio);
+        A.Add("childID", childID);
+        A.Add("parentID", parentID);
+        A.Add("type", type);
+        A.Add("TorF", TorF);
+        A.Add("rewardContent", rewardContent);
+
+        return A;
+    }
+
+
+
+
+
+
+
+
+
+
+
+    /*public static void NewReceivePoint(updateDelegate updateCircle)
+    {
+        if (db == null)
+        {
+            db = FirebaseFirestore.DefaultInstance;
+        }
+        Debug.Log("ReceivePoint 1");
+        DocumentReference pointDoc = db.Collection("ParentUsers").Document(parentID).Collection("Point").Document("RewardList_1");
+
+        pointDoc.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            DocumentSnapshot snapshot = task.Result;
+            if (snapshot.Exists)
+            { // document가 없으면 false
+              //snapshot.ID
+                Debug.Log("ChildDataController.receivePoint");
+                NewPointInformation pointInfo = snapshot.ConvertTo<NewPointInformation>();
+                type = pointInfo.type;
+                goalPoint = pointInfo.포인트;
+                rewardTitle = pointInfo.제목;
+                point = pointInfo.현재포인트;
+
+                progressRatio = pointInfo.현재포인트 / (float)pointInfo.포인트;
+
+                Debug.Log("ReceivePoint 2 : " + pointInfo.레벨 + " " + pointInfo.목표점수 + ", " + pointInfo.보상제목 + ", " + pointInfo.현재포인트);
+
+                isReceived = true;
+
+                updateCircle();
+            }
+            else
+            {
+                Debug.Log(String.Format("Document {0} does not exist!", snapshot.Id));
+            }
+
+        });
+
+
+
+    }*/
+
+
+
+
+
+
+
 
     /// <summary>
     /// 호흡 기록을 가져와서 스케줄 배치.

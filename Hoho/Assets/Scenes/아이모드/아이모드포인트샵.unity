@@ -4803,7 +4803,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -120.971466}
+  m_AnchoredPosition: {x: 0, y: -425.7333}
   m_SizeDelta: {x: 0, y: -667.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &691453150
@@ -4959,7 +4959,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 258.09225}
+  m_AnchoredPosition: {x: 0, y: 207.29861}
   m_SizeDelta: {x: 0, y: -667.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &724969709
@@ -6755,8 +6755,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 12
+  m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -7276,7 +7276,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 30.654053}
+  m_AnchoredPosition: {x: 0, y: -172.52054}
   m_SizeDelta: {x: 0, y: -667.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1039446982
@@ -7886,7 +7886,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -45.158722}
+  m_AnchoredPosition: {x: 0, y: -299.12692}
   m_SizeDelta: {x: 0, y: -667.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1083944898
@@ -9086,6 +9086,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84ae964ebd15874cbb3890e4b9d1821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressController: {fileID: 0}
 --- !u!114 &1425693480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9693,6 +9694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84ae964ebd15874cbb3890e4b9d1821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressController: {fileID: 0}
 --- !u!114 &1481474420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10315,18 +10317,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: "\uC544\uC774\uBAA8\uB4DC\uD648\uD654\uBA74"
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1469482786}
-        m_TargetAssemblyTypeName: ChildDataController, Assembly-CSharp
-        m_MethodName: SendPoint
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &1595054899
@@ -12715,7 +12705,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 182.27951}
+  m_AnchoredPosition: {x: 0, y: 80.69223}
   m_SizeDelta: {x: 0, y: -667.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1918709660
@@ -14255,7 +14245,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 106.46677}
+  m_AnchoredPosition: {x: 0, y: -45.914154}
   m_SizeDelta: {x: 0, y: -667.81}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2118134920
