@@ -257,6 +257,7 @@ public class FishGenerator : MonoBehaviour
 
             hookPos = (float) (Characteristic.value - BreathingTest.breathingMin) /(float) (BreathingTest.breathingMax - BreathingTest.breathingMin);
         }
+        hookPos=Mathf.Clamp(hookPos, 0f, 1f);
         GameObject.Find("³¬½Ë¹Ù´Ã").GetComponent<HookController>().setPosition(hookPos);
 
         if (FishArrivalTime.getArrivalTime() != 0.0f && recordingTime>=recordingPeriod)
