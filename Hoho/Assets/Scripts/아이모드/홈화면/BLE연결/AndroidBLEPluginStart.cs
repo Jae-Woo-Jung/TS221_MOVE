@@ -79,7 +79,7 @@ public class AndroidBLEPluginStart : MonoBehaviour
 #endif        
     }
 
-    public void startScan()
+    public static void startScan()
     {        
 
         Debug.LogError("permission checking.");

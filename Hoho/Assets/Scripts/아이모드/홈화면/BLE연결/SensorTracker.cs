@@ -29,8 +29,8 @@ public class SensorTracker : MonoBehaviour
             ScanBtn.enabled = false;
             ScanBtn.GetComponentInChildren<TextMeshProUGUI>().text = "연결 성공";
 
-            Value.text = "Value : " + (Characteristic.isValueNull ? "No Value" : Characteristic.value);
-            UUID.text = "UUID : " + Characteristic.realUuid;
+            //Value.text = "Value : " + (Characteristic.isValueNull ? "No Value" : Characteristic.value);
+            //UUID.text = "UUID : " + Characteristic.realUuid;
         }
         else if (AndroidBLEPluginStart.isScanning || AndroidBLEPluginStart.isConnecting)
         {

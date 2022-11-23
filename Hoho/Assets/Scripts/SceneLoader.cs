@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
@@ -34,6 +35,11 @@ public class SceneLoader : MonoBehaviour
             Screen.autorotateToPortraitUpsideDown = false;
             Screen.autorotateToLandscapeLeft = true;
             Screen.autorotateToLandscapeRight = true;
+        }
+
+        if (GameObject.Find("벨트버튼") != null)
+        {
+            GameObject.Find("벨트버튼").GetComponent<Button>().onClick.AddListener(AndroidBLEPluginStart.startScan);
         }
     }
 
