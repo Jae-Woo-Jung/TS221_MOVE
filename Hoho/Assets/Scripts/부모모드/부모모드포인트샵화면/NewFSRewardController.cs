@@ -47,8 +47,19 @@ public class NewFSRewardController : MonoBehaviour
 
     public void newAddReward()
     {
-        if (titleInput.text == "" || contentInput.text == "" || pointInput.text == "")
+        if (titleInput.text == "")
         {
+            AndroidBLEPluginStart.CallByAndroid("제목을 입력해주세요.");
+            return;
+        }
+        if (contentInput.text == "")
+        {
+            AndroidBLEPluginStart.CallByAndroid("세부 내용을 입력해주세요.");
+            return;
+        }
+        if (pointInput.text == "")
+        {
+            AndroidBLEPluginStart.CallByAndroid("포인트를 입력해주세요.");
             return;
         }
         SendRewardList();
@@ -56,12 +67,23 @@ public class NewFSRewardController : MonoBehaviour
 
     }
 
-
-
+    private void Start()
+    {
+        pointInput.onEndEdit.AddListener(x => pointInput.text = pointChecker(x));
+    }
 
     // Update is called once per frame
     void Update()
     {
 
+    }
+
+    string pointChecker(string pt)
+    {
+        int p = 0;
+        System.Int32.TryParse(pt, out p);
+        p = Mathf.Clamp(p, 1, 9999);
+
+        return p.ToString();
     }
 }
