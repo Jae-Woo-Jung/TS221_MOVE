@@ -142,7 +142,7 @@ public class ProgressController : MonoBehaviour
         updateLevel(level);
         GameObject rewardTitle = GameObject.Find("제목text");
         //TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
-        //TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
         
 
         GameObject.Find("Canvas").transform.Find("보상목록").gameObject.SetActive(true);
@@ -277,7 +277,7 @@ public class ProgressController : MonoBehaviour
     /// </summary>
     private void updateTotalPoint()
     {
-        //TextMeshProUGUI currentPoint = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();  //현재포인트Text는 진행상황영역/포인트동그라미/innerBoder/ContentArea의 하위 요소.
+        TextMeshProUGUI currentPoint = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();  //현재포인트Text는 진행상황영역/포인트동그라미/innerBoder/ContentArea의 하위 요소.
 
         ProgressController.pointString=currentPoint.text=pointToString(getCurrentPoint());
     }

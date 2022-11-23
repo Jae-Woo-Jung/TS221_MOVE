@@ -10346,7 +10346,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40.52156, y: -30.50026}
+  m_AnchoredPosition: {x: 40.521606, y: -30.50026}
   m_SizeDelta: {x: 40.2536, y: 37.969}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &607602737
@@ -20094,7 +20094,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1469482790}
         m_TargetAssemblyTypeName: NewFSRewardController, Assembly-CSharp
-        m_MethodName: newAddReward
+        m_MethodName: SendRewardList
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -25422,7 +25422,9 @@ MonoBehaviour:
   titleInput: {fileID: 1593421048}
   contentInput: {fileID: 572459531}
   pointInput: {fileID: 891409458}
+  applyBtn: {fileID: 0}
   "\uBCF4\uC0C1\uBAA9\uB85D\uBC30\uACBD": {fileID: 657522679}
+  talk: {fileID: 0}
 --- !u!1 &1469732994
 GameObject:
   m_ObjectHideFlags: 0
@@ -27212,7 +27214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00018310547, y: -250.87}
+  m_AnchoredPosition: {x: -0.00024414062, y: -250.87}
   m_SizeDelta: {x: 0, y: 774.55005}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1548036526
@@ -32985,7 +32987,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 40.52156, y: -30.50026}
+  m_AnchoredPosition: {x: 40.521606, y: -30.50026}
   m_SizeDelta: {x: 40.2536, y: 37.969}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1922328002

@@ -16,7 +16,7 @@ public class PointCircleController : MonoBehaviour
         Debug.Log("updateCircle 1");
         //TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
         Debug.Log("updateCircle 2");
-        //TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
         Debug.Log("updateCircle 3");
 
         rewardTitle.text = (string) ChildDataController.getValues()["rewardTitle"];
@@ -24,7 +24,7 @@ public class PointCircleController : MonoBehaviour
         //currentLevel.text = ((int)ChildDataController.getValues()["level"]).ToString();
         Debug.Log("updateCircle 5");
         
-        //pointText.text = underlinePoint( ((int) ChildDataController.getValues()["point"]).ToString() );
+        pointText.text = underlinePoint( ((int) ChildDataController.getValues()["point"]).ToString() );
 
         Debug.Log("updateCircle 6");
         /*

@@ -11,7 +11,11 @@ public class NewFSRewardController : MonoBehaviour
     public TMP_InputField titleInput;
     public TMP_InputField contentInput;
     public TMP_InputField pointInput;
+    public Button applyBtn;
+
     public GameObject 보상목록배경;
+    public GameObject talk;
+
     // Start is called before the first frame update
     public void SendRewardList()
     {
@@ -62,7 +66,9 @@ public class NewFSRewardController : MonoBehaviour
             AndroidBLEPluginStart.CallByAndroid("포인트를 입력해주세요.");
             return;
         }
-        SendRewardList();
+
+        talk.SetActive(true);
+        //SendRewardList();
         보상목록배경.SetActive(false);
 
     }
@@ -70,6 +76,7 @@ public class NewFSRewardController : MonoBehaviour
     private void Start()
     {
         pointInput.onEndEdit.AddListener(x => pointInput.text = pointChecker(x));
+
     }
 
     // Update is called once per frame

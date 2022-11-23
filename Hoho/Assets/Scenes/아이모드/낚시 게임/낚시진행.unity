@@ -1483,7 +1483,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &441445148
 Transform:
   m_ObjectHideFlags: 0
@@ -2423,7 +2423,6 @@ MonoBehaviour:
   point: {fileID: 599897768}
   timeBar: {fileID: 644261386}
   fullTime: 900
-  progressedTime: 0
 --- !u!1 &790254504
 GameObject:
   m_ObjectHideFlags: 0
@@ -4541,6 +4540,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8fb2f70ad087c40a1be4e54656c905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idealTime_temp: 0
+  "\uC644\uC131\uB960": 0
   point: {fileID: 599897768}
   chainYmin: -1
   chainYmax: 2.5
@@ -4608,6 +4609,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb8fb2f70ad087c40a1be4e54656c905, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  idealTime_temp: 0
+  "\uC644\uC131\uB960": 0
   point: {fileID: 599897768}
   chainYmin: -1
   chainYmax: 2.5
