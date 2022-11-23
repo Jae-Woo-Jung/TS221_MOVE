@@ -8,6 +8,7 @@ TagManager:
   - row
   - TimeOrAim
   - Vertex
+  - hookIdealPosition
   layers:
   - Default
   - TransparentFX

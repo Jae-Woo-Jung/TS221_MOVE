@@ -14942,7 +14942,7 @@ MonoBehaviour:
   pointInput: {fileID: 259824782}
   applyBtn: {fileID: 0}
   "\uBCF4\uC0C1\uBAA9\uB85D\uBC30\uACBD": {fileID: 1019467478}
-  talk: {fileID: 0}
+  talk: {fileID: 1499331534}
 --- !u!1 &1985489331
 GameObject:
   m_ObjectHideFlags: 0
