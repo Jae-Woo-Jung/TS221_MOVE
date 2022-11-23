@@ -295,6 +295,12 @@ public class ProgressController : MonoBehaviour
         if (pointCircle.GetComponent<Slider>().value >= 1.0f)
         {
             //levelUp();
+            GameObject.Find("Canvas").transform.Find("보상완료팝업").gameObject.SetActive(true);
+            GameObject.Find("완성제목text").GetComponent<TextMeshProUGUI>().text = ChildDataController.getValues()["rewardTitle"].ToString();
+            GameObject.Find("완성세부내용text").GetComponent<TextMeshProUGUI>().text = ChildDataController.getValues()["rewardContent"].ToString();
+            
+
+
         }
 
         updateTotalPoint();
