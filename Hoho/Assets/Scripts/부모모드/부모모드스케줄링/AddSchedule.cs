@@ -49,8 +49,21 @@ public class AddSchedule : MonoBehaviour
         applyWithTimeBtn.onClick.AddListener(applyWithTime);
         cancelWithTimeBtn.onClick.AddListener(cancelWithTime);
         
-        hourInput.onEndEdit.AddListener(x=> hourInput.text=hourChecker(x));
-        minuteInput.onEndEdit.AddListener(x=> minuteInput.text=minuteChecker(x));
+        hourInput.onEndEdit.AddListener(x=> hourCustomInput.text=hourChecker(x));
+        minuteInput.onEndEdit.AddListener(x=> minuteCustomInput.text=minuteChecker(x));
+
+        hourCustomInput.onEndEdit.AddListener(x=> hourCustomInput.text=hourChecker(x));
+        minuteCustomInput.onEndEdit.AddListener(x=> minuteCustomInput.text= minuteChecker(x));
+
+
+        titleInput.onEndEdit.AddListener(x => titleCustomInput.text = x);
+        titleCustomInput.onEndEdit.AddListener(x => titleInput.text = x);
+
+        hourInput.onEndEdit.AddListener(x=>hourCustomInput.text=x);
+        minuteInput.onEndEdit.AddListener(x=>minuteCustomInput.text=x);
+
+        hourCustomInput.onEndEdit.AddListener(x=>hourInput.text=x);
+        minuteCustomInput.onEndEdit.AddListener(x=>minuteInput.text=x);
 
         mode1.onValueChanged.AddListener((bool b) =>             
             {
@@ -155,6 +168,12 @@ public class AddSchedule : MonoBehaviour
             //Debug.LogError("No days are selected.");
             return;
         }
+        if (modeList.Count !=1)
+        {
+            AndroidBLEPluginStart.CallByAndroid("모드를 하나 선택해주세요.");
+            //Debug.LogError(modeList.Count+" modes are selected");
+            return;
+        }
         if (titleInput.text.Length ==0)
         {
             AndroidBLEPluginStart.CallByAndroid("제목을 입력해주세요.");
@@ -167,13 +186,6 @@ public class AddSchedule : MonoBehaviour
             //Debug.LogError("time is null");
             return;
         }
-        if (modeList.Count !=1)
-        {
-            AndroidBLEPluginStart.CallByAndroid("모드를 하나 선택해주세요.");
-            //Debug.LogError(modeList.Count+" modes are selected");
-            return;
-        }
-
 
         //this==GameManager
         GetComponent<TimetableController>().addSchedule(trueDayList, titleInput.text, hourInput.text, minuteInput.text, modeList[0]);
