@@ -57,11 +57,11 @@ public class AndroidBLEPluginStart : MonoBehaviour
 
         if (initResult == "initialized")
         {
-            CallByAndroid("bleInit done.");
+            //CallByAndroid("bleInit done.");
         }
         else
         {
-            CallByAndroid("bleInit failed.");
+            //CallByAndroid("bleInit failed.");
         }
     }
 
@@ -97,7 +97,7 @@ public class AndroidBLEPluginStart : MonoBehaviour
         _bleControlObj.Call("disconnectGattServer");
         _bleControlObj.Call("startScan");
         
-        CallByAndroid("BLEPluginSample.scannedNum : " + scannedDevices.Count.ToString());
+        //CallByAndroid("BLEPluginSample.scannedNum : " + scannedDevices.Count.ToString());
         scannedDevices.Clear();
 
         isScanning = true;

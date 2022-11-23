@@ -54,7 +54,7 @@ public class Pause : MonoBehaviour
             {
                 if (heart.activeSelf == true)
                 {
-                    //pauseBtn.GetComponentInChildren<TextMeshProUGUI>().text="¿Á∞≥";
+                    pauseBtn.GetComponentInChildren<TextMeshProUGUI>().text="¿Á∞≥";
                     heart.SetActive(false);
                     FishArrivalTime.guideSquare.SetActive(true);
                     return;
@@ -64,7 +64,7 @@ public class Pause : MonoBehaviour
         }
         else
         {
-            //pauseBtn.GetComponentInChildren<TextMeshProUGUI>().text = "∏ÿ√„";
+            pauseBtn.GetComponentInChildren<TextMeshProUGUI>().text = "∏ÿ√„";
             FishArrivalTime.guideSquare.SetActive(false);
             gameStart.startGame();        
         }

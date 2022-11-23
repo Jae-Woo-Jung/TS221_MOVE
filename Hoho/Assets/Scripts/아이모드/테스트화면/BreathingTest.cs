@@ -97,16 +97,22 @@ public class BreathingTest : MonoBehaviour
 
         }
 
-        if (breathingMin < 100)
+        if (breathingMin < 125)
         {
             Debug.Log("³Ê¹« Çæ··");
             tooLoosePannel.SetActive(true);
+            isTested = false;
+            isTesting = false;
+            return;
         }
 
-        if (breathingMax > 900)
+        if (breathingMax > 875)
         {
             Debug.Log("³Ê¹« Á¶ÀÓ");
             tooTightPannel.SetActive(true);
+            isTested = false;
+            isTesting = false;
+            return;
         }
 
 

@@ -49,16 +49,22 @@ public class ParentDataController : MonoBehaviour
     public class PointInformation
     {
         [FirestoreProperty]
+        public string type { get; set; } = "list";
+
+        [FirestoreProperty]
+        public string 내용 { get; set; } = "내용";
+
+        [FirestoreProperty]
+        public bool 완성여부 { get; set; } = false;
+
+        [FirestoreProperty]
+        public string 제목 { get; set; } = "제목";
+
+        [FirestoreProperty]
+        public int 포인트 { get; set; } = 4000;
+
+        [FirestoreProperty]
         public int 현재포인트 { get; set; } = 0;
-
-        [FirestoreProperty]
-        public int 목표점수 { get; set; } = 1000;
-
-        [FirestoreProperty]
-        public int 레벨 { get; set; } = 1;
-
-        [FirestoreProperty]
-        public string 보상제목 { get; set; } = "놀이공원";
     }
 
 
@@ -148,9 +154,8 @@ public class ParentDataController : MonoBehaviour
         Dictionary<string, object> A = new Dictionary<string, object>();
         A.Add("canSend", canSend);
         A.Add("point", pointInfo.현재포인트);
-        A.Add("level", pointInfo.레벨);
-        A.Add("goalPoint", pointInfo.목표점수);
-        A.Add("rewardTitle", pointInfo.보상제목);        
+        A.Add("goalPoint", pointInfo.포인트);
+        A.Add("rewardTitle", pointInfo.제목);        
         A.Add("childID", childID);
         A.Add("parentID", parentID);
 
@@ -180,21 +185,11 @@ public class ParentDataController : MonoBehaviour
     /// </summary>
     public static void setGoalPoint(int pt)
     {
-        pointInfo.목표점수 = pt;
+        pointInfo.포인트 = pt;
     }
-
-
-    /// <summary>
-    /// 현재 진행 보상 단계. PointShop에서 검은색 점의 개수.
-    /// </summary>
-    public static void setLevel(int lv)
-    {
-        pointInfo.레벨 = lv;
-    }
-
     public static void setRewardTitle(string title)
     {
-        pointInfo.보상제목 = title;
+        pointInfo.제목 = title;
     }
 
     /// <summary>

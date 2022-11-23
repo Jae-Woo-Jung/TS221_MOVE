@@ -47,12 +47,6 @@ public class ParentProgressController : MonoBehaviour
     public TextMeshProUGUI currentPoint;
     [Tooltip("목표점수")]
     public TextMeshProUGUI goalPointText;
-    [Tooltip("1~6단계, 점들")]
-    public GameObject progressLevel;
-    [Tooltip("점들간 검은선")]
-    public GameObject verticalLine;
-    [Tooltip("점prefab")]
-    public GameObject dotPrefab;
 
 
     /// <summary>
@@ -97,9 +91,8 @@ public class ParentProgressController : MonoBehaviour
     /// </summary>
     private void initProgress()
     {
-        Debug.Log("initProgress point : "+point+", level : "+level);
+        Debug.Log("initProgress point : "+point);
         point = (int) ParentDataController.getValues()["point"];
-        level = (int) ParentDataController.getValues()["level"];
         //totalLevel
         goalPoint_static = (int) ParentDataController.getValues()["goalPoint"];
 
@@ -108,56 +101,16 @@ public class ParentProgressController : MonoBehaviour
         progressRatio = (float)point / goalPoint_static;
         Debug.Log("progressRatio : " + progressRatio);
         currentPoint.text =  ParentProgressController.point.ToString();
-        ParentProgressController.level = Math.Max(1, level);
-
-        generateLevel(level);
-
-        if (level > totalLevel)
-        {
-            Debug.Log("레벨 상한 도달");
-        }
         
         //totalPointContent = totalPoint.GetComponent<TextMeshProUGUI>().text = "<" + level + ">\n" + parsePoint(currentPoint) + "P\n" + totPointContent;
         goalPointText.text =  goalPoint_static.ToString();
         Debug.Log("목표점수 : " + goalPoint_static);
 
         Debug.Log(goalPointText.text);
+
         updateProgress();        
     }
 
-    /// <summary>
-    /// 점 개수 생성
-    /// </summary>
-    /// <param name="level"></param>
-    private void generateLevel(int level)
-    {
-        Transform[] transformList = progressLevel.transform.GetComponentsInChildren<Transform>();
-        foreach (Transform dot in transformList)
-        {
-            if ((dot.name).Contains("점"))
-            {
-                Destroy(dot.gameObject);
-            }
-        }
-
-        List<GameObject> dots=new List<GameObject>();
-        for (int i=0; i<level; i++)
-        {
-            Instantiate(dotPrefab, progressLevel.transform);
-            dotPrefab.GetComponentInChildren<TextMeshProUGUI>().text = (i+1).ToString();
-            dots.Add(dotPrefab);
-        }
-
-
-        verticalLine.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, dots[0].GetComponent<RectTransform>().rect.yMin -dots[dots.Count-1].GetComponent<RectTransform>().rect.yMax);
-        verticalLine.transform.position = new Vector2(dots[0].transform.position.x, (dots[0].transform.position.y + dots[dots.Count - 1].transform.position.y)/2 );
-        
-        if (totalLevel == 1)
-        {
-            verticalLine.SetActive(false);
-        }
-        updateLevel(level);
-    }
 
 
     /// <summary>
@@ -175,48 +128,6 @@ public class ParentProgressController : MonoBehaviour
                 tempNum += point.text[i];
         }
         return Int32.Parse(tempNum);
-    }
-
-    /// <summary>
-    /// progressLevel의 점들 중 lv 이하의 점들은 검정으로, 나머지는 하얀색으로 바꿈.
-    /// </summary>
-    /// <param name="lv"></param>
-    private void updateLevel(int lv)
-    {
-        GameObject levelText = GameObject.Find("단계text");
-        levelText.GetComponent<TextMeshProUGUI>().text = lv.ToString();
-
-        for (int i=0; i<progressLevel.transform.childCount; i++)
-        {
-            if (i < lv)
-            {
-                progressLevel.transform.GetChild(i).GetComponent<Image>().color = Color.black; //lv 이하의 점들은 검정으로
-            }
-            else
-            {
-                progressLevel.transform.GetChild(i).GetComponent<Image>().color = Color.white;  //lv 이후의 점들은 하얀색으로
-            }
-        }
-    }
-
-    /// <summary>
-    /// progressLevel에 표시된 레벨(검은 점 개수)을 반환함.
-    /// </summary>
-    /// <returns></returns>
-    private int getCurrentLevel()
-    {
-        int level = 0;
-        Debug.Log("progressLevel's child# is "+progressLevel.transform.childCount);
-        for (int i = 0; i < progressLevel.transform.childCount; i++)
-        {
-            if (progressLevel.transform.GetChild(i).GetComponent<Image>().color == Color.black)
-            {
-                level = i+1;  //0번째인 경우, 레벨1
-            }
-        }
-
-        Debug.Log("current level is "+level);
-        return level;
     }
 
     /// <summary>
@@ -240,9 +151,10 @@ public class ParentProgressController : MonoBehaviour
         pointRatio.text = parsePoint(currentPoint)*100 / parsePoint(goalPointText)+"%";
         progressRatio = pointCircle.GetComponent<Slider>().value = parsePoint(pointRatio) / 100.0f;
 
-        GameObject totalPoint = GameObject.Find("현재포인트text");  //전체포인트는 진행상황영역/포인트동그라미/innerBoder/ContentArea의 하위 요소.
-        totalPoint.GetComponent<TextMeshProUGUI>().text = point.ToString();
-
+        GameObject totalPoint = GameObject.Find("제목text");  //전체포인트는 진행상황영역/포인트동그라미/innerBoder/ContentArea의 하위 요소.
+        Debug.Log("updateProgress1");
+        totalPoint.GetComponent<TextMeshProUGUI>().text = (string) ParentDataController.getValues()["rewardTitle"];
+        Debug.Log("updateProgress2");
         //updateTotalPoint();
     }
 

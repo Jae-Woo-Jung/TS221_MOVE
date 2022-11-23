@@ -93,8 +93,8 @@ public class TodaySchedule : MonoBehaviour
         {
             Id = UnityEngine.Random.Range(0, int.MaxValue),
             Delay = TimeSpan.FromSeconds(10),
-            Title = "Custom notification",
-            Message = "Message",
+            Title = "테스트입니다.",
+            Message = "월요일_" + "1시" + "0분"+ " 호흡 훈련을 진행해주세요.",
             Ticker = "Ticker",
             Sound = true,           
             Vibrate = true,
@@ -198,6 +198,7 @@ public class TodaySchedule : MonoBehaviour
             {
                 newTime.transform.Find("완료표시").gameObject.SetActive(true);
                 newTime.transform.Find("미완료표시").gameObject.SetActive(false);
+                newTime.transform.Find("검은배경").gameObject.SetActive(false);
             }
         }
 
@@ -229,6 +230,7 @@ public class TodaySchedule : MonoBehaviour
             {
                 newTime.transform.Find("완료표시").gameObject.SetActive(false);
                 newTime.transform.Find("미완료표시").gameObject.SetActive(true);
+                newTime.transform.Find("검은배경").gameObject.SetActive(true);
             }
         }
 
@@ -262,7 +264,7 @@ public class TodaySchedule : MonoBehaviour
 
         if (!AndroidBLEPluginStart.isConnected)
         {
-            AndroidBLEPluginStart.CallByAndroid("왼쪽 위의 버튼을 눌러 벨트랑 연결해주세요.");
+            AndroidBLEPluginStart.CallByAndroid("오른쪽 아래의 버튼을 눌러 벨트랑 연결해주세요.");
             return;
         }
 

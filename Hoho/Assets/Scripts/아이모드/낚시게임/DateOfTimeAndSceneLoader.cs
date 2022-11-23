@@ -25,12 +25,16 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
 
         if (TodaySchedule.mode.Contains("자유"))
         {
-            SceneManager.LoadScene("낚시모드선택");            
+            ChildDataController.fishGameResult.스케줄적용 = false;
+            SceneManager.LoadScene("낚시모드선택");
         }
         else
         {
+            ChildDataController.fishGameResult.스케줄적용 = true;
+            ChildDataController.fishGameResult.스케줄분 = ChildDataController.scheduleInformationList[0].분;
+            ChildDataController.fishGameResult.스케줄시 = ChildDataController.scheduleInformationList[0].시;
+            ChildDataController.fishGameResult.모드 = TodaySchedule.mode;
             SceneManager.LoadScene("낚시진행");
-            //SceneManager.LoadScene("낚시진행");
         }
     }
     
