@@ -19,6 +19,7 @@ public class CardController : MonoBehaviour
 
     public ProgressController progressController;
     public PointListController pointListController;
+    public PointCircleController pointCircleController;
 
 
     static FirebaseFirestore db;
@@ -83,6 +84,7 @@ public class CardController : MonoBehaviour
         int p = System.Int32.Parse(point.text.Length>0? point.text : "0");
         progressController.addPoint(p);
         pointListController.updateList(pointListController.spriteList[0], "칭찬포인트", p);
+        pointCircleController.updateCircle();
         ChildDataController.SendPoint();
     }
 

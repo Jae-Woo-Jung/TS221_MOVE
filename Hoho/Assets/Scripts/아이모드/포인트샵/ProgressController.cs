@@ -142,7 +142,7 @@ public class ProgressController : MonoBehaviour
         updateLevel(level);
         GameObject rewardTitle = GameObject.Find("제목text");
         //TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
+        //TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
         
 
         GameObject.Find("Canvas").transform.Find("보상목록").gameObject.SetActive(true);
@@ -171,7 +171,7 @@ public class ProgressController : MonoBehaviour
 
         //currentLevel.GetComponent<TextMeshProUGUI>().text = level.ToString();
 
-        ProgressController.pointString = pointText.text = pointToString(parsePoint(currentPoint));
+        //ProgressController.pointString = pointText.text = pointToString(parsePoint(currentPoint));
         ProgressController.rewardTitle=rewardTitle.GetComponent<TextMeshProUGUI>().text = ChildDataController.getValues()["rewardTitle"].ToString();
         //goalPoint.text = getGoalfromRow(rows[level-1]).ToString();
         goalPoint.text = ChildDataController.getValues()["goalPoint"].ToString();
@@ -206,7 +206,8 @@ public class ProgressController : MonoBehaviour
         string tempPoint = null;
         for (int i = 0; i < point.ToString().Length; i++)
         {
-            tempPoint += "<U>" + point.ToString()[i] + "</U> ";
+            //tempPoint += "<U>" + point.ToString()[i] + "</U>";
+            tempPoint += point.ToString()[i];
         }
         return tempPoint;
     }
@@ -276,7 +277,7 @@ public class ProgressController : MonoBehaviour
     /// </summary>
     private void updateTotalPoint()
     {
-        TextMeshProUGUI currentPoint = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();  //현재포인트Text는 진행상황영역/포인트동그라미/innerBoder/ContentArea의 하위 요소.
+        //TextMeshProUGUI currentPoint = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();  //현재포인트Text는 진행상황영역/포인트동그라미/innerBoder/ContentArea의 하위 요소.
 
         ProgressController.pointString=currentPoint.text=pointToString(getCurrentPoint());
     }
@@ -287,11 +288,13 @@ public class ProgressController : MonoBehaviour
     private void updateProgress()
     {
         pointRatio.text = parsePoint(currentPoint)*100 / parsePoint(goalPoint)+"%";
+        //GameObject rewardTitle = GameObject.Find("제목text");
+        //ProgressController.rewardTitle = rewardTitle.GetComponent<TextMeshProUGUI>().text = ChildDataController.getValues()["rewardTitle"].ToString();
         progressRatio = pointCircle.GetComponent<Slider>().value = parsePoint(pointRatio) / 100.0f;
 
         if (pointCircle.GetComponent<Slider>().value >= 1.0f)
         {
-            levelUp();
+            //levelUp();
         }
 
         updateTotalPoint();
@@ -313,15 +316,15 @@ public class ProgressController : MonoBehaviour
         }
         else    //level이 1인 경우, rows의 0번째에 해당.
         {
-            GameObject rewardTitle = GameObject.Find("보상제목");
-            TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
+            GameObject rewardTitle = GameObject.Find("제목text");
+            //TextMeshProUGUI currentLevel = GameObject.Find("단계Text").GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI pointText = GameObject.Find("현재포인트Text").GetComponent<TextMeshProUGUI>();
 
             currentPoint.text = "0";
 
             level += 1;
 
-            currentLevel.text = level.ToString();
+            //currentLevel.text = level.ToString();
             pointString = pointText.text = pointToString(parsePoint(currentPoint));
             ProgressController.rewardTitle = rewardTitle.GetComponent<TextMeshProUGUI>().text = ChildDataController.getValues()["rewardTitle"].ToString();
 
