@@ -26,7 +26,7 @@ public class AndroidBLEPluginStart : MonoBehaviour
     [Tooltip("스캔 지속 시간. 스캔은 배터리 소모를 많이 함.")]
     public float scanTimeLimit = 5.0f;
     [Tooltip("연결할 대상의 주소")]
-    public string targetDevice="8D:CC:8C:70:EB:30";
+    public string targetDevice= "14:90:BC:8A:2D:06";
     [Tooltip("연결된 장치의 주소")]
     public string connectedDevice;
 
@@ -68,6 +68,11 @@ public class AndroidBLEPluginStart : MonoBehaviour
     // makeToast. 안드로이드 화면 상에 Text를 잠깐 띄워줌.
     public static void CallByAndroid(string message)
     {
+        if (_bleControlCls == null)
+        {
+            bleInit();
+        }
+        
         Debug.Log("CallByAndroid : " + message);
 #if PLATFORM_ANDROID && !UNITY_EDITOR
             _bleControlObj.Call("showText", message);
@@ -107,7 +112,7 @@ public class AndroidBLEPluginStart : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        targetDevice="8D:CC:8C:70:EB:30";
+        targetDevice="14:90:BC:8A:2D:06";
         bleInit();
 
         isScanning = false;

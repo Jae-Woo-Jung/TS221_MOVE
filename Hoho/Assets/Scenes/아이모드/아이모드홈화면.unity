@@ -624,7 +624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -133.56775, y: 177.73602}
+  m_AnchoredPosition: {x: -133.56775, y: 177.736}
   m_SizeDelta: {x: 267.57, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &437457118
@@ -729,7 +729,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   updateTimeLimit: 0.5
   scanTimeLimit: 5
-  targetDevice: 8D:CC:8C:70:EB:30
+  targetDevice: 14:90:BC:8A:2D:06
   connectedDevice: 
 --- !u!114 &457317464
 MonoBehaviour:
@@ -1759,6 +1759,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a84ae964ebd15874cbb3890e4b9d1821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progressController: {fileID: 0}
 --- !u!1 &900469792
 GameObject:
   m_ObjectHideFlags: 0
@@ -3619,7 +3620,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 0}
   m_Direction: 2
   m_Value: 1
-  m_Size: 1
+  m_Size: 0.50000024
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

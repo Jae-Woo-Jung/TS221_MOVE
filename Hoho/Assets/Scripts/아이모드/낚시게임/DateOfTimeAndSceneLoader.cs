@@ -68,13 +68,16 @@ public class DateOfTimeAndSceneLoader : MonoBehaviour
         ChildDataController.scheduleInformationList.Sort(TodaySchedule.compareSchedule);
         var info = ChildDataController.scheduleInformationList[0];
 
-        if (info.완료 || Math.Abs(info.시*60+info.분 - DateTime.Now.Hour*60+DateTime.Now.Minute )>5)
+        //Debug.Log("updateMode : 시 : " + info.시 +", 분 :"+ info.분+" 시간차 : "+ (Math.Abs(info.시 * 60 + info.분 - (DateTime.Now.Hour * 60 + DateTime.Now.Minute))));
+        if (info.완료 || (Math.Abs(info.시*60+info.분 - (DateTime.Now.Hour*60+DateTime.Now.Minute)) >5))
         {
             TodaySchedule.mode = "자유모드";
+            return;
         }
-        if (!info.완료)
+        else if (!info.완료)
         {
-            TodaySchedule.mode = info.모드;            
+            TodaySchedule.mode = info.모드;
+            return;
         }
     }
 

@@ -7,6 +7,9 @@ using TMPro;
 public class HookController : MonoBehaviour
 {
     public static float idealTime = 0.0f;
+
+    public float idealTime_temp = 0.0f;
+    public int ¿Ï¼º·ü = 0;
     
     public TextMeshProUGUI point;
 
@@ -53,8 +56,9 @@ public class HookController : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {        
-
+    {
+        idealTime_temp = idealTime;
+        ¿Ï¼º·ü = (int)Mathf.Round((HookController.idealTime * 100f / (TimeController.progressedTime- FishArrivalTime.getArrivalTime())));
     }
 
     /// <summary>
@@ -86,7 +90,7 @@ public class HookController : MonoBehaviour
         GameObject idealPosition = collision.gameObject;
         if (idealPosition.tag=="hookIdealPosition" && !Pause.isPaused && FishArrivalTime.getArrivalTime() > 0.0f)
         {
-            idealTime += Time.deltaTime/2;  //³¬½Ã¹Ù´ÃÀÇ collider°¡ 2°³ÀÓ.
+            idealTime += Time.deltaTime/4;  //³¬½Ã¹Ù´ÃÀÇ collider°¡ 2°³ÀÓ.
         }
     }
 

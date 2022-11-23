@@ -31,6 +31,12 @@ public class ParentCardController : MonoBehaviour
             AndroidBLEPluginStart.CallByAndroid("포인트를 입력해주세요.");
             return;
         }
+        if (cardMessage.text == "")
+        {
+            AndroidBLEPluginStart.CallByAndroid("내용을 입력해주세요.");
+            return;
+        }
+
         else
         {
 

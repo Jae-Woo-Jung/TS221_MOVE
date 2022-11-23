@@ -60,8 +60,25 @@ public class BreathingTest : MonoBehaviour
             {
                  breathingMin = Characteristic.value;
             }
-        }
 
+            if (breathingMin < 125)
+            {
+                Debug.Log("너무 헐렁");
+                tooLoosePannel.SetActive(true);
+                isTested = false;
+                isTesting = false;
+                return;
+            }
+
+            if (breathingMax > 875)
+            {
+                Debug.Log("너무 조임");
+                tooTightPannel.SetActive(true);
+                isTested = false;
+                isTesting = false;
+                return;
+            }
+        }
     }
 
 
@@ -95,24 +112,6 @@ public class BreathingTest : MonoBehaviour
         {
             Debug.Log("낚시 게임을 진행해주세요.");
 
-        }
-
-        if (breathingMin < 125)
-        {
-            Debug.Log("너무 헐렁");
-            tooLoosePannel.SetActive(true);
-            isTested = false;
-            isTesting = false;
-            return;
-        }
-
-        if (breathingMax > 875)
-        {
-            Debug.Log("너무 조임");
-            tooTightPannel.SetActive(true);
-            isTested = false;
-            isTesting = false;
-            return;
         }
 
 

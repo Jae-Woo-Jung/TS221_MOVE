@@ -29,7 +29,7 @@ public class TimeController : MonoBehaviour
 
 
     [SerializeField][Tooltip("°ÔÀÓ ÁøÇà ½Ã°£")]
-    private float progressedTime;
+    public static float progressedTime;
 
 
     public void setTime(float time)
@@ -74,6 +74,7 @@ public class TimeController : MonoBehaviour
             if (progressedTime - FishArrivalTime.getArrivalTime() > 0.0f)
             {
                 ChildDataController.fishGameResult.¿Ï¼º·ü = (int) Mathf.Round( (HookController.idealTime*100f / (progressedTime - FishArrivalTime.getArrivalTime()) ) );
+                Debug.Log("¿Ï¼º·ü :" + ChildDataController.fishGameResult.¿Ï¼º·ü);
             }
             PointListController.pointContent cont = new PointListController.pointContent();
             cont.content = "³¬½Ã °ÔÀÓ";

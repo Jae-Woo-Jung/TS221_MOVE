@@ -81,6 +81,9 @@ public class TodaySchedule : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        NotificationManager.CancelAll();
+
+        NotificationManager.Send(TimeSpan.FromSeconds(5), "테스트용", "안녕!", new Color(1, 0.3f, 0.15f));
         gameProgress.value = gameProgressRatio;
         ChildDataController.ReceiveBreath( () => ChildDataController.ReceiveScheduleInfo(initializeSchedule));
 
@@ -88,26 +91,10 @@ public class TodaySchedule : MonoBehaviour
         Debug.Log(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + 22 + ":" + 0);
         Debug.Log("Start : "+Convert.ToDateTime(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + 22 + ":" + 0));
 
-
-        var notificationParams = new NotificationParams
-        {
-            Id = UnityEngine.Random.Range(0, int.MaxValue),
-            Delay = TimeSpan.FromSeconds(10),
-            Title = "테스트입니다.",
-            Message = "월요일_" + "1시" + "0분"+ " 호흡 훈련을 진행해주세요.",
-            Ticker = "Ticker",
-            Sound = true,           
-            Vibrate = true,
-            Light = true,
-            SmallIcon = NotificationIcon.Heart,
-            SmallIconColor = new Color(0, 0.5f, 0),
-            LargeIcon = "app_icon"
-        };
-
-        Debug.Log("Start : " + notificationParams.Delay);
-        NotificationManager.SendCustom(notificationParams);
-
-
+        
+        NotificationManager.SendWithAppIcon(TimeSpan.FromSeconds(5), "호흡 훈련 알람 테스트", "호흡을 할 시간입니다.", new Color(0, 0.6f, 1), NotificationIcon.Message);
+        Debug.Log("Start : " + TimeSpan.FromSeconds(6));
+    
         startBtn.onClick.AddListener(checkTest);
 
     }
@@ -133,8 +120,7 @@ public class TodaySchedule : MonoBehaviour
             Debug.Log("initializeSchedule Last Result : "+LastResult.시작시간);
         }
 
-        Transform table = scheduleContent.transform;
-        NotificationManager.CancelAll();
+        Transform table = scheduleContent.transform;        
 
         foreach  (var schedule in ChildDataController.scheduleInformationList)
         {
@@ -149,7 +135,6 @@ public class TodaySchedule : MonoBehaviour
             }
 
             //notification 추가
-#if PLATFORM_ANDROID && UNITY_EDITOR
 
             DateTime date1 = Convert.ToDateTime(DateTime.Now.Year + " " + DateTime.Now.Month + " " + DateTime.Now.Day + " " + schedule.시 + ":" + schedule.분);
 
@@ -176,9 +161,9 @@ public class TodaySchedule : MonoBehaviour
                     LargeIcon = "app_icon"
                 };
 
-                NotificationManager.SendCustom(notificationParams);
+                //NotificationManager.SendCustom(notificationParams);
+                NotificationManager.SendWithAppIcon(delay, "호흡 훈련 알람 테스트", schedule.시 + "시" + schedule.분 + "분에 " + schedule.모드 + " 호흡 훈련을 진행해주세요.", new Color(0, 0.6f, 1), NotificationIcon.Message);
             }
-#endif
 
             string title = schedule.제목;
             string hour = (schedule.시 < 10 ? "0" : "") + schedule.시.ToString();
@@ -203,6 +188,7 @@ public class TodaySchedule : MonoBehaviour
         }
 
         gameProgressRatio = gameProgress.value = ChildDataController.scheduleInformationList.Count == 0 ? 0 : finishedScheduleNum / (float) ChildDataController.scheduleInformationList.Count;
+        ChildDataController.scheduleInformationList.Sort(compareSchedule);
         orderSchedule();
     }
 
