@@ -53,8 +53,10 @@ public class DeleteSchedule : MonoBehaviour
         Destroy(this.gameObject);
 
         int idx = ParentDataController.scheduleInformationList.FindIndex(x => 
-            x.夸老 == transform.parent.parent.name+"夸老" && x.力格 == titleText.text && 
+            x.夸老 == transform.parent.parent.parent.parent.name+"夸老" && x.力格 == titleText.text && 
             x.矫==Int32.Parse(timeText.text.Substring(0, 2)) && x.盒 == Int32.Parse(timeText.text.Substring(3, 2)));
+
+        Debug.Log("deleteClicked : " + idx);
 
         if (idx != -1)
         {
